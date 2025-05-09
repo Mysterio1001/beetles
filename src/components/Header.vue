@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <router-link to="/">
+    <router-link to="/test">
       <img :src="logo" alt="logo" />
     </router-link>
     <ul>
@@ -8,11 +8,9 @@
         <router-link :to="item.to">{{ item.label }}</router-link>
       </li>
     </ul>
-    <div class="user-action">
-      <a href="./login.html">會員登入</a>
-      <a href="./shopping-cart.html"
-        ><i class="fa-sharp fa-solid fa-cart-shopping"></i> 購物車</a
-      >
+    <div class="userAction">
+      <btn>{{ t("common.signIn") }}</btn>
+      <btn>{{ t("common.cart") }}</btn>
     </div>
   </header>
 </template>
@@ -40,7 +38,7 @@ const routes = [
   top: 0;
   z-index: 9999;
   margin-bottom: 30px;
-  padding: 0 40px;
+  padding: 0 10px;
   height: 100px;
   background: linear-gradient(to right, #98b0a7, #f5f8f6);
   opacity: 1;
@@ -90,6 +88,9 @@ const routes = [
         }
       }
     }
+  }
+  .userAction {
+    display: flex;
   }
 }
 </style>

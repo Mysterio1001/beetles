@@ -11,6 +11,14 @@ const routes = [
     },
   },
   {
+    path: "/test",
+    name: "test",
+    component: () => import("@/views/components.vue"),
+    meta: {
+      titleKey: "route.test",
+    },
+  },
+  {
     path: "/news",
     name: "news",
     component: () => import("@/views/newsView.vue"),
@@ -55,7 +63,7 @@ router.beforeEach((to, from, next) => {
   const defaultTitle = i18n.global.t("route.default"); // 預設值
   const pageTitle = i18n.global.t(to.meta.titleKey);
   if (pageTitle) {
-    document.title = i18n.global.t(pageTitle + "－" + defaultTitle);
+    document.title = pageTitle + "－" + defaultTitle;
   } else {
     document.title = defaultTitle;
   }

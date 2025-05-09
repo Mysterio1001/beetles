@@ -2,6 +2,9 @@ import { createI18n } from "vue-i18n";
 import zhTw from "./zh_tw";
 import en from "./en";
 
+console.log("zhTw", zhTw);
+console.log("en", en);
+
 // 根據瀏覽器語系判斷預設語言
 let locale = "zh-TW";
 if (navigator.language.toLowerCase().startsWith("en")) {
@@ -14,7 +17,7 @@ const messages = {
 };
 
 const i18n = createI18n({
-  legacy: false, // Composition API 模式
+  legacy: true,
   locale,
   fallbackLocale: "zh-TW",
   messages,
