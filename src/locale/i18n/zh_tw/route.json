@@ -1,4 +1,8 @@
 {
-  "home": "首頁 - 甲蟲羽錄",
-  "default": "甲蟲羽錄"
+  "default": "甲蟲羽錄",
+  "home": "首頁",
+  "news": "最新消息",
+  "beetleLab": "甲蟲研究所",
+  "beetleShop": "翅鞘商店",
+  "beetleBulletin": "羽錄情報"
 }

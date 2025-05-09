@@ -1,14 +1,45 @@
 import { createRouter, createWebHistory } from "vue-router";
 import i18n from "@/locale/index";
-import Home from "@/views/Home.vue";
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "home",
+    component: () => import("@/views/homeView.vue"),
     meta: {
       titleKey: "route.home",
+    },
+  },
+  {
+    path: "/news",
+    name: "news",
+    component: () => import("@/views/newsView.vue"),
+    meta: {
+      titleKey: "route.news",
+    },
+  },
+  {
+    path: "/beetle-lab",
+    name: "beetleLab",
+    component: () => import("@/views/newsView.vue"),
+    meta: {
+      titleKey: "route.beetleLab",
+    },
+  },
+  {
+    path: "/beetle-shop",
+    name: "beetleShop",
+    component: () => import("@/views/newsView.vue"),
+    meta: {
+      titleKey: "route.beetleShop",
+    },
+  },
+  {
+    path: "/beetle-bulletin",
+    name: "beetleBulletin",
+    component: () => import("@/views/newsView.vue"),
+    meta: {
+      titleKey: "route.beetleBulletin",
     },
   },
 ];
@@ -21,9 +52,10 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   i18n.global.t("route.home");
 
-  const defaultTitle = i18n.global.t("route.default"); // fallback key
-  if (to.meta.titleKey) {
-    document.title = i18n.global.t(to.meta.titleKey);
+  const defaultTitle = i18n.global.t("route.default"); // 預設值
+  const pageTitle = i18n.global.t(to.meta.titleKey);
+  if (pageTitle) {
+    document.title = i18n.global.t(pageTitle + "－" + defaultTitle);
   } else {
     document.title = defaultTitle;
   }

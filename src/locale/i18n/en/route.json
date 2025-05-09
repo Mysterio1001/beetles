@@ -1,4 +1,8 @@
 {
-  "home": "Home - Recording of Beetles",
-  "default": "Recording of Beetles"
+  "default": "Recording of Beetles",
+  "home": "Home",
+  "news": "News",
+  "beetleLab": "Beetle Lab",
+  "beetleShop": "Beetle Shop",
+  "beetleBulletin": "Beetle Bulletin"
 }
