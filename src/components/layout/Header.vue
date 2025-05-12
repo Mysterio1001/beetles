@@ -10,13 +10,17 @@
     </ul>
     <div class="userAction">
       <btn>{{ t("common.signIn") }}</btn>
-      <btn>{{ t("common.cart") }}</btn>
+      <btn>
+        <ShoppingCart style="width: 16px; height: 16px" />&nbsp;
+        {{ t("common.cart") }}</btn
+      >
     </div>
   </header>
 </template>
 
 <script setup>
 import logo from "@/assets/images/logo/white_border_logo.svg";
+import { ShoppingCart } from "lucide-vue-next";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -37,7 +41,7 @@ const routes = [
   position: sticky;
   top: 0;
   z-index: 9999;
-  margin-bottom: 30px;
+  margin-bottom: 28px;
   padding: 0 10px;
   height: 100px;
   background: linear-gradient(to right, #98b0a7, #f5f8f6);
@@ -70,6 +74,7 @@ const routes = [
         display: block;
         line-height: 30px;
         color: #161d1b;
+        font-weight: 1000;
         transition: transform 0.3s ease;
         &:hover {
           transform: translate(0, -5px);

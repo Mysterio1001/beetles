@@ -24,7 +24,7 @@ const props = defineProps({
   cursor: pointer;
 
   margin: 5px;
-  padding: 10px 20px;
+  padding: 8px 20px;
 
   color: #fff;
   font-size: 16px;
@@ -42,7 +42,11 @@ const props = defineProps({
   }
   span {
     position: relative;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    text-align: center;
     transition: transform 0.2s ease;
     &::before {
       content: "";
