@@ -11,7 +11,7 @@
     <div class="userAction">
       <btn>{{ t("common.signIn") }}</btn>
       <btn>
-        <ShoppingCart style="width: 16px; height: 16px" />&nbsp;
+        <ShoppingCart style="width: 1.6rem; height: 1.6rem" />&nbsp;
         {{ t("common.cart") }}</btn
       >
     </div>
@@ -41,14 +41,14 @@ const routes = [
   position: sticky;
   top: 0;
   z-index: 9999;
-  margin-bottom: 28px;
-  padding: 0 10px;
-  height: 100px;
+  margin-bottom: 1.6rem;
+  padding: 0 1rem;
+  height: 10rem;
   background: linear-gradient(to right, #98b0a7, #f5f8f6);
   opacity: 1;
   border-radius: 0 0 10px 10px;
   img {
-    height: 80px;
+    height: 8rem;
   }
   ul {
     display: flex;
@@ -56,7 +56,7 @@ const routes = [
     margin: 0 auto;
     li {
       position: relative;
-      padding: 0 15px;
+      padding: 0 1.6rem;
       font-weight: bold;
       &:not(:last-child)::after {
         content: "";
@@ -67,12 +67,12 @@ const routes = [
         right: 0;
         margin: auto;
         width: 1px;
-        height: 40px;
+        height: 4rem;
         background-color: #5d7c71;
       }
       a {
         display: block;
-        line-height: 30px;
+        line-height: 3.2rem;
         color: #161d1b;
         font-weight: 1000;
         transition: transform 0.3s ease;
@@ -81,7 +81,7 @@ const routes = [
           &::before {
             content: "";
             position: absolute;
-            bottom: -5px;
+            bottom: -0.4rem;
             right: 0;
             left: 0;
             display: block;

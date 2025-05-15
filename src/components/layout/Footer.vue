@@ -42,24 +42,24 @@ const socials = [
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 28px;
-  padding: 10px 40px;
+  margin-top: 1.6rem;
+  padding: 1rem 4rem;
   background-color: #2b3632;
 
   img {
-    width: 70px;
-    height: 70px;
+    width: 7rem;
+    height: 7rem;
   }
 
   ul {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 40px;
+    gap: 4rem;
     .icon::before {
       color: white;
-      height: 50px;
-      width: 50px;
+      height: 5rem;
+      width: 5rem;
     }
   }
 }

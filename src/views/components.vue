@@ -1,51 +1,45 @@
 <template>
-  <div class="container">
-    <!-- 按鈕 -->
-    <div class="button section">
-      <div class="title">
-        <h2 style="font-size: 20px">button &lt;btn&gt;&lt;/btn&gt;</h2>
-        <h3>width屬性可以自己調整寬度</h3>
-      </div>
-      <div class="btns">
-        <h6>size="l"</h6>
-        <div class="box">
-          <btn size="l">大按鈕</btn>
+  <Container>
+    <div class="main">
+      <!-- 按鈕 -->
+      <div class="button section">
+        <div class="title">
+          <h2>button &lt;btn&gt;&lt;/btn&gt;</h2>
+          <h4>width屬性如果需要可以自己調整寬度</h4>
         </div>
-        <h6>不用填 :size</h6>
-        <div class="box">
-          <btn>預設按鈕</btn>
-        </div>
-        <h6>size="s"</h6>
-        <div class="box">
-          <btn size="s">小按鈕</btn>
+        <div class="btns">
+          <h6>size="l"</h6>
+          <div class="box">
+            <btn size="l">大按鈕</btn>
+          </div>
+          <h6>不用填 :size</h6>
+          <div class="box">
+            <btn>預設按鈕</btn>
+          </div>
+          <h6>size="s"</h6>
+          <div class="box">
+            <btn size="s">小按鈕</btn>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </Container>
 </template>
 
-<script>
-export default {};
-</script>
+<script setup></script>
 
 <style lang="scss" scoped>
-.container {
+.main {
   background-color: #fff;
-  padding: 20px;
   color: black;
-  display: flex;
-  justify-content: center;
+  padding: 0 1rem;
 
   .title {
-    padding: 10px 0;
-    h2 {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
+    padding: 1rem 0;
   }
 
   .box {
-    padding: 10px;
+    padding: 1rem;
   }
 }
 </style>
