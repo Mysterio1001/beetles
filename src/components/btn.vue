@@ -37,7 +37,10 @@ const props = defineProps({
   }
   span {
     position: relative;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     transition: transform 0.2s ease;
     &::before {
       content: "";
@@ -48,10 +51,10 @@ const props = defineProps({
     background-color: #394c45;
 
     span {
-      transform: translateX(10px);
+      transform: translateX(1rem);
       &::before {
         position: absolute;
-        left: -10px;
+        left: -2rem;
         content: "•";
       }
     }
