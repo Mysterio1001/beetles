@@ -44,7 +44,7 @@ const socials = [
   align-items: center;
   margin-top: 1.6rem;
   padding: 1rem 4rem;
-  background-color: #2b3632;
+  background-color: color(green-04);
 
   img {
     width: 7rem;
@@ -57,7 +57,7 @@ const socials = [
     align-items: center;
     gap: 4rem;
     .icon::before {
-      color: white;
+      color: color(white);
       height: 5rem;
       width: 5rem;
     }

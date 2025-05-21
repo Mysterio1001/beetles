@@ -1,0 +1,4 @@
+// 尋找顏色
+@function color($key) {
+  @return map-get($colors, $key);
+}

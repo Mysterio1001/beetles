@@ -17,6 +17,7 @@ export default defineConfig({
         additionalData: `
           @import "@/assets/scss/base/var.scss";
           @import "@/assets/scss/mixin/mixin.scss";
+          @import "@/assets/scss/function/function.scss";
         `,
       },
     },
