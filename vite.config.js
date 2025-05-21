@@ -10,4 +10,15 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // 全域引入變數和mixin
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+          @import "@/assets/scss/base/var.scss";
+          @import "@/assets/scss/mixin/mixin.scss";
+        `,
+      },
+    },
+  },
 });

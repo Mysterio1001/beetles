@@ -6,7 +6,7 @@
     <div :class="['hamburger', { active: isActive }]" @click="toggleMenu">
       <div v-for="i in 3" :class="['line', `line${i}`]"></div>
     </div>
-    <ul v-if="false">
+    <ul>
       <li v-for="(item, index) in routes" :key="index">
         <router-link :to="item.to">{{ item.label }}</router-link>
       </li>
@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { ref } from "Vue";
+import { ref } from "vue";
 import logo from "@/assets/images/logo/white_border_logo.svg";
 import logoRwd from "@/assets/images/logo/rwd-white-logo.svg";
 import { ShoppingCart } from "lucide-vue-next";
@@ -73,7 +73,7 @@ const toggleMenu = () => {
   opacity: 1;
   border-radius: 0 0 12px 12px;
 
-  @media (max-width: 768px) {
+  @include md {
     padding: 0 1.6rem;
     height: 16rem;
     border-radius: 0;

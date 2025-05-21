@@ -1,0 +1,26 @@
+// RWD var
+@mixin xl() {
+  @media screen and (max-width: $media-xl) {
+    @content;
+  }
+}
+@mixin lg() {
+  @media screen and (max-width: $media-lg) {
+    @content;
+  }
+}
+@mixin md() {
+  @media screen and (max-width: $media-md) {
+    @content;
+  }
+}
+@mixin sm() {
+  @media screen and (max-width: $media-sm) {
+    @content;
+  }
+}
+@mixin xs() {
+  @media screen and (max-width: $media-xs) {
+    @content;
+  }
+}

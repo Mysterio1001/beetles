@@ -1,5 +1,9 @@
-// 初始化
+//var
+@import "base/var";
+//mixin
+@import "mixin/mixin";
+// 初始重置
 @import "base/reset";
+// 基本配置
 @import "base/base";
-
 //layout

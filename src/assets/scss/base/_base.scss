@@ -1,18 +1,18 @@
 html {
   font-size: 10px;
-  @media (max-width: 1200px) {
+  @include xl {
     font-size: 9px;
   }
-
-  @media (max-width: 992px) {
+  @include lg {
+    font-size: 8px;
+  }
+  @include md {
     font-size: 7px;
   }
-
-  @media (max-width: 768px) {
+  @include sm {
     font-size: 6px;
   }
-
-  @media (max-width: 480px) {
+  @include xs {
     font-size: 5px;
   }
 
