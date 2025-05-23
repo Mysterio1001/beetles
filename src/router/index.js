@@ -67,6 +67,13 @@ router.beforeEach((to, from, next) => {
   } else {
     document.title = defaultTitle;
   }
+  // 以to.name建立data-page 屬性
+  if (to.name) {
+    document.body.dataset.page = to.name;
+  } else {
+    document.body.removeAttribute("data-page");
+  }
+
   next();
 });
 

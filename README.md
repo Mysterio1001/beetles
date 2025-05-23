@@ -1,5 +1,18 @@
-# Vue 3 + Vite
+# 開發規則 / Development Guidelines
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+本專案採用明確的樣式與結構分層原則，以維持高可讀性與擴展性，請依照以下規則開發。
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## 頁面（Page View）
+
+- 邏輯與結構統一寫在 `.vue` 檔案中。
+- 樣式需寫在獨立的 `.scss` 檔案，放置於 `assets/scss/view/` 資料夾中。
+- 每個頁面樣式需包裹在 `body[data-page="xxx"]` selector 中，以避免全域污染。
+- `data-page` 的值應與對應的 route `name` 一致。
+
+## 元件（Component）
+
+- 所有結構、邏輯與樣式統一寫在 `.vue` 檔案內部。
+- 樣式請使用 `<style scoped lang="scss">`，以避免影響其他元件。
+- 複用元件命名請使用 `PascalCase`，並建議搭配 BEM 命名法提升清晰度與一致性。
+
+## 檔案結構建議
