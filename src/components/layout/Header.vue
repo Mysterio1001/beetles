@@ -138,12 +138,19 @@ onMounted(() => {
       &.active {
         .line1 {
           transform: rotate(45deg) translate(7.2px, 8.5px);
+
+          @include sm {
+            transform: rotate(45deg) translate(7.2px, 7px);
+          }
         }
         .line2 {
           opacity: 0;
         }
         .line3 {
           transform: rotate(-45deg) translate(5.8px, -8px);
+          @include sm {
+            transform: rotate(-45deg) translate(6px, -6px);
+          }
         }
       }
     }
