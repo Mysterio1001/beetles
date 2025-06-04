@@ -7,7 +7,7 @@
 <script setup>
 import { defineProps } from "vue";
 
-defineProps({
+const props = defineProps({
   size: {
     type: String,
     default: "",
@@ -22,13 +22,13 @@ defineProps({
   margin: 4px;
   padding: 8px 20px;
 
-  color: #fff;
+  color: getColor(white);
   font-weight: bold;
   text-align: center;
 
-  background-color: #5d7c71;
+  background-color: getColor(green-03);
   border-radius: 20px;
-  box-shadow: 4px 4px 4px rgb(0, 0, 0, 0.5);
+  box-shadow: 4px 4px 4px getColor(shadow);
   &.l {
     font-size: 2rem;
   }
@@ -47,8 +47,8 @@ defineProps({
     }
   }
   &:hover {
-    color: #dfe8e4;
-    background-color: #394c45;
+    color: getColor(text-light);
+    background-color: #394c45; //特殊專用色
 
     span {
       transform: translateX(1rem);

@@ -17,9 +17,9 @@ html {
   }
 
   body {
-    background-color: color(green-03);
+    background-color: getColor(green-03);
     font-family: "Noto Sans TC", serif;
-    color: color(text-light);
+    color: getColor(text-light);
     font-size: 1.6rem;
 
     h1,
@@ -55,7 +55,7 @@ html {
       display: block;
       text-decoration: none;
       font-weight: bold;
-      color: color(text);
+      color: getColor(text);
     }
   }
 }

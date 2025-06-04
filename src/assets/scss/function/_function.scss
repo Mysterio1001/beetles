@@ -1,4 +1,9 @@
 // 尋找顏色
-@function color($key) {
+@function getColor($key) {
   @return map-get($colors, $key);
+}
+
+//設定z-index
+@function z($key) {
+  @return map-get($z-index, $key);
 }

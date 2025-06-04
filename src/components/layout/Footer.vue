@@ -1,10 +1,18 @@
 <template>
   <footer class="footer">
     <div>Copyright 2024 © {{ t("route.default") }}</div>
-    <div><img :src="footerLogo" alt="Logo" /></div>
+    <div>
+      <img
+        :src="footerLogo"
+        alt="Logo" />
+    </div>
     <ul>
-      <li v-for="(item, index) in socials" :key="index">
-        <a :href="item.url" target="_blank">
+      <li
+        v-for="(item, index) in socials"
+        :key="index">
+        <a
+          :href="item.url"
+          target="_blank">
           <i :class="[item.icon, 'icon']" />
         </a>
       </li>
@@ -18,7 +26,7 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
-// 社交按鈕
+// 社交按鈕 這裏用的是font awesome
 const socials = [
   {
     name: "instargram",
@@ -39,12 +47,14 @@ const socials = [
 </script>
 <style lang="scss" scoped>
 .footer {
+  z-index: z(footer);
+
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 1.6rem;
   padding: 1rem 4rem;
-  background-color: color(green-04);
+  background-color: getColor(green-04);
 
   img {
     width: 7rem;
@@ -57,7 +67,7 @@ const socials = [
     align-items: center;
     gap: 4rem;
     .icon::before {
-      color: color(white);
+      color: getColor(white);
       height: 5rem;
       width: 5rem;
     }
