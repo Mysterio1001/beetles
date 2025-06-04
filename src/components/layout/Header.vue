@@ -16,11 +16,11 @@
         <img class="logoRwd" :src="logoRwd" alt="Logo" />
       </router-link>
       <div class="userAction">
-        <btn class="singIn">{{ t("common.signIn") }}</btn>
-        <btn class="shoppingCart">
+        <Btn class="singIn">{{ t("common.signIn") }}</Btn>
+        <Btn class="shoppingCart">
           <ShoppingCart style="width: 1.6rem; height: 1.6rem" />&nbsp;
           <span>{{ t("common.cart") }}</span>
-        </btn>
+        </Btn>
       </div>
       <div class="shoppingCartRwd">
         <ShoppingCart style="width: 50%; height: 50%" />
