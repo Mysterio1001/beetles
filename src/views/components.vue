@@ -34,14 +34,29 @@
           <div class="box">
             <Btn
               width="20px"
-              @click="showDialog">
-              點我開啟彈窗(dialog)
+              @click="showDialog('dialog')">
+              點我開啟彈窗
+            </Btn>
+          </div>
+          <div class="box">
+            <Btn
+              width="20px"
+              @click="showDialog('alert')">
+              點我開啟警告
+            </Btn>
+          </div>
+          <div class="box">
+            <Btn
+              width="20px"
+              @click="showDialog('confirm')">
+              點我開啟確認
             </Btn>
           </div>
         </div>
       </div>
     </div>
   </Container>
+  <!-- 客製彈窗 -->
   <Dialog
     title="這是標題"
     v-model:visible="isDialogVisible"
@@ -54,19 +69,42 @@
       我說的對吧？
     </div>
   </Dialog>
+  <!-- 警告對話框 -->
+  <Dialog
+    v-model:visible="isAlertVisible"
+    type="alert"
+    message="這個不能按！"></Dialog>
+  <!-- 確認對話框 -->
+  <Dialog
+    v-model:visible="isConfirmVisible"
+    type="confirm"
+    @confirm="confirmAlert"
+    message="你確定要這樣做嗎？"></Dialog>
 </template>
 
 <script setup>
 import { ref } from "vue";
 
 let isDialogVisible = ref(false);
+let isAlertVisible = ref(false);
+let isConfirmVisible = ref(false);
 
-const showDialog = () => {
-  isDialogVisible.value = true;
+const showDialog = (key) => {
+  if (key == "dialog") {
+    isDialogVisible.value = true;
+  } else if (key == "alert") {
+    isAlertVisible.value = true;
+  } else if (key == "confirm") {
+    isConfirmVisible.value = true;
+  }
 };
 
 const closeAlert = () => {
   alert("關閉時執行的動作");
+};
+
+const confirmAlert = () => {
+  alert("按下確認後執行的動作");
 };
 </script>
 

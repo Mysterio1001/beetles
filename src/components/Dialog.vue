@@ -4,11 +4,17 @@
     class="coverBox"
     v-if="visible">
     <div
+      v-if="visible"
       class="dialog"
-      v-if="visible">
+      :class="{ small: type != 'custom' }">
       <div class="top">
         <div class="titleBox">
-          <h3>{{ title }}</h3>
+          <h3 v-if="type == 'custom'">{{ title }}</h3>
+          <h3
+            class="alertTitle"
+            v-if="type == 'alert'">
+            {{ "警告" }}
+          </h3>
         </div>
         <div class="closeBox">
           <CircleX
@@ -17,8 +23,28 @@
             @click="closeDialog" />
         </div>
       </div>
-      <div class="content">
+      <div
+        v-if="type == 'custom'"
+        class="content">
         <slot></slot>
+      </div>
+      <div
+        v-else
+        class="message">
+        {{ message }}
+      </div>
+      <div
+        v-if="type != 'custom'"
+        class="footer">
+        <Btn
+          v-if="type != 'alert'"
+          @click="handleConfirm"
+          >{{ "確認" }}</Btn
+        >
+        <Btn @click="closeDialog">
+          <span v-if="type != 'alert'">{{ "取消" }}</span>
+          <span v-else>{{ "確認" }}</span>
+        </Btn>
       </div>
     </div>
   </div>
@@ -26,7 +52,10 @@
 
 <script setup>
 import { defineProps, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { CircleX } from "lucide-vue-next";
+
+const { t } = useI18n();
 
 const props = defineProps({
   title: {
@@ -37,14 +66,28 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  //彈窗類型：客製化custom,警告alert,確認confirm
+  type: {
+    type: String,
+    default: "custom", //預設為客製化
+  },
+  // 警告alert,確認confirm 支援
+  message: {
+    type: String,
+  },
 });
 
-const emit = defineEmits(["update:visible", "close"]);
+const emit = defineEmits(["update:visible", "close", "confirm"]);
 
 const closeDialog = () => {
-  // 父元件可額外觸發的行為
+  // 按下關閉後執行的行為
   emit("close");
   //讓父元件關閉彈窗
+  emit("update:visible", false);
+};
+// 按下確認後執行的行為
+const handleConfirm = () => {
+  emit("confirm");
   emit("update:visible", false);
 };
 // 監控visible, 讓body加上overflow-y屬性
@@ -92,9 +135,21 @@ watch(
 
     color: getColor(black);
 
+    &.small {
+      width: 216px;
+      min-height: 150px;
+      justify-content: space-between;
+
+      .alertTitle {
+        font-size: 24px;
+      }
+    }
+
     @include md {
-      width: 80%;
-      padding: 3rem;
+      &:not(.small) {
+        width: 80%;
+        padding: 3rem;
+      }
     }
 
     .top {
@@ -119,6 +174,20 @@ watch(
 
     .content {
       overflow-y: auto;
+    }
+
+    .message {
+      margin: 0 auto;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+
+      font-size: 16px;
     }
   }
 }
