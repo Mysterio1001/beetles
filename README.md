@@ -24,7 +24,7 @@
 **custom 模式**  
 - 支援自訂內容插槽（`<slot>`），可用於表單、複雜排版等用途。  
 - 顯示標題（透過 `title` 傳入）。  
-```vue
+```javascript
   <Dialog
   v-model:visible="showCustomDialog"
   title="自訂表單"
@@ -36,9 +36,8 @@
 **alert 模式**
 - 僅顯示警告訊息（透過 `message` 傳入）。 
 - 僅包含一個「確認」按鈕。 
-- 適用於單向通知、阻斷性提示。
-
-  ```vue
+- 適用於單向通知、阻斷性提示。 
+```javascript
 <Dialog
   v-model:visible="showAlert"
   type="alert"
@@ -46,13 +45,11 @@
   @close="handleClose"
   @confirm="handleConfirm" /> 
 ```
-
 **confirm 模式**
 - 顯示確認訊息（透過 message 傳入）。
 - 提供「確認」與「取消」兩個按鈕。
 - 適合處理需用戶明確同意的操作（例如刪除、提交等）。 
-
-```vue
+```javascript
 <Dialog
   v-model:visible="showAlert" 
   type="alert" 
