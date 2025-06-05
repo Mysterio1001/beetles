@@ -19,11 +19,14 @@
       <ul :class="{ active: isActive }">
         <li
           v-for="(item, index) in routes"
-          :key="index">
+          :key="index"
+          @click="handelMenuClick">
           <router-link :to="item.to">{{ item.label }}</router-link>
         </li>
       </ul>
-      <router-link to="/test">
+      <router-link
+        to="/test"
+        @click="handelMenuClick">
         <img
           class="logoRwd"
           :src="logoRwd"
@@ -74,6 +77,11 @@ const toggleMenu = () => {
       isTransitioning.value = false;
     }, 500);
   }
+};
+
+// 按下菜單後關閉菜單(RWD)
+const handelMenuClick = () => {
+  isActive.value = false;
 };
 
 //監聽視窗大小
@@ -161,6 +169,10 @@ onMounted(() => {
           @include sm {
             transform: rotate(45deg) translate(7.2px, 7px);
           }
+
+          @include xs {
+            transform: rotate(45deg) translate(5px, 5.4px);
+          }
         }
         .line2 {
           opacity: 0;
@@ -169,6 +181,9 @@ onMounted(() => {
           transform: rotate(-45deg) translate(5.8px, -8px);
           @include sm {
             transform: rotate(-45deg) translate(6px, -6px);
+          }
+          @include xs {
+            transform: rotate(-45deg) translate(6px, -5.5px);
           }
         }
       }
@@ -244,6 +259,13 @@ onMounted(() => {
           }
         }
         a {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          width: 100%;
+          height: 100%;
+
           line-height: 3.2rem;
           transition: transform 0.3s ease;
           &:hover {

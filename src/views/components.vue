@@ -28,9 +28,12 @@
         <div class="title">
           <h2>彈窗</h2>
           <h3>&lt;Dialog&gt;&lt;/Dialog&gt;</h3>
-          <h4>title = "標題"</h4>
+          <h4>三種type = "custom"(客製化), "alert"(警告), "confirm"(確認)</h4>
           <h4>v-model:visible = "視窗開關"</h4>
-          <h4>@close = "關閉時執行的動作"</h4>
+          <h4>title = "標題" (支援custom)</h4>
+          <h4>message = "警告或確認訊息" (支援alert和confirm)</h4>
+          <h4>@close = "關閉時執行的動作" (全支援)</h4>
+          <h4>@confirm = "按下確認時執行的動作" (支援alert和confirm)</h4>
           <div class="box">
             <Btn
               width="20px"
