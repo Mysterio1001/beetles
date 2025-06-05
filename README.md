@@ -15,4 +15,48 @@
 - 樣式請使用 `<style scoped lang="scss">`，以避免影響其他元件。
 - 複用元件命名請使用 `PascalCase`，並建議搭配 BEM 命名法提升清晰度與一致性。
 
-## 檔案結構建議
+### 元件說明 
+
+#### Dialog.vue
+
+多用途對話框，支援三種顯示模式，根據 type 屬性切換行為與內容
+
+**custom 模式**  
+- 支援自訂內容插槽（`<slot>`），可用於表單、複雜排版等用途。  
+- 顯示標題（透過 `title` 傳入）。  
+```vue
+  <Dialog
+  v-model:visible="showCustomDialog"
+  title="自訂表單"
+  type="custom"
+  @close="handleClose">
+  <div>這裡可以放入任何自定義內容</div>
+</Dialog>
+```
+**alert 模式**
+- 僅顯示警告訊息（透過 `message` 傳入）。 
+- 僅包含一個「確認」按鈕。 
+- 適用於單向通知、阻斷性提示。
+
+  ```vue
+<Dialog
+  v-model:visible="showAlert"
+  type="alert"
+  message="請確認所有欄位皆已填寫"
+  @close="handleClose"
+  @confirm="handleConfirm" /> 
+```
+
+**confirm 模式**
+- 顯示確認訊息（透過 message 傳入）。
+- 提供「確認」與「取消」兩個按鈕。
+- 適合處理需用戶明確同意的操作（例如刪除、提交等）。 
+
+```vue
+<Dialog
+  v-model:visible="showAlert" 
+  type="alert" 
+  message="請確認所有欄位皆已填寫" 
+  @close="handleClose" 
+  @confirm="handleConfirm" /> 
+``` 
