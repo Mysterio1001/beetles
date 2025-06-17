@@ -13,7 +13,7 @@
           <h3
             class="alertTitle"
             v-if="type == 'alert'">
-            {{ "警告" }}
+            {{ prompt || t("common.warning") }}
           </h3>
         </div>
         <div class="closeBox">
@@ -23,29 +23,38 @@
             @click="closeDialog" />
         </div>
       </div>
+      <!-- 客製化內容 -->
       <div
         v-if="type == 'custom'"
         class="content">
         <slot></slot>
       </div>
+      <!-- 固定式訊息內容 -->
       <div
-        v-else
+        v-if="type != 'custom'"
         class="message">
         {{ message }}
       </div>
-      <div
-        v-if="type != 'custom'"
-        class="footer">
-        <Btn
-          v-if="type != 'alert'"
-          @click="handleConfirm"
-          >{{ "確認" }}</Btn
-        >
-        <Btn @click="closeDialog">
-          <span v-if="type != 'alert'">{{ "取消" }}</span>
-          <span v-else>{{ "確認" }}</span>
-        </Btn>
-      </div>
+      <!-- footer客製化插槽 -->
+      <template v-if="$slots.footer">
+        <div class="footer">
+          <slot name="footer"></slot>
+        </div>
+      </template>
+      <template v-else-if="showFooterBtn">
+        <!-- 固定式彈窗按鈕 -->
+        <div class="footer">
+          <Btn
+            v-if="type != 'alert'"
+            @click="handleConfirm">
+            {{ t("common.confirm") }}
+          </Btn>
+          <Btn @click="closeDialog">
+            <span v-if="type != 'alert'">{{ t("common.cancel") }}</span>
+            <span v-else>{{ t("common.confirm") }}</span>
+          </Btn>
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -71,9 +80,18 @@ const props = defineProps({
     type: String,
     default: "custom", //預設為客製化
   },
+  prompt: {
+    type: String,
+    default: "",
+  },
   // 警告alert,確認confirm 支援
   message: {
     type: String,
+  },
+  // 手動控制footer是否有按鈕
+  showFooterBtn: {
+    type: Boolean,
+    default: true,
   },
 });
 
@@ -136,6 +154,7 @@ watch(
     color: getColor(black);
 
     &.small {
+      padding: 3rem;
       width: 216px;
       min-height: 150px;
       justify-content: space-between;

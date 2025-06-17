@@ -1,11 +1,12 @@
 @use "../abstracts/var" as *;
+@use "sass:map"; //新寫法
 
 // 尋找顏色
 @function getColor($key) {
-  @return map-get($colors, $key);
+  @return map.get($colors, $key);
 }
 
 //設定z-index
 @function z($key) {
-  @return map-get($z-index, $key);
+  @return map.get($z-index, $key);
 }

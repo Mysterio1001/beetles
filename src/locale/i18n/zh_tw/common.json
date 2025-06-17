@@ -1,4 +1,7 @@
 {
   "signIn": "會員登入",
-  "cart": "購物車"
+  "cart": "購物車",
+  "warning": "警告",
+  "confirm": "確認",
+  "cancel": "取消"
 }

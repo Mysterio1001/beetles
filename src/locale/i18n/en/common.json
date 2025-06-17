@@ -1,4 +1,7 @@
 {
   "signIn": "Sign In",
-  "cart": "Cart"
+  "cart": "Cart",
+  "warning": "Warning",
+  "confirm": "Confirm",
+  "cancel": "Cancel"
 }

@@ -13,7 +13,7 @@ const routes = [
   {
     path: "/test",
     name: "test",
-    component: () => import("@/views/components.vue"),
+    component: () => import("@/views/test.vue"),
     meta: {
       titleKey: "route.test",
     },

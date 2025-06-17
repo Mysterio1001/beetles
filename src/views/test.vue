@@ -33,7 +33,9 @@
           <h4>title = "標題" (支援custom)</h4>
           <h4>message = "警告或確認訊息" (支援alert和confirm)</h4>
           <h4>@close = "關閉時執行的動作" (全支援)</h4>
-          <h4>@confirm = "按下確認時執行的動作" (支援alert和confirm)</h4>
+          <h4>@confirm = "按下確認時執行的動作" (全支援)</h4>
+          <h4>新增： #footer 自定義插槽(若不使用預設有 確認/取消 按鈕)</h4>
+          <h4>新增： 確認/取消 按鈕 可以用"footerBtn = 'false'" 隱藏)</h4>
           <div class="box">
             <Btn
               width="20px"
@@ -63,14 +65,25 @@
   <Dialog
     title="這是標題"
     v-model:visible="isDialogVisible"
+    :show-footer-btn="showFooterBtn"
     @close="closeAlert">
     <div style="height: 800px; background-color: #bfd0c9">
       這裡是內容<br />
       且內容過多會自行生成卷軸
+      <div
+        class="footerTestBtn"
+        @click="footerTest">
+        {{ footerText }}
+      </div>
     </div>
     <div style="background-color: #bfd0c9; display: flex; justify-content: end">
       我說的對吧？
     </div>
+    <template
+      v-if="!showFooterBtn"
+      #footer>
+      客製化的FOOTER!
+    </template>
   </Dialog>
   <!-- 警告對話框 -->
   <Dialog
@@ -91,6 +104,8 @@ import { ref } from "vue";
 let isDialogVisible = ref(false);
 let isAlertVisible = ref(false);
 let isConfirmVisible = ref(false);
+let footerText = ref("客製化的footer");
+let showFooterBtn = ref(true);
 
 const showDialog = (key) => {
   if (key == "dialog") {
@@ -108,6 +123,18 @@ const closeAlert = () => {
 
 const confirmAlert = () => {
   alert("按下確認後執行的動作");
+};
+
+const footerTest = () => {
+  const def = "預設的footer";
+  const cus = "客製化的footer";
+  if (showFooterBtn.value) {
+    footerText.value = def;
+    showFooterBtn.value = false;
+  } else {
+    footerText.value = cus;
+    showFooterBtn.value = true;
+  }
 };
 </script>
 
@@ -128,5 +155,12 @@ const confirmAlert = () => {
       padding: 1rem;
     }
   }
+}
+
+.footerTestBtn {
+  cursor: pointer;
+  text-align: center;
+  color: blue;
+  text-decoration: underline;
 }
 </style>
