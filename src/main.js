@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import i18n from "./locale";
-import "@/assets/scss/style.scss";
+import "@/assets/scss/main.scss";
 
 const app = createApp(App);
 

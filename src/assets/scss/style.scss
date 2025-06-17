@@ -1,17 +1,5 @@
-//var
-@import "base/var";
-//mixin
-@import "mixin/mixin";
-// 初始重置
-@import "base/reset";
-// 基本配置
-@import "base/base";
-//function
-@import "function/function";
-//主頁面
-@import "page/home";
-@import "page/test";
-@import "page/news";
-@import "page/beetleLab";
-@import "page/beetleShop";
-@import "page/beetleBulletin";
+//abstracts 摘要（無css）
+@forward "abstracts/var";
+@forward "abstracts/mixin";
+@forward "abstracts/function";
+

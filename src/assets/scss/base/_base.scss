@@ -1,3 +1,5 @@
+@use "../abstracts/mixin" as *;
+@use "../abstracts/function" as *;
 html {
   font-size: 10px;
   @include xl {

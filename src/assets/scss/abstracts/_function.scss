@@ -1,3 +1,5 @@
+@use "../abstracts/var" as *;
+
 // 尋找顏色
 @function getColor($key) {
   @return map-get($colors, $key);

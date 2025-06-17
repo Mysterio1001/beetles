@@ -1,3 +1,4 @@
+@use "../abstracts/var" as *;
 // RWD var
 @mixin xl() {
   @media screen and (max-width: $media-xl) {
