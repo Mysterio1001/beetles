@@ -36,32 +36,59 @@
           <h4>@confirm = "按下確認時執行的動作" (全支援)</h4>
           <h4>新增： #footer 自定義插槽(若不使用預設有 確認/取消 按鈕)</h4>
           <h4>新增： 確認/取消 按鈕 可以用"footerBtn = 'false'" 隱藏)</h4>
-          <div class="box">
-            <Btn
-              width="20px"
-              @click="showDialog('dialog')">
-              點我開啟彈窗
-            </Btn>
-          </div>
-          <div class="box">
-            <Btn
-              width="20px"
-              @click="showDialog('alert')">
-              點我開啟警告
-            </Btn>
-          </div>
-          <div class="box">
-            <Btn
-              width="20px"
-              @click="showDialog('confirm')">
-              點我開啟確認
-            </Btn>
-          </div>
+        </div>
+        <div class="box">
+          <Btn
+            width="20px"
+            @click="showDialog('dialog')">
+            點我開啟彈窗
+          </Btn>
+        </div>
+        <div class="box">
+          <Btn
+            width="20px"
+            @click="showDialog('alert')">
+            點我開啟警告
+          </Btn>
+        </div>
+        <div class="box">
+          <Btn
+            width="20px"
+            @click="showDialog('confirm')">
+            點我開啟確認
+          </Btn>
+        </div>
+      </div>
+      <!-- ----------- -->
+      <div class="tag section">
+        <div class="title">
+          <h2>標籤</h2>
+          <h3>&lt;Tags&gt;&lt;/Tags&gt;</h3>
+          <h5>現在點選的Label是 : {{ showTagSelectLabel }}</h5>
+          <h5>現在點選的Value是 : {{ showTagSelectValue }}</h5>
+        </div>
+        <div class="box">
+          <Tags
+            :data="tagsData"
+            :option="tagsOption"
+            @tags-click="tagsClick" />
+        </div>
+        <div class="title">
+          <h5>現在點選的Label是 : {{ showTagSelectLabels.join(", ") }}</h5>
+          <h5>現在點選的Value是 : {{ showTagSelectValues.join(", ") }}</h5>
+        </div>
+        <div class="box">
+          <Tags
+            :data="multipleTagsData"
+            :option="multipleTagsOption"
+            @tags-click="multipleTagsClick" />
         </div>
       </div>
     </div>
   </Container>
-  <!-- 客製彈窗 -->
+  <!---------->
+  <!-- 彈窗 -->
+  <!---------->
   <Dialog
     title="這是標題"
     v-model:visible="isDialogVisible"
@@ -100,12 +127,12 @@
 
 <script setup>
 import { ref } from "vue";
-
-let isDialogVisible = ref(false);
-let isAlertVisible = ref(false);
-let isConfirmVisible = ref(false);
-let footerText = ref("客製化的footer");
-let showFooterBtn = ref(true);
+// 彈窗內容邏輯
+const isDialogVisible = ref(false);
+const isAlertVisible = ref(false);
+const isConfirmVisible = ref(false);
+const footerText = ref("客製化的footer");
+const showFooterBtn = ref(true);
 
 const showDialog = (key) => {
   if (key == "dialog") {
@@ -136,21 +163,68 @@ const footerTest = () => {
     showFooterBtn.value = true;
   }
 };
+// tags內容邏輯
+// 單選
+const showTagSelectLabel = ref("A");
+const showTagSelectValue = ref("a");
+
+const tagsData = ref([
+  { label: "A", value: "a" },
+  { label: "B", value: "b" },
+  { label: "C", value: "c" },
+  { label: "D", value: "d" },
+  { label: "E", value: "e" },
+  { label: "F", value: "f" },
+]);
+
+const tagsOption = ref({
+  selectedTagNo: 1, // 預設點選
+  disableTagNo: [2], // 禁止點選
+});
+// 回傳該tag的value
+const tagsClick = (val) => {
+  showTagSelectValue.value = val;
+  const clickIndex = tagsData.value.findIndex((i) => i.value == val);
+  showTagSelectLabel.value = tagsData.value[clickIndex].label;
+};
+
+// 多選
+const showTagSelectLabels = ref(["BB", "CC"]);
+const showTagSelectValues = ref(["bb", "cc"]);
+
+const multipleTagsData = ref([
+  { label: "AA", value: "aa" },
+  { label: "BB", value: "bb" },
+  { label: "CC", value: "cc" },
+  { label: "DD", value: "dd" },
+  { label: "EE", value: "ee" },
+  { label: "FF", value: "ff" },
+]);
+
+const multipleTagsOption = ref({
+  selectedTagNo: [2, 3], // 預設點選
+  disableTagNo: [1], // 禁止點選
+  multiple: true, // 是否多選
+});
+
+// 回傳該tag的array
+const multipleTagsClick = (val) => {
+  showTagSelectValues.value = val;
+  showTagSelectLabels.value = multipleTagsData.value
+    .filter((item) => val.includes(item.value))
+    .map((i) => i.label);
+};
 </script>
 
 <style lang="scss" scoped>
 .main {
-  background-color: getColor(white);
+  background-color: getColor(green-02);
   color: getColor(black);
   padding: 0 1rem;
 
   .section {
     border-bottom: 1.5px solid getColor(green-04);
-
-    .title {
-      padding: 1rem 0;
-    }
-
+    padding: 1rem 0 1rem;
     .box {
       padding: 1rem;
     }

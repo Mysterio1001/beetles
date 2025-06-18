@@ -69,7 +69,6 @@ const { t } = useI18n();
 const props = defineProps({
   title: {
     type: String,
-    required: true,
   },
   visible: {
     type: Boolean,
