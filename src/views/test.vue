@@ -71,7 +71,8 @@
           <Tags
             :data="tagsData"
             :option="tagsOption"
-            @tags-click="tagsClick" />
+            @tags-click="tagsClick"
+            @ready="tagsClick" />
         </div>
         <div class="title">
           <h5>現在點選的Label是 : {{ showTagSelectLabels.join(", ") }}</h5>
@@ -81,7 +82,8 @@
           <Tags
             :data="multipleTagsData"
             :option="multipleTagsOption"
-            @tags-click="multipleTagsClick" />
+            @tags-click="multipleTagsClick"
+            @ready="multipleTagsClick" />
         </div>
       </div>
     </div>
@@ -165,8 +167,8 @@ const footerTest = () => {
 };
 // tags內容邏輯
 // 單選
-const showTagSelectLabel = ref("A");
-const showTagSelectValue = ref("a");
+const showTagSelectLabel = ref("");
+const showTagSelectValue = ref("");
 
 const tagsData = ref([
   { label: "A", value: "a" },
@@ -180,6 +182,7 @@ const tagsData = ref([
 const tagsOption = ref({
   selectedTagNo: 1, // 預設點選
   disableTagNo: [2], // 禁止點選
+  // emitOnLoad: true, // 載入時執行一次預設點選
 });
 // 回傳該tag的value
 const tagsClick = (val) => {
@@ -189,8 +192,8 @@ const tagsClick = (val) => {
 };
 
 // 多選
-const showTagSelectLabels = ref(["BB", "CC"]);
-const showTagSelectValues = ref(["bb", "cc"]);
+const showTagSelectLabels = ref([]);
+const showTagSelectValues = ref([]);
 
 const multipleTagsData = ref([
   { label: "AA", value: "aa" },
@@ -205,6 +208,7 @@ const multipleTagsOption = ref({
   selectedTagNo: [2, 3], // 預設點選
   disableTagNo: [1], // 禁止點選
   multiple: true, // 是否多選
+  // emitOnLoad: true, // 載入時執行一次預設點選
 });
 
 // 回傳該tag的array

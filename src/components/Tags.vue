@@ -10,8 +10,8 @@
           {
             // 如果為多選擇把被點選樣式加到每一個tag上
             selected: props.option?.multiple
-              ? selectdIndex.includes(index)
-              : selectdIndex === index,
+              ? selectedIndex.includes(index)
+              : selectedIndex === index,
           },
           { multiple: props.option?.multiple },
           { disabled: disableTagIndex.includes(index) },
@@ -33,8 +33,8 @@ const props = defineProps({
     default: () => ({}), //Vue：對於 Object 或 Array 類型的 預設值，必須用函式回傳
   },
 });
-const emit = defineEmits(["tagsClick"]);
-const selectdIndex = ref([]);
+const emit = defineEmits(["tagsClick", "ready"]);
+const selectedIndex = ref([]);
 const disableTagIndex = ref([]);
 
 // 點選後觸發的事件
@@ -45,21 +45,21 @@ const tagSelect = (index) => {
   // 是否為複選
   if (props.option?.multiple) {
     // toogle邏輯（複選用）
-    const i = selectdIndex.value.indexOf(index);
+    const i = selectedIndex.value.indexOf(index);
     if (i === -1) {
       // 如果陣列裡沒有就加入
-      selectdIndex.value.push(index);
+      selectedIndex.value.push(index);
       // 如果有就移除
     } else {
-      selectdIndex.value.splice(i, 1);
+      selectedIndex.value.splice(i, 1);
     }
     emit(
       "tagsClick",
-      selectdIndex.value.map((index) => props.data[index].value)
+      selectedIndex.value.map((index) => props.data[index].value)
     );
   } else {
     // 單選
-    selectdIndex.value = index;
+    selectedIndex.value = index;
     emit("tagsClick", props.data[index].value);
   }
 };
@@ -70,15 +70,32 @@ watch(
     // 預設被選擇的index
     if (props.option?.multiple) {
       // 複選
-      const indices = (option?.selectdTagNo || []).map((item) => item - 1);
-      selectdIndex.value = indices;
+      const indices = (option?.selectedTagNo || []).map((item) => item - 1);
+      selectedIndex.value = indices;
+      emit(
+        "ready",
+        selectedIndex.value.map((i) => props.data[i]?.value)
+      );
+      // 載入畫面時是否先執行一次點選邏輯(若有預設點選)
+      // if (option.emitOnLoad) {
+      //   const selectedValues = indices.map((i) => props.data[i]?.value);
+      //   emit("tagsClick", selectedValues);
+      // }
     } else {
       // 單選
       const index = option?.selectedTagNo - 1;
       if (index >= 0) {
-        selectdIndex.value = index;
+        selectedIndex.value = index;
+        emit("ready", props.data[selectedIndex.value]?.value);
+        // if (props.option?.emitOnLoad) {
+        //   emit("tagsClick", props.data[selectedIndex.value].value);
+        // }
       }
     }
+    // 載入畫面時是否先執行一次點選邏輯(若有預設點選)
+    // if (props.option?.emitOnLoad) {
+    //   emit("tagsClick", props.data[selectedIndex.value].value);
+    // }
     // 被禁用的index
     disableTagIndex.value =
       props.option?.disableTagNo.map((tag) => tag - 1) || [];
