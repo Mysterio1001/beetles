@@ -196,9 +196,14 @@ const tagsOption = ref({
 });
 // 回傳該tag的value
 const tagsClick = (val) => {
+  const preValue = showTagSelectValue.value;
   showTagSelectValue.value = val;
   const clickIndex = tagsData.value.findIndex((i) => i.value == val);
   showTagSelectLabel.value = tagsData.value[clickIndex].label;
+
+  if (preValue != "f" && val === "f") {
+    isAlertVisible.value = true;
+  }
 };
 
 // 多選
