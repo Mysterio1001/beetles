@@ -155,7 +155,7 @@ watch(
 
     &.small {
       padding: 3rem;
-      width: 224px;
+      width: 248px;
       min-height: 150px;
       justify-content: space-between;
 
@@ -174,8 +174,6 @@ watch(
     .top {
       position: relative;
       display: flex;
-
-      min-height: 2rem;
 
       .closeBox {
         position: absolute;

@@ -17,7 +17,13 @@
           { disabled: disableTagIndex.includes(index) },
         ]"
         @click="tagSelect(index)">
-        <h5 class="label">{{ tag.label }}</h5>
+        <h5 class="label">
+          {{ tag.label }}
+          <component
+            :is="tag.icon"
+            v-if="tag.icon"
+            size="2rem" />
+        </h5>
       </li>
     </ul>
   </div>
@@ -144,7 +150,7 @@ watch(
 
       padding: 8px 20px;
       box-sizing: border-box;
-      max-width: 60px;
+      min-width: 4.8rem;
       border-radius: 5px;
 
       &:hover {
@@ -161,6 +167,12 @@ watch(
 
       &.disabled {
         @include tagsStyle("disabled");
+      }
+
+      .label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
     }
   }

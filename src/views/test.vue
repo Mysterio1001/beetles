@@ -65,7 +65,8 @@
         <div class="title">
           <h2>標籤</h2>
           <h3>&lt;Tags&gt;&lt;/Tags&gt;</h3>
-          <h4>標籤資料 data="[{label:"",value:""}]"</h4>
+          <h4>標籤資料 data="[{label:"",value:"", icon:""}]"</h4>
+          <h5>icon import後直接使用</h5>
           <h4>標籤設定 option 提供:</h4>
           <h5>"multiple"(是否多選：Boolean)</h5>
           <h5>"selectedTagNo"(預設選取：單選給一值/多選給一陣列, 數值1~n)</h5>
@@ -138,6 +139,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { ShoppingCart, XCircle } from "lucide-vue-next";
 // 彈窗內容邏輯
 const isDialogVisible = ref(false);
 const isAlertVisible = ref(false);
@@ -180,8 +182,8 @@ const showTagSelectLabel = ref("");
 const showTagSelectValue = ref("");
 
 const tagsData = ref([
-  { label: "A", value: "a" },
-  { label: "B", value: "b" },
+  { label: "A", value: "a", icon: ShoppingCart },
+  { label: "B", value: "b", icon: XCircle },
   { label: "C", value: "c" },
   { label: "D", value: "d" },
   { label: "E", value: "e" },
