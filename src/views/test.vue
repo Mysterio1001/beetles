@@ -36,6 +36,7 @@
           <h4>@confirm = "按下確認時執行的動作" (全支援)</h4>
           <h4>新增： #footer 自定義插槽(若不使用預設有 確認/取消 按鈕)</h4>
           <h4>新增： 確認/取消 按鈕 可以用"footerBtn = 'false'" 隱藏)</h4>
+          <h4>新增： "prompt" 提示標題,僅支援警告alert 預設為"警告"</h4>
         </div>
         <div class="box">
           <Btn
@@ -64,6 +65,14 @@
         <div class="title">
           <h2>標籤</h2>
           <h3>&lt;Tags&gt;&lt;/Tags&gt;</h3>
+          <h4>標籤資料 data="[{label:"",value:""}]"</h4>
+          <h4>標籤設定 option 提供:</h4>
+          <h5>"multiple"(是否多選：Boolean)</h5>
+          <h5>"selectedTagNo"(預設選取：單選給一值/多選給一陣列, 數值1~n)</h5>
+          <h5>"disableTagNo"(禁止點選:陣列, 數值1~n)</h5>
+          <h4>@tags-click = "點選後可執行的事件"</h4>
+          <h4>@ready = "載入時執行的事件"</h4>
+
           <h5>現在點選的Label是 : {{ showTagSelectLabel }}</h5>
           <h5>現在點選的Value是 : {{ showTagSelectValue }}</h5>
         </div>
@@ -182,7 +191,6 @@ const tagsData = ref([
 const tagsOption = ref({
   selectedTagNo: 1, // 預設點選
   disableTagNo: [2], // 禁止點選
-  // emitOnLoad: true, // 載入時執行一次預設點選
 });
 // 回傳該tag的value
 const tagsClick = (val) => {
@@ -208,7 +216,6 @@ const multipleTagsOption = ref({
   selectedTagNo: [2, 3], // 預設點選
   disableTagNo: [1], // 禁止點選
   multiple: true, // 是否多選
-  // emitOnLoad: true, // 載入時執行一次預設點選
 });
 
 // 回傳該tag的array

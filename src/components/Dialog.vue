@@ -79,6 +79,7 @@ const props = defineProps({
     type: String,
     default: "custom", //預設為客製化
   },
+  // 提示標題,僅支援警告alert 預設為"警告"
   prompt: {
     type: String,
     default: "",
@@ -154,7 +155,7 @@ watch(
 
     &.small {
       padding: 3rem;
-      width: 216px;
+      width: 224px;
       min-height: 150px;
       justify-content: space-between;
 
@@ -173,6 +174,8 @@ watch(
     .top {
       position: relative;
       display: flex;
+
+      min-height: 2rem;
 
       .closeBox {
         position: absolute;
