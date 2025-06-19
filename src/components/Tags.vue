@@ -136,17 +136,12 @@ watch(
 .tagsBox {
   width: 100%;
   .tags {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include center;
     gap: 4rem;
 
     .tag {
+      @include center;
       @include tagsStyle("default");
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
 
       padding: 8px 20px;
       box-sizing: border-box;

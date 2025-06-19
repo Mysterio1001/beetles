@@ -62,9 +62,8 @@ const socials = [
   }
 
   ul {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include center;
+
     gap: 4rem;
     .icon::before {
       color: getColor(white);

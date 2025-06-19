@@ -36,10 +36,9 @@ const props = defineProps({
     font-size: 1.2rem;
   }
   span {
+    @include center;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
     text-align: center;
     transition: transform 0.2s ease;
     &::before {

@@ -124,6 +124,7 @@ watch(
 <style lang="scss" scoped>
 .coverBox {
   // 背景覆蓋層
+  @include center;
   z-index: z(dialog);
 
   position: fixed;
@@ -132,9 +133,6 @@ watch(
   left: 0;
   right: 0;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
   width: 100vw;
   background-color: getColor(shadow);
@@ -202,8 +200,8 @@ watch(
     }
 
     .footer {
-      display: flex;
-      justify-content: center;
+      @include center;
+
       gap: 10px;
 
       font-size: 16px;

@@ -141,13 +141,11 @@ onMounted(() => {
 
     .hamburger {
       display: none;
-      justify-content: center;
-      align-items: center;
       flex-direction: column;
       gap: 1rem;
       @include circle();
       @include md {
-        display: flex;
+        @include center;
       }
       .line {
         height: 0.5rem;
@@ -192,13 +190,13 @@ onMounted(() => {
       display: flex;
       margin: 0 auto;
       @include md {
+        @include center;
+
         position: absolute;
         left: -100%;
         top: 100%;
 
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
 
         width: 100%;
         height: calc(100vh - 100%);
@@ -221,7 +219,6 @@ onMounted(() => {
 
         display: flex;
         align-items: center;
-        justify-content: center;
 
         font-size: 2rem;
 
@@ -259,9 +256,7 @@ onMounted(() => {
           }
         }
         a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
+          @include center;
 
           width: 100%;
           height: 100%;
@@ -312,11 +307,9 @@ onMounted(() => {
     }
     .shoppingCartRwd {
       display: none;
-      justify-content: center;
-      align-items: center;
 
       @include md {
-        display: flex;
+        @include center;
         @include circle($color: getColor(green-03));
       }
     }
