@@ -147,7 +147,7 @@ watch(
     background-color: getColor(green-01);
     width: 50%;
     max-height: 80vh;
-    border-radius: 8px;
+    border-radius: radius(dialog);
 
     color: getColor(black);
 

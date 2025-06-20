@@ -10,3 +10,9 @@
 @function z($key) {
   @return map.get($z-index, $key);
 }
+
+// 設定圓角
+@function radius($key){
+    @return map.get($borderRadius,$key);
+  
+}

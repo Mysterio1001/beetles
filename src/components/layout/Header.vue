@@ -102,7 +102,7 @@ onMounted(() => {
   height: $size;
   width: $size;
   background-color: $color;
-  border-radius: 50%;
+  border-radius: radius(circle);
 }
 .headerSticky {
   z-index: z(header);

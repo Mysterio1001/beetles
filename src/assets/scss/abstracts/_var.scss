@@ -16,7 +16,9 @@ $colors: (
   text: #161d1b,
   text-light: #dfe8e4,
   green-01-1: #bfd0c9,
-  shadow: rgb(0, 0, 0, 0.5)
+  shadow: rgb(0, 0, 0, 0.5),
+  btnActive: #394c45,
+  btnHover: #487949
 );
 
 //z-index
@@ -25,3 +27,27 @@ $z-index: (
   footer: 1000,
   dialog: 1200,
 );
+
+// // input size  
+$input-sizes:(
+  small:(
+    // font-size: 14px,
+    padding: 5px 8px,
+    icon-size: 12px,
+  ),
+  default:(
+    // font-size: 16px,
+    padding: 8px 12px,
+    icon-size: 16px,
+  ),
+
+);
+
+// border-radius
+$borderRadius:(
+  input: 20px,
+  btn: 20px,
+  tags: 8px,
+  dialog: 36px,
+  circle: 50%
+)

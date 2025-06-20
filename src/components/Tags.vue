@@ -146,7 +146,7 @@ watch(
       padding: 8px 20px;
       box-sizing: border-box;
       min-width: 4.8rem;
-      border-radius: 5px;
+      border-radius: radius(tags);
 
       &:hover {
         @include tagsStyle("hover");
