@@ -69,6 +69,7 @@ const props = defineProps({
 
   &:active {
     background-color: getColor(btnActive);
+    box-shadow: inset 0 1px 3px getColor(shadow);
   }
 }
 </style>
