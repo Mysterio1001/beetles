@@ -82,26 +82,14 @@ watch(
         "ready",
         selectedIndex.value.map((i) => props.data[i]?.value)
       );
-      // 載入畫面時是否先執行一次點選邏輯(若有預設點選)
-      // if (option.emitOnLoad) {
-      //   const selectedValues = indices.map((i) => props.data[i]?.value);
-      //   emit("tagsClick", selectedValues);
-      // }
     } else {
       // 單選
       const index = option?.selectedTagNo - 1;
       if (index >= 0) {
         selectedIndex.value = index;
         emit("ready", props.data[selectedIndex.value]?.value);
-        // if (props.option?.emitOnLoad) {
-        //   emit("tagsClick", props.data[selectedIndex.value].value);
-        // }
       }
     }
-    // 載入畫面時是否先執行一次點選邏輯(若有預設點選)
-    // if (props.option?.emitOnLoad) {
-    //   emit("tagsClick", props.data[selectedIndex.value].value);
-    // }
     // 被禁用的index
     disableTagIndex.value =
       props.option?.disableTagNo.map((tag) => tag - 1) || [];
