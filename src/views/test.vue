@@ -39,25 +39,13 @@
           <h4>新增： "prompt" 提示標題,僅支援警告alert 預設為"警告"</h4>
         </div>
         <div class="box">
-          <Btn
-            width="20px"
-            @click="showDialog('dialog')">
-            點我開啟彈窗
-          </Btn>
+          <Btn @click="showDialog('dialog')"> 點我開啟彈窗 </Btn>
         </div>
         <div class="box">
-          <Btn
-            width="20px"
-            @click="showDialog('alert')">
-            點我開啟警告
-          </Btn>
+          <Btn @click="showDialog('alert')"> 點我開啟警告 </Btn>
         </div>
         <div class="box">
-          <Btn
-            width="20px"
-            @click="showDialog('confirm')">
-            點我開啟確認
-          </Btn>
+          <Btn @click="showDialog('confirm')"> 點我開啟確認 </Btn>
         </div>
       </div>
       <!-- ----------- -->
@@ -94,6 +82,77 @@
             :option="multipleTagsOption"
             @tags-click="multipleTagsClick"
             @ready="multipleTagsClick" />
+        </div>
+      </div>
+      <!-- ----------- -->
+      <div class="tag section">
+        <div class="title">
+          <h2>輸入框</h2>
+          <h3>&lt;Input&gt;&lt;/Input&gt;</h3>
+          <h4>需設定v-model的值</h4>
+          <h4>type = "text, password, textarea" 支援三種原生類型</h4>
+          <h5>password僅支援英文數字</h5>
+          <h4>label = "欄位標題"</h4>
+          <h4>placeholder = "提示文字"</h4>
+          <h4>支援原生readonly 和 disabled</h4>
+          <h4>支援原生maxlength(最大字元數)</h4>
+          <h4>僅支援input:</h4>
+          <h5>size = "default, small"設定兩種大小的input(預設為default)</h5>
+          <h5>clearable設定是否要清除按鈕(預設為true：Boolean)</h5>
+          <h5>
+            提供前後兩種slot插槽： #prefix #suffix(註：#prefix位於標題後input前)
+          </h5>
+          <h4>僅支援textarea:</h4>
+          <h5>labelTop設定欄位標題是否置上(預設為false：Boolean)</h5>
+        </div>
+        <br />
+        <h4>提供事件支援：</h4>
+        <h4>@enter事件 (按下enter後可執行的事件)</h4>
+        <h4>@input事件 (輸入值時可執行事件,回傳使用者目前輸入的文字內容)</h4>
+
+        <div class="title">
+          <h4>size="default"</h4>
+        </div>
+        <div class="box">
+          <Input
+            label="一般預設input"
+            v-model="inputValue"
+            placeholder="按下Enter送到下面的Textarea"
+            @enter="enter">
+            <template #prefix>#prefix</template>
+          </Input>
+          <Input
+            label="禁用"
+            v-model="inputValueDis"
+            disabled>
+          </Input>
+          <Input
+            label="唯讀"
+            v-model="inputValueRead"
+            readonly>
+          </Input>
+        </div>
+        <div class="title">
+          <h4>size="small"</h4>
+        </div>
+        <div class="box">
+          <Input
+            label="密碼"
+            v-model="inputValuePs"
+            placeholder="請輸入密碼"
+            size="small"
+            type="password"
+            :maxlength="5">
+            <template #suffix>#suffix</template>
+          </Input>
+        </div>
+        <div class="box">
+          <Input
+            type="textarea"
+            v-model="textareaValue"
+            placeholder="任意輸入"
+            label="標題"
+            :labelTop="true" />
         </div>
       </div>
     </div>
@@ -231,6 +290,20 @@ const multipleTagsClick = (val) => {
   showTagSelectLabels.value = multipleTagsData.value
     .filter((item) => val.includes(item.value))
     .map((i) => i.label);
+};
+
+// input 內容邏輯
+
+const inputValue = ref("");
+const inputValuePs = ref("");
+const textareaValue = ref("");
+const inputValueDis = ref("nonono");
+const inputValueRead = ref("look at me");
+
+const enter = () => {
+  const val = inputValue.value;
+  textareaValue.value = val;
+  inputValue.value = "";
 };
 </script>
 
