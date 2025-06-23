@@ -8,10 +8,17 @@ const app = createApp(App);
 
 // 元件全域註冊
 const components = import.meta.glob("./components/**/*.vue", { eager: true });
+function toKebabCase(str) {
+  return str
+    .replace(/([a-z])([A-Z])/g, "$1-$2")
+    .replace(/([A-Z])([A-Z][a-z])/g, "$1-$2")
+    .toLowerCase();
+}
 for (const path in components) {
   const component = components[path].default;
-  const name = path.split("/").pop().replace(".vue", ""); // e.g. MyHeader
-  app.component(name, component);
+  const name = path.split("/").pop().replace(".vue", ""); // e.g. BeHeader
+  app.component(name, component); // PascalCase
+  app.component(toKebabCase(name), component); // kebab-case
 }
 
 app.use(router);

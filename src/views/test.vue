@@ -1,25 +1,25 @@
 <template>
-  <Container>
+  <be-container>
     <div class="main">
       <!-- ----------- -->
       <div class="button section">
         <div class="title">
           <h2>按鈕</h2>
-          <h3>&lt;Btn&gt;&lt;/Btn&gt;</h3>
+          <h3>&lt;be-btn&gt;&lt;/be-btn&gt;</h3>
           <h4>寬度為100%</h4>
         </div>
         <div class="btns">
           <h6>size="l"</h6>
           <div class="box">
-            <Btn size="l">大按鈕</Btn>
+            <be-btn size="l">大按鈕</be-btn>
           </div>
           <h6>不用填 :size</h6>
           <div class="box">
-            <Btn>預設按鈕</Btn>
+            <be-btn>預設按鈕</be-btn>
           </div>
           <h6>size="s"</h6>
           <div class="box">
-            <Btn size="s">小按鈕</Btn>
+            <be-btn size="s">小按鈕</be-btn>
           </div>
         </div>
       </div>
@@ -27,7 +27,7 @@
       <div class="dialog section">
         <div class="title">
           <h2>彈窗</h2>
-          <h3>&lt;Dialog&gt;&lt;/Dialog&gt;</h3>
+          <h3>&lt;be-dialog&gt;&lt;/be-dialog&gt;</h3>
           <h4>三種type = "custom"(客製化), "alert"(警告), "confirm"(確認)</h4>
           <h4>v-model:visible = "視窗開關"</h4>
           <h4>title = "標題" (支援custom)</h4>
@@ -39,20 +39,20 @@
           <h4>新增： "prompt" 提示標題,僅支援警告alert 預設為"警告"</h4>
         </div>
         <div class="box">
-          <Btn @click="showDialog('dialog')"> 點我開啟彈窗 </Btn>
+          <be-btn @click="showDialog('dialog')"> 點我開啟彈窗 </be-btn>
         </div>
         <div class="box">
-          <Btn @click="showDialog('alert')"> 點我開啟警告 </Btn>
+          <be-btn @click="showDialog('alert')"> 點我開啟警告 </be-btn>
         </div>
         <div class="box">
-          <Btn @click="showDialog('confirm')"> 點我開啟確認 </Btn>
+          <be-btn @click="showDialog('confirm')"> 點我開啟確認 </be-btn>
         </div>
       </div>
       <!-- ----------- -->
       <div class="tag section">
         <div class="title">
           <h2>標籤</h2>
-          <h3>&lt;Tags&gt;&lt;/Tags&gt;</h3>
+          <h3>&lt;be-tags&gt;&lt;/be-tags&gt;</h3>
           <h4>標籤資料 data="[{label:"",value:"", icon:""}]"</h4>
           <h5>icon import後直接使用</h5>
           <h4>標籤設定 option 提供:</h4>
@@ -66,7 +66,7 @@
           <h5>現在點選的Value是 : {{ showTagSelectValue }}</h5>
         </div>
         <div class="box">
-          <Tags
+          <be-tags
             :data="tagsData"
             :option="tagsOption"
             @tags-click="tagsClick"
@@ -77,7 +77,7 @@
           <h5>現在點選的Value是 : {{ showTagSelectValues.join(", ") }}</h5>
         </div>
         <div class="box">
-          <Tags
+          <be-tags
             :data="multipleTagsData"
             :option="multipleTagsOption"
             @tags-click="multipleTagsClick"
@@ -88,7 +88,7 @@
       <div class="tag section">
         <div class="title">
           <h2>輸入框</h2>
-          <h3>&lt;Input&gt;&lt;/Input&gt;</h3>
+          <h3>&lt;be-input&gt;&lt;/be-input&gt;</h3>
           <h4>需設定v-model的值</h4>
           <h4>type = "text, password, textarea" 支援三種原生類型</h4>
           <h5>password僅支援英文數字</h5>
@@ -114,29 +114,29 @@
           <h4>size="default"</h4>
         </div>
         <div class="box">
-          <Input
+          <be-input
             label="一般預設input"
             v-model="inputValue"
             placeholder="按下Enter送到下面的Textarea"
             @enter="enter">
             <template #prefix>#prefix</template>
-          </Input>
-          <Input
+          </be-input>
+          <be-input
             label="禁用"
             v-model="inputValueDis"
             disabled>
-          </Input>
-          <Input
+          </be-input>
+          <be-input
             label="唯讀"
             v-model="inputValueRead"
             readonly>
-          </Input>
+          </be-input>
         </div>
         <div class="title">
           <h4>size="small"</h4>
         </div>
         <div class="box">
-          <Input
+          <be-input
             label="密碼"
             v-model="inputValuePs"
             placeholder="請輸入密碼"
@@ -144,10 +144,10 @@
             type="password"
             :maxlength="5">
             <template #suffix>#suffix</template>
-          </Input>
+          </be-input>
         </div>
         <div class="box">
-          <Input
+          <be-input
             type="textarea"
             v-model="textareaValue"
             placeholder="任意輸入"
@@ -156,11 +156,11 @@
         </div>
       </div>
     </div>
-  </Container>
+  </be-container>
   <!---------->
   <!-- 彈窗 -->
   <!---------->
-  <Dialog
+  <be-dialog
     title="這是標題"
     v-model:visible="isDialogVisible"
     :show-footer-btn="showFooterBtn"
@@ -182,22 +182,22 @@
       #footer>
       客製化的FOOTER!
     </template>
-  </Dialog>
+  </be-dialog>
   <!-- 警告對話框 -->
-  <Dialog
+  <be-dialog
     v-model:visible="isAlertVisible"
     type="alert"
-    message="這個不能按！"></Dialog>
+    message="這個不能按！"></be-dialog>
   <!-- 確認對話框 -->
-  <Dialog
+  <be-dialog
     v-model:visible="isConfirmVisible"
     type="confirm"
     @confirm="confirmAlert"
-    message="你確定要這樣做嗎？"></Dialog>
+    message="你確定要這樣做嗎？"></be-dialog>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { ShoppingCart, XCircle } from "lucide-vue-next";
 // 彈窗內容邏輯
 const isDialogVisible = ref(false);

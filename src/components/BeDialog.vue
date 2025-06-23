@@ -44,15 +44,15 @@
       <template v-else-if="showFooterBtn">
         <!-- 固定式彈窗按鈕 -->
         <div class="footer">
-          <Btn
+          <be-btn
             v-if="type != 'alert'"
             @click="handleConfirm">
             {{ t("common.confirm") }}
-          </Btn>
-          <Btn @click="closeDialog">
+          </be-btn>
+          <be-btn @click="closeDialog">
             <span v-if="type != 'alert'">{{ t("common.cancel") }}</span>
             <span v-else>{{ t("common.confirm") }}</span>
-          </Btn>
+          </be-btn>
         </div>
       </template>
     </div>

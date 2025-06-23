@@ -1,12 +1,12 @@
 <template>
-  <Header />
+  <be-header />
   <router-view />
-  <Footer />
+  <be-footer />
 </template>
 
 <script setup>
-import Header from "./components/layout/Header.vue";
-import Footer from "./components/layout/Footer.vue";
+import BeHeader from "./components/layout/BeHeader.vue";
+import BeFooter from "./components/layout/BeFooter.vue";
 </script>
 
 <style lang="scss"></style>

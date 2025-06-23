@@ -33,11 +33,11 @@
           alt="Logo" />
       </router-link>
       <div class="userAction">
-        <Btn class="singIn">{{ t("common.signIn") }}</Btn>
-        <Btn class="shoppingCart">
+        <be-btn class="singIn">{{ t("common.signIn") }}</be-btn>
+        <be-btn class="shoppingCart">
           <ShoppingCart size="1.6rem" />&nbsp;
           <span>{{ t("common.cart") }}</span>
-        </Btn>
+        </be-btn>
       </div>
       <div class="shoppingCartRwd">
         <ShoppingCart size="4rem" />
