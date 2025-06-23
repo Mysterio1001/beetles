@@ -3,12 +3,17 @@
     class="input"
     v-if="type != 'textarea'">
     <!-- 前方插槽 -->
-    <div class="label">
-      <h4>{{ label }}</h4>
-    </div>
+    <label
+      class="label"
+      :for="inputId">
+      <h4>
+        {{ label }}
+      </h4>
+    </label>
     <slot name="prefix" />
     <div :class="['innerInput', { hasValue: modelValue }]">
       <input
+        :id="inputId"
         :class="[
           { small: size === 'small' },
           { disabled: disabled },
@@ -38,11 +43,14 @@
   <div
     :class="['textarea', { labelTop: labelTop }]"
     v-else>
-    <div class="label">
+    <label
+      class="label"
+      :for="inputId">
       <h4>{{ label }}</h4>
-    </div>
+    </label>
     <div class="innerTextarea">
       <textarea
+        :id="inputId"
         :value="modelValue"
         :placeholder="placeholder"
         @keydown.enter="handleEnter"
@@ -57,7 +65,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits, computed, watch } from "vue";
+import { ref, defineProps, defineEmits, computed } from "vue";
 import { CircleX, Eye, EyeClosed } from "lucide-vue-next";
 import { filterAlphaNumeric } from "@/utils/inputFilters";
 
@@ -103,6 +111,9 @@ const emit = defineEmits([
   "enter",
   "input",
 ]);
+
+// input id 唯一值
+const inputId = ref(`input-${Math.random().toString(36).slice(2, 8)}`);
 
 // 密碼查看icon 切換
 const eyeIsOpen = ref(false);
