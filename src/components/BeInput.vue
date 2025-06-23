@@ -148,6 +148,8 @@ const isComposing = ref(false);
 const handleEnter = () => {
   // 如果在組字就返回
   if (isComposing.value) return;
+  // 空白不執行
+  if (!props.modelValue) return;
   emit("enter");
 };
 
