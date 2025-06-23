@@ -5,6 +5,7 @@
     <!-- 前方插槽 -->
     <label
       class="label"
+      v-if="label"
       :for="inputId">
       <h4>
         {{ label }}
@@ -45,6 +46,7 @@
     v-else>
     <label
       class="label"
+      v-if="label"
       :for="inputId">
       <h4>{{ label }}</h4>
     </label>
