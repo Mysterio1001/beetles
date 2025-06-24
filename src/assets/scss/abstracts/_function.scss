@@ -13,6 +13,10 @@
 
 // 設定圓角
 @function radius($key){
+  @if $key == 0 {
+    @return 0;
+  }@else{
     @return map.get($borderRadius,$key);
+  }
   
 }

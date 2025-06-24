@@ -59,5 +59,9 @@ html {
       font-weight: bold;
       color: getColor(text);
     }
+
+    input{
+      font-size: clamp(10px,2rem,16px)
+    }
   }
 }
