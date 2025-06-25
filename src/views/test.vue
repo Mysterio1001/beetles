@@ -231,6 +231,37 @@
     type="confirm"
     @confirm="confirmAlert"
     message="你確定要這樣做嗎？"></be-dialog>
+  <!-- 浮動視窗 -->
+  <be-float-panel title="浮動視窗">
+    <div class="title">
+      <h3>&lt;be-float-panel&gt;&lt;/be-float-panel&gt;</h3>
+      <h4>title = "標題"</h4>
+      <h4>side = "置左或右"(預設左邊)</h4>
+      <h4>initialHidden = "是否載入時收起"(預設展開)</h4>
+      <h4>position 輸入數字後可以改變Y軸位置(預設20%, 也支援px,rem等)</h4>
+    </div>
+  </be-float-panel>
+  <be-float-panel
+    side="right"
+    title="米奇"
+    :initialHidden="true"
+    topOffSet="50">
+    <div
+      style="
+        width: 180px;
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      ">
+      <div class="title">
+        <h4>title="米奇"</h4>
+        <h4>side="right"</h4>
+        <h4>topOffSet="50"</h4>
+        <h4>:initialHidden="true"</h4>
+      </div>
+    </div>
+  </be-float-panel>
 </template>
 
 <script setup>
