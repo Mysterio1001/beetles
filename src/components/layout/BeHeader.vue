@@ -53,8 +53,12 @@ import logoRwd from "@/assets/images/logo/rwd-white-logo.svg";
 import { ShoppingCart } from "lucide-vue-next";
 import { useI18n } from "vue-i18n";
 
+// Refs / Reactive State 定義
 const { t } = useI18n();
+const isActive = ref(false); // rwd動態header變化
+const isTransitioning = ref(false); // 是否還在動畫中
 
+// Computed 計算屬性
 const routes = [
   { label: t("route.home"), to: "/" },
   { label: t("route.news"), to: "/news" },
@@ -63,27 +67,21 @@ const routes = [
   { label: t("route.beetleBulletin"), to: "/beetle-bulletin" },
 ];
 
-// rwd動態header變化
-const isActive = ref(false);
-// 是否還在動畫中
-const isTransitioning = ref(false);
+// Methods / Functions
 // hamburger開關
 const toggleMenu = () => {
   if (!isTransitioning.value) {
     isTransitioning.value = true;
     isActive.value = !isActive.value;
-
     setTimeout(() => {
       isTransitioning.value = false;
     }, 500);
   }
 };
-
 // 按下菜單後關閉菜單(RWD)
 const handelMenuClick = () => {
   isActive.value = false;
 };
-
 //監聽視窗大小
 const mdBreakpoint = 768;
 const handleResize = () => {
@@ -92,6 +90,7 @@ const handleResize = () => {
   }
 };
 
+// Lifecycle Hooks
 onMounted(() => {
   window.addEventListener("resize", handleResize);
 });

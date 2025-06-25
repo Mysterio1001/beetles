@@ -6,7 +6,8 @@
     <label
       class="label"
       v-if="label"
-      :for="inputId">
+      :for="inputId"
+      :style="{ width: labelWidth }">
       <h4>
         {{ label }}
       </h4>
@@ -71,6 +72,7 @@ import { ref, defineProps, defineEmits, computed } from "vue";
 import { CircleX, Eye, EyeClosed } from "lucide-vue-next";
 import { filterAlphaNumeric } from "@/utils/inputFilters";
 
+// defineProps / defineEmits
 const props = defineProps({
   modelValue: String, // 父元件v-model
   type: {
@@ -78,6 +80,7 @@ const props = defineProps({
     default: "text",
   },
   label: String, //欄位標題
+  labelWidth: String, // 標題寬度
   placeholder: String, // 預設字
   // 提供textarea標題在上方
   labelTop: {
@@ -107,6 +110,7 @@ const props = defineProps({
   // 最大字元數
   maxlength: Number,
 });
+
 const emit = defineEmits([
   "update:modelValue",
   "update:type",
@@ -114,16 +118,15 @@ const emit = defineEmits([
   "input",
 ]);
 
+// Refs / Reactive State 定義
 // input id 唯一值
 const inputId = ref(`input-${Math.random().toString(36).slice(2, 8)}`);
-
 // 密碼查看icon 切換
 const eyeIsOpen = ref(false);
+// 是否正在組字(中日等需要組字的輸入法判斷)
+const isComposing = ref(false);
 
-const toggleEye = () => {
-  eyeIsOpen.value = !eyeIsOpen.value;
-};
-
+// Computed 計算屬性
 const currentType = computed(() => {
   if (props.type !== "password") {
     return props.type;
@@ -131,11 +134,6 @@ const currentType = computed(() => {
     return eyeIsOpen.value ? "text" : "password";
   }
 });
-
-// input內容清除
-const clear = () => {
-  emit("update:modelValue", "");
-};
 
 // icon集合管理
 const iconComponent = computed(() => {
@@ -146,6 +144,16 @@ const iconComponent = computed(() => {
   }
 });
 
+// Methods / Functions
+const toggleEye = () => {
+  eyeIsOpen.value = !eyeIsOpen.value;
+};
+
+// input內容清除
+const clear = () => {
+  emit("update:modelValue", "");
+};
+
 const iconClick = () => {
   if (props.type === "password") {
     toggleEye();
@@ -155,9 +163,6 @@ const iconClick = () => {
 };
 
 // Enter的行為
-// 是否正在組字(中日等需要組字的輸入法判斷)
-const isComposing = ref(false);
-
 const handleEnter = () => {
   // 如果在組字就返回
   if (isComposing.value) return;
@@ -183,53 +188,6 @@ const onInput = (e) => {
 
 <style lang="scss" scoped>
 @use "sass:map";
-// input樣式
-@mixin inputStyle($type: default, $size: default, $status: null) {
-  $size-config: map.get($input-sizes, $size);
-  $padding: map.get($size-config, padding);
-  // 基礎樣式
-  padding: $padding;
-  box-sizing: border-box;
-  width: 100%;
-
-  border-radius: radius(input);
-  border: none;
-  outline: none; /* 移除點選時的藍框 */
-  transition: box-shadow 0.5s ease-in-out;
-
-  @if $type == "textarea" {
-    min-height: 100px;
-  }
-  // bgc
-  background-color: getColor(green-01);
-
-  @if $status == "disabled" {
-    cursor: not-allowed;
-    background-color: getColor(gray-01);
-    color: getColor(text-gray);
-  } @else if $status == "readonly" {
-    background-color: getColor(gray-01);
-    &:focus {
-      background-color: getColor(gray-01);
-      box-shadow: none;
-    }
-  } @else {
-    &:focus {
-      background-color: getColor(white);
-      box-shadow: inset 0 0 0 2px getColor(green-03);
-      @if ($size == small and $type != "textarea") {
-        box-shadow: inset 0 0 0 1px;
-      }
-    }
-  }
-}
-// icon樣式
-@mixin iconStyle($size: default) {
-  $size-config: map.get($input-sizes, $size);
-  $icon-size: map.get($size-config, icon-size);
-  width: $icon-size;
-  height: $icon-size;
-}
 
 .input {
   @include center;
@@ -245,17 +203,17 @@ const onInput = (e) => {
     flex: 1;
 
     input {
-      @include inputStyle("default");
+      @include fieldStyle("default");
 
       &.small {
-        @include inputStyle("default", small);
+        @include fieldStyle("default", small);
       }
 
       &.disabled {
-        @include inputStyle($status: "disabled");
+        @include fieldStyle($status: "disabled");
       }
       &.readonly {
-        @include inputStyle($status: "readonly");
+        @include fieldStyle($status: "readonly");
       }
     }
     &.hasValue:hover .icon {
@@ -289,7 +247,7 @@ const onInput = (e) => {
   .innerTextarea {
     flex: 1;
     textarea {
-      @include inputStyle("textarea");
+      @include fieldStyle("textarea");
     }
   }
 

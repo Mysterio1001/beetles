@@ -155,6 +155,32 @@
             :labelTop="true" />
         </div>
       </div>
+      <!-- ----------- -->
+      <div class="tag section">
+        <div class="title">
+          <h2>下拉式選單</h2>
+          <h3>&lt;be-select&gt;&lt;/be-select&gt;</h3>
+          <h4>需設定v-model的值</h4>
+        </div>
+        <div class="box">
+          <be-select
+            label="下拉式選單"
+            v-model="selcetValue"
+            placeholder="請選擇"
+            :options="selectOptions"
+            @select="optionSelect" />
+          <h4>點選的value為：{{ valueSelected }}</h4>
+          <h4>點選的label為：{{ labelSelected }}</h4>
+        </div>
+        <div class="box">
+          <be-select
+            label="禁用選單"
+            v-model="selcetValueSm"
+            placeholder="請不要使用"
+            size="small"
+            disabled="true" />
+        </div>
+      </div>
     </div>
   </be-container>
   <!---------->
@@ -199,13 +225,65 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { ShoppingCart, XCircle } from "lucide-vue-next";
+
+// Refs / Reactive State 定義
 // 彈窗內容邏輯
 const isDialogVisible = ref(false);
 const isAlertVisible = ref(false);
 const isConfirmVisible = ref(false);
 const footerText = ref("客製化的footer");
 const showFooterBtn = ref(true);
+// tags內容邏輯
+// 單選
+const showTagSelectLabel = ref("");
+const showTagSelectValue = ref("");
+const tagsData = ref([
+  { label: "A", value: "a", icon: ShoppingCart },
+  { label: "B", value: "b", icon: XCircle },
+  { label: "C", value: "c" },
+  { label: "D", value: "d" },
+  { label: "E", value: "e" },
+  { label: "F", value: "f" },
+]);
+const tagsOption = ref({
+  selectedTagNo: 1, // 預設點選
+  disableTagNo: [2], // 禁止點選
+});
+// 多選
+const showTagSelectLabels = ref([]);
+const showTagSelectValues = ref([]);
+const multipleTagsData = ref([
+  { label: "AA", value: "aa" },
+  { label: "BB", value: "bb" },
+  { label: "CC", value: "cc" },
+  { label: "DD", value: "dd" },
+  { label: "EE", value: "ee" },
+  { label: "FF", value: "ff" },
+]);
+const multipleTagsOption = ref({
+  selectedTagNo: [2, 3], // 預設點選
+  disableTagNo: [1], // 禁止點選
+  multiple: true, // 是否多選
+});
+// input 內容邏輯
+const inputValue = ref("");
+const inputValuePs = ref("");
+const textareaValue = ref("");
+const inputValueDis = ref("nonono");
+const inputValueRead = ref("look at me");
+// select 內容邏輯
+const selcetValue = ref("");
+const selcetValueSm = ref("");
+const selectOptions = [
+  { label: "雷", value: "1" },
+  { label: "風", value: "2" },
+  { label: "水", value: "3" },
+  { label: "魔神", value: "ABC" },
+];
+const valueSelected = ref("");
+const labelSelected = ref("");
 
+// Methods / Functions
 const showDialog = (key) => {
   if (key == "dialog") {
     isDialogVisible.value = true;
@@ -215,15 +293,12 @@ const showDialog = (key) => {
     isConfirmVisible.value = true;
   }
 };
-
 const closeAlert = () => {
   alert("關閉時執行的動作");
 };
-
 const confirmAlert = () => {
   alert("按下確認後執行的動作");
 };
-
 const footerTest = () => {
   const def = "預設的footer";
   const cus = "客製化的footer";
@@ -235,55 +310,16 @@ const footerTest = () => {
     showFooterBtn.value = true;
   }
 };
-// tags內容邏輯
-// 單選
-const showTagSelectLabel = ref("");
-const showTagSelectValue = ref("");
-
-const tagsData = ref([
-  { label: "A", value: "a", icon: ShoppingCart },
-  { label: "B", value: "b", icon: XCircle },
-  { label: "C", value: "c" },
-  { label: "D", value: "d" },
-  { label: "E", value: "e" },
-  { label: "F", value: "f" },
-]);
-
-const tagsOption = ref({
-  selectedTagNo: 1, // 預設點選
-  disableTagNo: [2], // 禁止點選
-});
 // 回傳該tag的value
 const tagsClick = (val) => {
   const preValue = showTagSelectValue.value;
   showTagSelectValue.value = val;
   const clickIndex = tagsData.value.findIndex((i) => i.value == val);
   showTagSelectLabel.value = tagsData.value[clickIndex].label;
-
   if (preValue != "f" && val === "f") {
     isAlertVisible.value = true;
   }
 };
-
-// 多選
-const showTagSelectLabels = ref([]);
-const showTagSelectValues = ref([]);
-
-const multipleTagsData = ref([
-  { label: "AA", value: "aa" },
-  { label: "BB", value: "bb" },
-  { label: "CC", value: "cc" },
-  { label: "DD", value: "dd" },
-  { label: "EE", value: "ee" },
-  { label: "FF", value: "ff" },
-]);
-
-const multipleTagsOption = ref({
-  selectedTagNo: [2, 3], // 預設點選
-  disableTagNo: [1], // 禁止點選
-  multiple: true, // 是否多選
-});
-
 // 回傳該tag的array
 const multipleTagsClick = (val) => {
   showTagSelectValues.value = val;
@@ -291,19 +327,15 @@ const multipleTagsClick = (val) => {
     .filter((item) => val.includes(item.value))
     .map((i) => i.label);
 };
-
-// input 內容邏輯
-
-const inputValue = ref("");
-const inputValuePs = ref("");
-const textareaValue = ref("");
-const inputValueDis = ref("nonono");
-const inputValueRead = ref("look at me");
-
 const enter = () => {
   const val = inputValue.value;
   textareaValue.value = val;
   inputValue.value = "";
+};
+// 點選選項後執行的事件
+const optionSelect = (obj) => {
+  valueSelected.value = obj.value;
+  labelSelected.value = obj.label;
 };
 </script>
 

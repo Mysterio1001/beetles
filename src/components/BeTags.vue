@@ -32,6 +32,7 @@
 <script setup>
 import { ref, defineProps, watch } from "vue";
 
+// defineProps / defineEmits
 const props = defineProps({
   data: Array, // [{label:"",value:""}]
   option: {
@@ -39,10 +40,14 @@ const props = defineProps({
     default: () => ({}), //Vue：對於 Object 或 Array 類型的 預設值，必須用函式回傳
   },
 });
+
 const emit = defineEmits(["tagsClick", "ready"]);
+
+// Refs / Reactive State 定義
 const selectedIndex = ref([]);
 const disableTagIndex = ref([]);
 
+// Methods / Functions
 // 點選後觸發的事件
 const tagSelect = (index) => {
   // 如果含有禁止點選的tag
@@ -70,6 +75,7 @@ const tagSelect = (index) => {
   }
 };
 
+// Watchers
 watch(
   () => props.option,
   (option) => {

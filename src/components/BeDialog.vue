@@ -64,8 +64,7 @@ import { defineProps, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { CircleX } from "lucide-vue-next";
 
-const { t } = useI18n();
-
+// defineProps / defineEmits
 const props = defineProps({
   title: {
     type: String,
@@ -97,17 +96,24 @@ const props = defineProps({
 
 const emit = defineEmits(["update:visible", "close", "confirm"]);
 
+// Refs / Reactive State 定義
+const { t } = useI18n();
+
+// Methods / Functions
 const closeDialog = () => {
   // 按下關閉後執行的行為
   emit("close");
   //讓父元件關閉彈窗
   emit("update:visible", false);
 };
+
 // 按下確認後執行的行為
 const handleConfirm = () => {
   emit("confirm");
   emit("update:visible", false);
 };
+
+// Watchers
 // 監控visible, 讓body加上overflow-y屬性
 watch(
   () => props.visible,

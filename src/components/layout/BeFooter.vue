@@ -24,6 +24,7 @@
 import footerLogo from "@/assets/images/logo/rwd-white-logo.svg";
 import { useI18n } from "vue-i18n";
 
+// Refs / Reactive State 定義
 const { t } = useI18n();
 
 // 社交按鈕 這裏用的是font awesome

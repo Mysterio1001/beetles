@@ -7,6 +7,7 @@
 <script setup>
 import { defineProps } from "vue";
 
+// defineProps / defineEmits
 const props = defineProps({
   size: {
     type: String,
