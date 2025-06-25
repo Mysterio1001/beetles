@@ -32,9 +32,11 @@ const props = defineProps({
   box-shadow: 4px 4px 4px getColor(shadow);
   &.l {
     font-size: 2rem;
+    padding: 12px 20px;
   }
   &.s {
     font-size: 1.2rem;
+    padding: 6px 20px;
   }
   span {
     @include center;
