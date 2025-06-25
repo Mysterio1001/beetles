@@ -161,6 +161,16 @@
           <h2>下拉式選單</h2>
           <h3>&lt;be-select&gt;&lt;/be-select&gt;</h3>
           <h4>需設定v-model的值</h4>
+          <h4>label = "欄位標題"</h4>
+          <h4>placeholder = "提示文字"</h4>
+          <h4>支援原生disabled</h4>
+          <h4>labelWidth="標題寬度"</h4>
+          <h5>size = "default, small"設定兩種大小的input(預設為default)</h5>
+          <h4>options設定(選單選項)</h4>
+          <h4>options = "[{label:'', value:''}]"</h4>
+          <br />
+          <h4>提供事件支援：</h4>
+          <h4>@select事件 (點選選單後可執行的事件)</h4>
         </div>
         <div class="box">
           <be-select
@@ -177,8 +187,9 @@
             label="禁用選單"
             v-model="selcetValueSm"
             placeholder="請不要使用"
+            :options="[{ label: '', value: '' }]"
             size="small"
-            disabled="true" />
+            disabled />
         </div>
       </div>
     </div>
