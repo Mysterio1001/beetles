@@ -2,7 +2,7 @@
   <div
     :style="floatPosition"
     :class="[
-      'float',
+      'be-float-panel',
       { isLeft: side == 'left' },
       { isRight: side == 'right' },
       { isMovingLeft: isMovingLeft },
@@ -92,7 +92,7 @@ const toggleMove = () => {
 <style lang="scss" scoped>
 @use "sass:map";
 
-.float {
+.be-float-panel {
   position: fixed;
   //   top: 20%; 讓父元件控制位置
 

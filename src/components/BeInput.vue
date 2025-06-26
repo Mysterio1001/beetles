@@ -1,6 +1,6 @@
 <template>
   <div
-    class="input"
+    class="be-input"
     v-if="type != 'textarea'">
     <!-- 前方插槽 -->
     <label
@@ -189,7 +189,7 @@ const onInput = (e) => {
 <style lang="scss" scoped>
 @use "sass:map";
 
-.input {
+.be-input {
   @include center;
   gap: 2rem;
 

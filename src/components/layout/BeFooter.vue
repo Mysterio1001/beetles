@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer">
+  <footer class="be-footer">
     <div>Copyright 2024 © {{ t("route.default") }}</div>
     <div>
       <img
@@ -47,7 +47,7 @@ const socials = [
 ];
 </script>
 <style lang="scss" scoped>
-.footer {
+.be-footer {
   z-index: z(footer);
 
   display: flex;

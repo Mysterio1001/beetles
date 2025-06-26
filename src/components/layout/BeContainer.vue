@@ -1,6 +1,6 @@
 <!-- 外部容器統一設定 -->
 <template>
-  <div class="container">
+  <div class="be-container">
     <slot></slot>
   </div>
 </template>
@@ -10,7 +10,7 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-.container {
+.be-container {
   padding: 0 2rem;
   box-sizing: border-box;
 }

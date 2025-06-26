@@ -1,7 +1,6 @@
 <template>
   <be-container>
     <div class="main">
-      <!-- ----------- -->
       <div class="button section">
         <div class="title">
           <h2>按鈕</h2>
@@ -85,7 +84,7 @@
         </div>
       </div>
       <!-- ----------- -->
-      <div class="tag section">
+      <div class="input section">
         <div class="title">
           <h2>輸入框</h2>
           <h3>&lt;be-input&gt;&lt;/be-input&gt;</h3>
@@ -156,9 +155,9 @@
         </div>
       </div>
       <!-- ----------- -->
-      <div class="tag section">
+      <div class="select section">
         <div class="title">
-          <h2>下拉式選單</h2>
+          <h2>選擇器</h2>
           <h3>&lt;be-select&gt;&lt;/be-select&gt;</h3>
           <h4>需設定v-model的值</h4>
           <h4>label = "欄位標題"</h4>
@@ -174,7 +173,7 @@
         </div>
         <div class="box">
           <be-select
-            label="下拉式選單"
+            label="選擇器"
             v-model="selcetValue"
             placeholder="請選擇"
             :options="selectOptions"
@@ -190,6 +189,15 @@
             :options="[{ label: '', value: '' }]"
             size="small"
             disabled />
+        </div>
+      </div>
+      <div class="card section">
+        <div class="title">
+          <h2>卡片</h2>
+          <h3>&lt;be-card&gt;&lt;/be-card&gt;</h3>
+          <div class="box">
+            <be-card></be-card>
+          </div>
         </div>
       </div>
     </div>
@@ -231,7 +239,9 @@
     type="confirm"
     @confirm="confirmAlert"
     message="你確定要這樣做嗎？"></be-dialog>
+  <!---------->
   <!-- 浮動視窗 -->
+  <!---------->
   <be-float-panel title="浮動視窗">
     <div class="title">
       <h3>&lt;be-float-panel&gt;&lt;/be-float-panel&gt;</h3>
@@ -248,7 +258,7 @@
     topOffSet="50">
     <div
       style="
-        width: 180px;
+        width: 25rem;
         height: 150px;
         display: flex;
         align-items: center;

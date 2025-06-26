@@ -1,5 +1,5 @@
 <template>
-  <div class="tagsBox">
+  <div class="be-tag">
     <ul class="tags">
       <li
         ref="tag"
@@ -127,7 +127,7 @@ watch(
   }
 }
 
-.tagsBox {
+.be-tag {
   width: 100%;
   .tags {
     @include center;

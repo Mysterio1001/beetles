@@ -1,5 +1,5 @@
 <template>
-  <div :class="['btn', size]">
+  <div :class="['be-btn', size]">
     <span><slot></slot></span>
   </div>
 </template>
@@ -17,8 +17,9 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-.btn {
+.be-btn {
   cursor: pointer;
+  position: relative;
 
   margin: 4px;
   padding: 8px 20px;
@@ -38,41 +39,50 @@ const props = defineProps({
     font-size: 1.2rem;
     padding: 6px 20px;
   }
+
+  &::before {
+    content: "•";
+    display: block;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    transition: all 0.2s linear;
+  }
+
   span {
     @include center;
-    position: relative;
-
-    text-align: center;
-    transition: transform 0.2s ease, background-color 0.5s ease, color 0.3s ease;
-    &::before {
-      display: none;
-      content: "•";
-      opacity: 0;
-      transform: translateX(-0.5rem);
-      transition: all 0.3s ease;
-    }
+    transition: transform 0.2s linear, background-color 0.5s ease,
+      color 0.3s ease;
+    user-select: none;
   }
   &:hover {
     color: getColor(text-light);
     background-color: getColor(btnHover);
 
-    span {
+    &::before {
       transform: translateX(1rem);
-      user-select: none;
-      &::before {
-        display: block;
-        position: absolute;
-        left: clamp(-3rem, -32%, 2rem);
-        content: "•";
-        opacity: 1;
-        transform: translateX(0);
-      }
+      color: getColor(text-light);
+      opacity: 1;
+    }
+
+    span {
+      transform: translateX(0.5rem);
     }
   }
 
   &:active {
     background-color: getColor(btnActive);
     box-shadow: inset 0 1px 3px getColor(shadow);
+
+    &::before {
+      transform: translateX(1rem);
+      color: getColor(text-light);
+      opacity: 1;
+    }
+
+    span {
+      transform: translateX(0.5rem);
+    }
   }
 }
 </style>

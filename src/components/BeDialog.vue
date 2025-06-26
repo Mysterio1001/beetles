@@ -1,11 +1,10 @@
 <template>
   <!-- 背景覆蓋層 -->
   <div
-    class="coverBox"
+    class="be-coverBox"
     v-if="visible">
     <div
-      v-if="visible"
-      class="dialog"
+      class="be-dialog"
       :class="{ small: type != 'custom' }">
       <div class="top">
         <div class="titleBox">
@@ -128,7 +127,7 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-.coverBox {
+.be-coverBox {
   // 背景覆蓋層
   @include center;
   z-index: z(dialog);
@@ -143,7 +142,7 @@ watch(
   width: 100vw;
   background-color: getColor(shadow);
 
-  .dialog {
+  .be-dialog {
     display: flex;
     flex-direction: column;
     gap: 1rem;

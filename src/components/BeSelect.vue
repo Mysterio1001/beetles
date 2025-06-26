@@ -1,6 +1,6 @@
 <template>
   <div
-    class="select"
+    class="be-select"
     ref="selectRef">
     <label
       class="label"
@@ -179,7 +179,7 @@ onUnmounted(() => {
 @use "sass:map";
 // select 樣式
 
-.select {
+.be-select {
   @include center;
   gap: 2rem;
 

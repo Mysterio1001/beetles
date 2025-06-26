@@ -1,5 +1,5 @@
 <template>
-  <header class="headerSticky">
+  <header class="be-header">
     <div class="header">
       <router-link
         to="/test"
@@ -103,7 +103,7 @@ onMounted(() => {
   background-color: $color;
   border-radius: radius(circle);
 }
-.headerSticky {
+.be-header {
   z-index: z(header);
 
   position: sticky;
