@@ -8,7 +8,9 @@
       { isMovingLeft: isMovingLeft },
       { isMovingRight: isMovingRight },
     ]">
-    <div class="title">
+    <div
+      class="title"
+      v-if="title">
       <h4>
         {{ title }}
       </h4>
