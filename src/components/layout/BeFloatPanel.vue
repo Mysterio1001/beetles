@@ -101,7 +101,7 @@ const toggleMove = () => {
   max-width: 96vw; // 以防超出視窗
   background-color: getColor(gray-01);
   opacity: 0.9;
-  border-radius: radius(tags);
+  border-radius: radius(block);
   box-shadow: 0 0 8px getColor(shadow);
   z-index: z(float);
 

@@ -21,6 +21,7 @@ $colors: (
   btnHover: #67897d,
   gray-01:#d3dad8,
   text-gray:#b1b6b4,
+  darkMode:#455c54
 );
 
 //z-index
@@ -49,9 +50,9 @@ $input-sizes:(
 
 // border-radius
 $borderRadius:(
-  input: 20px,
-  btn: 20px,
-  tags: 8px,
   dialog: 36px,
+  btn: 20px,
+  input: 16px,
+  block: 12px,
   circle: 50%
 )
