@@ -140,7 +140,7 @@ watch(
 
   height: 100vh;
   width: 100vw;
-  background-color: getColor(shadow);
+  background-color: getColor(dialogCover);
 
   .be-dialog {
     display: flex;
