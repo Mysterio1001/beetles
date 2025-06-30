@@ -191,12 +191,63 @@
             disabled />
         </div>
       </div>
+      <!-- ----------- -->
       <div class="card section">
         <div class="title">
           <h2>卡片</h2>
           <h3>&lt;be-card&gt;&lt;/be-card&gt;</h3>
-          <div class="box">
-            <be-card></be-card>
+          <h3>建議搭配dispaly : grid; 使用</h3>
+          <h4>支援設定imgSrc,imgAlt</h4>
+          <h4>imgPosition = "圖片位置(top, left, right) 預設為left"</h4>
+          <h4>imgCover = "是否需要遮罩(Boolean)"</h4>
+          <h4>imgCoverText = "遮罩內容"</h4>
+          <h4>imgCoverTextRotate = "內容選轉角度 預設為45度"</h4>
+          <h4>hasPadding = "是否需要容器padding(Boolean)"</h4>
+          <h4>darkMode = "支援暗色模式(Boolean)"</h4>
+          <h4>clickable = "是否出現點擊樣式(Boolean)"</h4>
+          <div class="box cardBox">
+            <be-card
+              v-for="(card, index) in 3"
+              :key="index"
+              :hasPadding="false"
+              :imgSrc="testImg"
+              :imgCover="index == 1 ? true : false"
+              :clickable="index == 2 ? true : false"
+              imgCoverTextRotate="30"
+              imgCoverText="Slod Out">
+              <div class="box">
+                <h3>{{ card }}</h3>
+                <p v-if="index == 1">
+                  :imgCover = "true"<br />
+                  <br />
+                  imgCoverText = "Slod Out"
+                  <br />
+                  imgCoverTextRotate="30"
+                </p>
+                <p v-else>:imgPosition = "top"</p>
+                <br />
+                <p v-if="index == 2">:clickable="true"</p>
+              </div>
+            </be-card>
+          </div>
+          <div class="box cardBox two">
+            <be-card
+              v-for="(card, index) in 3"
+              :key="index"
+              :imgPosition="index == 1 ? 'right' : 'left'"
+              :darkMode="true"
+              :hasPadding="false"
+              :imgSrc="testImg">
+              <div class="box">
+                <h4>{{ card }}</h4>
+                <h4>
+                  :darkMode = "true"<br />
+                  ::hasPadding = "false"
+                </h4>
+                <br />
+                <h4 v-if="index == 1">:imgPosition = "right</h4>
+              </div>
+            </be-card>
           </div>
         </div>
       </div>
@@ -259,7 +310,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { ShoppingCart, XCircle } from "lucide-vue-next";
-
+// import testImg from "@/assets/images/test.png";
+import testImg from "/public/img/img-beetle-shop/product_main_1.png";
 // Refs / Reactive State 定義
 // 彈窗內容邏輯
 const isDialogVisible = ref(false);
@@ -384,6 +436,16 @@ const optionSelect = (obj) => {
     padding: 1rem 0 1rem;
     .box {
       padding: 1rem;
+
+      &.cardBox {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(3, 1fr);
+
+        &.two {
+          grid-template-columns: repeat(1, 1fr);
+        }
+      }
     }
   }
 }
