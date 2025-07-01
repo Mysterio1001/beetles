@@ -20,13 +20,13 @@
         <li
           v-for="(item, index) in routes"
           :key="index"
-          @click="handelMenuClick">
+          @click="handleMenuClick">
           <router-link :to="item.to">{{ item.label }}</router-link>
         </li>
       </ul>
       <router-link
         to="/test"
-        @click="handelMenuClick">
+        @click="handleMenuClick">
         <img
           class="logoRwd"
           :src="logoRwd"
@@ -79,7 +79,7 @@ const toggleMenu = () => {
   }
 };
 // 按下菜單後關閉菜單(RWD)
-const handelMenuClick = () => {
+const handleMenuClick = () => {
   isActive.value = false;
 };
 //監聽視窗大小
