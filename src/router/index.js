@@ -7,7 +7,7 @@ const routes = [
     name: "home",
     component: () => import("@/views/homeView.vue"),
     meta: {
-      titleKey: "route.home",
+      title: "route.home",
     },
   },
   {
@@ -15,7 +15,28 @@ const routes = [
     name: "test",
     component: () => import("@/views/test.vue"),
     meta: {
-      titleKey: "route.test",
+      title: "route.test",
+    },
+  },
+  {
+    path: "/test/testChild",
+    name: "testChild",
+    component: () => import("@/views/testChild.vue"),
+    meta: {
+      title: "route.testChild",
+      parents: [{ path: "/test", name: "route.test" }],
+    },
+  },
+  {
+    path: "/test/testChild/jr",
+    name: "testChildJr",
+    component: () => import("@/views/testChildJr.vue"),
+    meta: {
+      title: "route.testChildJr",
+      parents: [
+        { path: "/test", name: "route.test" },
+        { path: "/test/testChild", name: "route.testChild" },
+      ],
     },
   },
   {
@@ -23,7 +44,7 @@ const routes = [
     name: "news",
     component: () => import("@/views/newsView.vue"),
     meta: {
-      titleKey: "route.news",
+      title: "route.news",
     },
   },
   {
@@ -31,7 +52,7 @@ const routes = [
     name: "beetleLab",
     component: () => import("@/views/newsView.vue"),
     meta: {
-      titleKey: "route.beetleLab",
+      title: "route.beetleLab",
     },
   },
   {
@@ -39,7 +60,7 @@ const routes = [
     name: "beetleShop",
     component: () => import("@/views/newsView.vue"),
     meta: {
-      titleKey: "route.beetleShop",
+      title: "route.beetleShop",
     },
   },
   {
@@ -47,7 +68,7 @@ const routes = [
     name: "beetleBulletin",
     component: () => import("@/views/newsView.vue"),
     meta: {
-      titleKey: "route.beetleBulletin",
+      title: "route.beetleBulletin",
     },
   },
 ];
@@ -61,7 +82,7 @@ router.beforeEach((to, from, next) => {
   i18n.global.t("route.home");
 
   const defaultTitle = i18n.global.t("route.default"); // 預設值
-  const pageTitle = i18n.global.t(to.meta.titleKey);
+  const pageTitle = i18n.global.t(to.meta.title);
   if (pageTitle) {
     document.title = pageTitle + "－" + defaultTitle;
   } else {
