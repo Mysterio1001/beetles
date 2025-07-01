@@ -10,11 +10,13 @@
         <div class="btns">
           <h6>size="l"</h6>
           <div class="box">
-            <be-btn size="l">大按鈕</be-btn>
+            <be-btn size="l"> 大按鈕 </be-btn>
           </div>
           <h6>不用填 :size</h6>
           <div class="box">
-            <be-btn>預設按鈕</be-btn>
+            <router-link to="/test/testChild">
+              <be-btn>預設按鈕; 到TestChild</be-btn>
+            </router-link>
           </div>
           <h6>size="s"</h6>
           <div class="box">
@@ -213,7 +215,7 @@
               :imgSrc="testImg"
               :imgCover="index == 1 ? true : false"
               :clickable="index == 2 ? true : false"
-              imgCoverTextRotate="30"
+              :imgCoverTextRotate="30"
               imgCoverText="Slod Out">
               <div class="box">
                 <h3>{{ card }}</h3>
@@ -253,6 +255,7 @@
       </div>
     </div>
   </be-container>
+
   <!---------->
   <!-- 彈窗 -->
   <!---------->
@@ -296,13 +299,14 @@
   <be-float-panel
     side="right"
     title="浮動視窗"
-    topOffSet="60">
+    topOffSet="40"
+    :initialHidden="true">
     <div class="title">
       <h3>&lt;be-float-panel&gt;&lt;/be-float-panel&gt;</h3>
       <h4>title = "標題"</h4>
       <h4>side = "置左或右"(預設左邊)</h4>
       <h4>initialHidden = "是否載入時收起"(預設展開)</h4>
-      <h4>position 輸入數字後可以改變Y軸位置(預設20%, 也支援px,rem等)</h4>
+      <h4>topOffSet 輸入數字後可以改變Y軸位置(預設20%, 也支援px,rem等)</h4>
     </div>
   </be-float-panel>
 </template>
