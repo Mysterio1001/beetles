@@ -1,6 +1,15 @@
 <template>
   <be-container>
     <div class="main">
+      <div class="section">
+        <div class="title">
+          <h2>幻燈片</h2>
+          <h3>&lt;be-swiper/&gt;</h3>
+        </div>
+        <div class="swiperBox">
+          <be-swiper :data="siwperData" />
+        </div>
+      </div>
       <div class="button section">
         <div class="title">
           <h2>按鈕</h2>
@@ -317,6 +326,24 @@ import { ShoppingCart, XCircle } from "lucide-vue-next";
 // import testImg from "@/assets/images/test.png";
 import testImg from "/public/img/img-beetle-shop/product_main_1.png";
 // Refs / Reactive State 定義
+//幻燈片邏輯
+const siwperData = [
+  {
+    src: "../../public/img/image-news/slide1.png",
+    name: "slide1.png",
+    message: "五角大兜",
+  },
+  {
+    src: "../../public/img/image-news/list2.png",
+    name: "list2.png",
+    message: "日曆",
+  },
+  {
+    src: "../../public/img/image-news/slide3.png",
+    name: "slide3.png",
+    message: "黃帶天牛",
+  },
+];
 // 彈窗內容邏輯
 const isDialogVisible = ref(false);
 const isAlertVisible = ref(false);
@@ -438,6 +465,11 @@ const optionSelect = (obj) => {
   .section {
     border-bottom: 1.5px solid getColor(green-04);
     padding: 1rem 0 1rem;
+
+    .swiperBox {
+      @include center();
+    }
+
     .box {
       padding: 1rem;
 
