@@ -137,9 +137,7 @@ const toggleMove = () => {
   }
 
   .title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include center();
 
     padding: 0.8rem;
   }
@@ -185,38 +183,4 @@ const toggleMove = () => {
     transform: translateX(2px);
   }
 }
-
-// @keyframes iconRotating {
-//   0% {
-//     transform: rotate(0) translateX(0);
-//   }
-//   25% {
-//     transform: rotate(0) translateX(-25%);
-//   }
-//   50% {
-//     transform: rotate(0) translateX(-50%);
-//   }
-//   75% {
-//     transform: rotate(0) translateX(-75%);
-//   }
-//   100% {
-//     transform: rotate(180deg) translateX(-150%);
-//   }
-// }
-
-// @keyframes shakeY {
-//   0%,
-//   100% {
-//     transform: translateY(0);
-//   }
-//   25% {
-//     transform: translateY(-2px);
-//   }
-//   50% {
-//     transform: translateY(0px);
-//   }
-//   75% {
-//     transform: translateY(2px);
-//   }
-// }
 </style>

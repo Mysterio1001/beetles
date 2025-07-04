@@ -50,7 +50,7 @@ const breadcrumbs = computed(() => {
   const parentsList = route.value.meta?.parents || [];
   const currentTitle = route.value.meta?.title || "";
   const currentPath = {
-    name: t(currentTitle) || "",
+    name: currentTitle ? t(currentTitle) : "",
     path: route.value.fullPath, // 絕對位置
   };
   const crumbArray = [
@@ -64,12 +64,6 @@ const breadcrumbs = computed(() => {
 
 const isHome = computed(() => {
   return route.value.name === "home";
-});
-
-onMounted(() => {
-  console.log("Current path:", route.value.path);
-  console.log("Current name:", route.value.name);
-  console.log("isHome:", isHome.value);
 });
 
 // Computed 計算屬性
