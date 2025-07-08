@@ -76,6 +76,7 @@ const imgRefs = ref([]); // li的ref容器
 const siwperData = ref([]); // 幻燈片資料
 
 const currentIndex = ref(1); // 目前顯示第幾張(index)
+const isActive = ref(false); // 防止連續點擊
 
 // 開啟手機模式 且 處於手機大小螢幕
 // const isMobile = ref(props.mobileMode && window.innerWidth <= 576);
@@ -100,15 +101,17 @@ const imgBoxTransform = (width, isTransition = true, time = "0.8") => {
     : "none";
 };
 
-let isActive = false; // 防止連續點擊
+// let isActive = false; // 防止連續點擊
 // 點選移動
 const handleMove = (direction, isAuto = false) => {
-  if (isActive) return;
-  isActive = true;
-
+  if (isActive.value) return;
+  isActive.value = true;
+  // 確認是否為自動播放或手動播放
   if (!isAuto) {
     clearInterval(autoMoveInterval);
     setTimeout(() => {
+      clearInterval(autoMoveInterval);
+
       autoMoveInterval = setInterval(() => {
         handleMove("left", true);
       }, props.time * 1000);
@@ -133,8 +136,8 @@ const handleMove = (direction, isAuto = false) => {
       currentIndex.value = 1;
       imgBoxTransform(imgWidth, false, 0.1);
     }
-    isActive = false;
-  }, 800);
+    isActive.value = false;
+  }, 1000);
 };
 
 // Watchers
