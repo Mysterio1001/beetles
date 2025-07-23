@@ -140,12 +140,16 @@ watch(
     @include center;
     gap: 4rem;
 
+    @include md {
+      gap: 10rem;
+    }
+
     .tag {
       @include center;
       @include tagsStyle("default");
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 0.8rem;
 
       padding: 8px 20px;
       box-sizing: border-box;
