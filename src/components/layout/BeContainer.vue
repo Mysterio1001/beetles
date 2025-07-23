@@ -11,6 +11,10 @@ export default {};
 
 <style lang="scss" scoped>
 .be-container {
+  @include center();
+  flex-direction: column;
+  gap: 16px;
+
   padding: 0 2rem;
   box-sizing: border-box;
 }
