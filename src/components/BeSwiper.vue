@@ -209,7 +209,7 @@ onBeforeUnmount(() => {
     @include center;
 
     width: max-content; // 撐開 ul 的寬度，剛好包含所有 li
-    background-color: getColor(black);
+    background-color: getColor(shadow);
 
     transition: transform 0.5s linear;
     li {
