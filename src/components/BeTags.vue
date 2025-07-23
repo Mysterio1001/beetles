@@ -15,15 +15,16 @@
           },
           { multiple: props.option?.multiple },
           { disabled: disableTagIndex.includes(index) },
+          { responsive: responsive },
         ]"
         @click="tagSelect(index)">
         <h5 class="label">
           {{ tag.label }}
-          <component
-            :is="tag.icon"
-            v-if="tag.icon"
-            size="2rem" />
         </h5>
+        <component
+          :is="tag.icon"
+          v-if="tag.icon"
+          class="icon" />
       </li>
     </ul>
   </div>
@@ -38,6 +39,11 @@ const props = defineProps({
   option: {
     type: Object,
     default: () => ({}), //Vue：對於 Object 或 Array 類型的 預設值，必須用函式回傳
+  },
+  responsive: {
+    // 是否要響應式設計(小視窗時刪除標籤)
+    type: Boolean,
+    default: true,
   },
 });
 
@@ -97,8 +103,9 @@ watch(
       }
     }
     // 被禁用的index
-    disableTagIndex.value =
-      props.option?.disableTagNo.map((tag) => tag - 1) || [];
+    disableTagIndex.value = Array.isArray(props.option?.disableTagNo)
+      ? props.option.disableTagNo.map((tag) => tag - 1)
+      : [];
   },
   { immediate: true } // 進入畫面時執行一次
 );
@@ -136,6 +143,9 @@ watch(
     .tag {
       @include center;
       @include tagsStyle("default");
+      display: flex;
+      align-items: center;
+      gap: 8px;
 
       padding: 8px 20px;
       box-sizing: border-box;
@@ -158,10 +168,26 @@ watch(
         @include tagsStyle("disabled");
       }
 
-      .label {
-        display: flex;
-        align-items: center;
-        gap: 8px;
+      .icon {
+        width: 2rem;
+        height: 2rem;
+      }
+
+      @include md {
+        &.responsive {
+          border-radius: radius(circle);
+          min-width: auto;
+          padding: 16px;
+
+          .label {
+            display: none;
+          }
+
+          .icon {
+            width: 4rem;
+            height: 4rem;
+          }
+        }
       }
     }
   }

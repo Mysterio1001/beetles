@@ -7,7 +7,7 @@
           <h3>&lt;be-swiper/&gt;</h3>
         </div>
         <div class="swiperBox">
-          <be-swiper :data="siwperData" />
+          <be-swiper :data="swiperData" />
         </div>
       </div>
       <div class="button section">
@@ -71,6 +71,7 @@
           <h5>"disableTagNo"(禁止點選:陣列, 數值1~n)</h5>
           <h4>@tags-click = "點選後可執行的事件"</h4>
           <h4>@ready = "載入時執行的事件"</h4>
+          <h4>"responsive"響應式(小視窗標籤文字消失) 預設為true</h4>
 
           <h5>現在點選的Label是 : {{ showTagSelectLabel }}</h5>
           <h5>現在點選的Value是 : {{ showTagSelectValue }}</h5>
@@ -80,7 +81,8 @@
             :data="tagsData"
             :option="tagsOption"
             @tags-click="tagsClick"
-            @ready="tagsClick" />
+            @ready="tagsClick"
+            :responsive="false" />
         </div>
         <div class="title">
           <h5>現在點選的Label是 : {{ showTagSelectLabels.join(", ") }}</h5>
@@ -91,7 +93,8 @@
             :data="multipleTagsData"
             :option="multipleTagsOption"
             @tags-click="multipleTagsClick"
-            @ready="multipleTagsClick" />
+            @ready="multipleTagsClick"
+            :responsive="false" />
         </div>
       </div>
       <!-- ----------- -->
@@ -327,7 +330,7 @@ import { ShoppingCart, XCircle } from "lucide-vue-next";
 import testImg from "/public/img/img-beetle-shop/product_main_1.png";
 // Refs / Reactive State 定義
 //幻燈片邏輯
-const siwperData = [
+const swiperData = [
   {
     src: "../../public/img/image-news/slide1.png",
     name: "slide1.png",
