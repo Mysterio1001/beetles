@@ -140,6 +140,17 @@ const handleMove = (direction, isAuto = false) => {
   }, 1000);
 };
 
+// 視窗寬度變動改變
+const handleResize = () => {
+  if (!beSwiper.value || !imgBox.value || !imgRefs.value.length === 0) return;
+  const width = beSwiper.value.offsetWidth;
+  imgBox.value.style.width = width * siwperData.value.length + "px";
+  imgRefs.value.forEach((li) => {
+    li.style.width = width + "px";
+  });
+  imgBoxTransform(width, false);
+};
+
 // Watchers
 
 watch(
@@ -168,12 +179,9 @@ onBeforeUpdate(() => {
 // 動態控制幻燈片個項目寬度比例
 onMounted(() => {
   nextTick(() => {
-    const width = beSwiper.value.offsetWidth;
-    imgBox.value.style.width = width * siwperData.value.length + "px";
-    imgRefs.value.forEach((li) => {
-      li.style.width = width + "px";
-    });
-
+    // 初始執行
+    handleResize();
+    window.addEventListener("resize", handleResize);
     // 執行自動播放
     autoMoveInterval = setInterval(() => {
       handleMove("left", true);
@@ -184,6 +192,7 @@ onMounted(() => {
 // 關閉自動播放
 onBeforeUnmount(() => {
   clearInterval(autoMoveInterval);
+  window.removeEventListener("resize", handleResize);
 });
 </script>
 
