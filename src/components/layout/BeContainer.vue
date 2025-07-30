@@ -11,7 +11,8 @@ export default {};
 
 <style lang="scss" scoped>
 .be-container {
-  @include center();
+  @include center;
+  align-items: stretch; // 該為預設
   flex-direction: column;
   gap: 16px;
 

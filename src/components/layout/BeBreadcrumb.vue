@@ -88,11 +88,22 @@ const isHome = computed(() => {
 
     color: getColor(white);
 
+    @include md {
+      @include center;
+    }
+
     li {
       display: flex;
       gap: 1rem;
+
       a {
         color: getColor(white);
+      }
+
+      h5 {
+        @include md {
+          font-size: 4rem;
+        }
       }
     }
   }
