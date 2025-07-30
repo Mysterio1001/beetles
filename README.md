@@ -5,7 +5,7 @@
 ## 頁面（Page View）
 
 - 邏輯與結構統一寫在 `.vue` 檔案中。
-- 樣式需寫在獨立的 `.scss` 檔案，放置於 `assets/scss/view/` 資料夾中。
+- 樣式需寫在獨立的 `.scss` 檔案，放置於 `assets/scss/page/` 資料夾中。
 - 每個頁面樣式需包裹在 `body[data-page="xxx"]` selector 中，以避免全域污染。
 - `data-page` 的值應與對應的 route `name` 一致。
 

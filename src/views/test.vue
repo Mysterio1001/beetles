@@ -459,40 +459,4 @@ const optionSelect = (obj) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.main {
-  background-color: getColor(green-02);
-  color: getColor(black);
-  padding: 0 1rem;
-
-  .section {
-    border-bottom: 1.5px solid getColor(green-04);
-    padding: 1rem 0 1rem;
-
-    .swiperBox {
-      @include center();
-    }
-
-    .box {
-      padding: 1rem;
-
-      &.cardBox {
-        display: grid;
-        gap: 2rem;
-        grid-template-columns: repeat(3, 1fr);
-
-        &.two {
-          grid-template-columns: repeat(1, 1fr);
-        }
-      }
-    }
-  }
-}
-
-.footerTestBtn {
-  cursor: pointer;
-  text-align: center;
-  color: blue;
-  text-decoration: underline;
-}
-</style>
+<style lang="scss" scoped></style>
