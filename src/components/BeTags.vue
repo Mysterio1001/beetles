@@ -138,11 +138,12 @@ watch(
   width: 100%;
   .tags {
     @include center;
-    gap: 4rem;
+    // gap: 4rem;
 
-    @include md {
-      gap: 10rem;
-    }
+    // @include md {
+    //   gap: 8rem;
+    // }
+    justify-content: space-around;
 
     .tag {
       @include center;
