@@ -212,7 +212,7 @@
           <h3>&lt;be-card&gt;&lt;/be-card&gt;</h3>
           <h3>建議搭配dispaly : grid; 使用</h3>
           <h4>支援設定imgSrc,imgAlt</h4>
-          <h4>imgPosition = "圖片位置(top, left, right) 預設為left"</h4>
+          <h4>imgPosition = "圖片位置(top, left, right) 預設為top"</h4>
           <h4>imgCover = "是否需要遮罩(Boolean)"</h4>
           <h4>imgCoverText = "遮罩內容"</h4>
           <h4>imgCoverTextRotate = "內容選轉角度 預設為45度"</h4>
@@ -255,8 +255,10 @@
               <div class="box">
                 <h4>{{ card }}</h4>
                 <h4>
+                  <span v-if="index == 1">:imgPosition = "right"</span>
+                  <span v-else>:imgPosition = "left"</span><br />
                   :darkMode = "true"<br />
-                  ::hasPadding = "false"
+                  :hasPadding = "false"
                 </h4>
                 <br />
                 <h4 v-if="index == 1">:imgPosition = "right</h4>
