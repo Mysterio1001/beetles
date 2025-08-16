@@ -53,7 +53,7 @@ const socials = [
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1.6rem;
+  margin-top: 20px;
   padding: 1rem 4rem;
   background-color: getColor(green-04);
 
