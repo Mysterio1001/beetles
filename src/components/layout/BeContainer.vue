@@ -14,7 +14,7 @@ export default {};
   @include center;
   align-items: stretch; // 該為預設
   flex-direction: column;
-  gap: 2rem;
+  gap: 20px;
 
   padding: 0 2rem;
   box-sizing: border-box;
