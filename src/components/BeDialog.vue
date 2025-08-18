@@ -17,7 +17,6 @@
         </div>
         <div class="closeBox">
           <CircleX
-            size="20"
             class="close"
             @click="closeDialog" />
         </div>
@@ -185,6 +184,13 @@ watch(
         .close {
           cursor: pointer;
           color: getColor(green-04);
+          width: 40px;
+          height: 40px;
+
+          @include sm {
+            width: 28px;
+            height: 28px;
+          }
         }
       }
 
