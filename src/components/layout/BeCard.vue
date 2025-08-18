@@ -96,54 +96,60 @@ const textRotate = computed(() => `${props.imgCoverTextRotate}deg`);
 
   &.imgTop {
     flex-direction: column;
-    // justify-content: center;
     align-items: center;
     display: block;
+  }
+  .mainImg {
+    aspect-ratio: 4/3;
+    // object-fit: cover;
+    position: relative;
 
-    .mainImg {
-      // border: 2px solid yellow;
-      // height: 20rem;
-      position: relative;
+    // @include md {
+    //   aspect-ratio: 8/5;
+    // }
 
-      img {
-        width: 100%;
-        height: 100%;
-        border-radius: radius(block);
-      }
+    @include sm {
+      aspect-ratio: 3/2;
+    }
 
-      // 圖片遮罩
-      &.imgCover:before {
-        content: "";
-        display: block;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: radius(block);
+    }
 
-        position: absolute;
-        top: 0;
-        left: 0;
+    // 圖片遮罩
+    &.imgCover:before {
+      content: "";
+      display: block;
 
-        width: 100%;
-        height: 100%;
-        background-color: rgba(getColor(white), 0.4);
-        border-radius: radius(block);
+      position: absolute;
+      top: 0;
+      left: 0;
 
-        @include center;
-      }
+      width: 100%;
+      height: 100%;
+      background-color: rgba(getColor(white), 0.4);
+      border-radius: radius(block);
 
-      // 圖片遮罩上文字
-      &.imgCover:after {
-        content: attr(data-coverText);
-        display: block;
-        width: 100%;
+      @include center;
+    }
 
-        position: absolute;
-        top: 50%;
+    // 圖片遮罩上文字
+    &.imgCover:after {
+      content: attr(data-coverText);
+      display: block;
+      width: 100%;
 
-        color: rgba(getColor(black), 0.4);
-        text-align: center;
-        font-size: 4rem;
-        font-weight: 1000;
-        // CSS 自訂變數
-        transform: translate(0, -50%) rotate(var(--text-rotate));
-      }
+      position: absolute;
+      top: 50%;
+
+      color: rgba(getColor(black), 0.4);
+      text-align: center;
+      font-size: 4rem;
+      font-weight: 1000;
+      // CSS 自訂變數
+      transform: translate(0, -50%) rotate(var(--text-rotate));
     }
   }
 
