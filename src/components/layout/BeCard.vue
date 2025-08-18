@@ -101,7 +101,6 @@ const textRotate = computed(() => `${props.imgCoverTextRotate}deg`);
   }
   .mainImg {
     aspect-ratio: 4/3;
-    // object-fit: cover;
     position: relative;
 
     // @include md {
@@ -172,9 +171,13 @@ const textRotate = computed(() => `${props.imgCoverTextRotate}deg`);
   }
 
   .content {
-    // border: 2px solid blue;
+    line-height: 1.6;
     flex: 7;
     padding: 1.5rem 1rem 1rem;
+
+    @include sm {
+      padding: 1.5rem 20px 1rem;
+    }
   }
 }
 </style>
