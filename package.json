@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@iconify-icons/simple-icons": "^1.2.74",
+    "@iconify/vue": "^5.0.0",
     "lucide-vue-next": "^0.509.0",
     "marked": "^15.0.12",
     "vue": "^3.5.13",

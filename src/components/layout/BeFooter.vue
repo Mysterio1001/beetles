@@ -9,11 +9,15 @@
     <ul>
       <li
         v-for="(item, index) in socials"
-        :key="index">
+        :key="item.name">
         <a
           :href="item.url"
+          :aria-label="item.name"
+          rel="noopener noreferrer"
           target="_blank">
-          <i :class="[item.icon, 'icon']" />
+          <Icon
+            class="icon"
+            :icon="item.icon" />
         </a>
       </li>
     </ul>
@@ -23,26 +27,31 @@
 <script setup>
 import footerLogo from "@/assets/images/logo/rwd-white-logo.svg";
 import { useI18n } from "vue-i18n";
+// 使用安裝的iconify
+import { Icon } from "@iconify/vue";
+import instagram from "@iconify-icons/simple-icons/instagram";
+import line from "@iconify-icons/simple-icons/line";
+import facebook from "@iconify-icons/simple-icons/facebook";
 
 // Refs / Reactive State 定義
 const { t } = useI18n();
 
-// 社交按鈕 這裏用的是font awesome
+// 社交按鈕 這裏用的是iconify
 const socials = [
   {
-    name: "instargram",
+    name: "instagram",
     url: "https://www.instagram.com/giraffa_beetle1001/",
-    icon: "fa-brands fa-instagram fa-2xl",
+    icon: instagram,
   },
   {
     name: "line",
     url: "https://line.me/ti/p/061ly8VaI_",
-    icon: "fa-brands fa-line fa-2xl",
+    icon: line,
   },
   {
     name: "facebook",
     url: "https://www.facebook.com/profile.php?id=100082416973415&mibextid=LQQJ4d",
-    icon: "fa-brands fa-facebook fa-2xl",
+    icon: facebook,
   },
 ];
 </script>
@@ -53,7 +62,7 @@ const socials = [
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 32px;
   padding: 1rem 4rem;
   background-color: getColor(green-04);
 
@@ -66,10 +75,14 @@ const socials = [
     @include center;
 
     gap: 4rem;
-    .icon::before {
+    a {
       color: getColor(white);
-      height: 5rem;
-      width: 5rem;
+
+      .icon {
+        // iconify 是svg 樣式可以直接設定在本體
+        height: 5rem;
+        width: 5rem;
+      }
     }
   }
 }
