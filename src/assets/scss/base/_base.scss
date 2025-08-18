@@ -1,5 +1,15 @@
 @use "../style.scss" as *;
 
+:root{
+  /* 字型堆疊：先用 Noto Sans TC，沒裝時用系統黑體 */
+  --font-sans: "Noto Sans TC", "PingFang TC", "Heiti TC",
+               "Microsoft JhengHei", system-ui, -apple-system,
+               "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Yuji Boku */
+  --font-yuji: "Yuji Boku", serif;
+}
+
 html {
   font-size: 10px;
   @include xl {
@@ -20,9 +30,13 @@ html {
 
   body {
     background-color: getColor(green-03);
-    font-family: "Noto Sans TC", serif;
+    font-family: var(--font-sans);
     color: getColor(text-light);
     font-size: 1.6rem;
+// 日文字型
+    .jp{
+      font-family: var(--font-yuji);
+    }
 
     h1,
     h2,

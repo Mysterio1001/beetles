@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/noto-sans-tc": "^5.2.6",
+    "@fontsource/yuji-boku": "^5.2.6",
     "@iconify-icons/simple-icons": "^1.2.74",
     "@iconify/vue": "^5.0.0",
     "lucide-vue-next": "^0.509.0",
