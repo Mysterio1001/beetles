@@ -86,3 +86,11 @@
   width: $icon-size;
   height: $icon-size;
 }
+
+// 多行省略
+@mixin textEllipsisMulti($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
