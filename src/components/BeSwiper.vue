@@ -142,7 +142,7 @@ const handleMove = (direction, isAuto = false) => {
 
 // 視窗寬度變動改變
 const handleResize = () => {
-  if (!beSwiper.value || !imgBox.value || !imgRefs.value.length === 0) return;
+  if (!beSwiper.value || !imgBox.value || imgRefs.value.length === 0) return;
   const width = beSwiper.value.offsetWidth;
   imgBox.value.style.width = width * siwperData.value.length + "px";
   imgRefs.value.forEach((li) => {
