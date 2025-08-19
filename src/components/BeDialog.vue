@@ -1,60 +1,70 @@
 <template>
-  <!-- 背景覆蓋層 -->
-  <div
-    class="be-coverBox"
-    v-if="visible">
+  <!-- 背景淡入 -->
+  <Transition
+    name="fade"
+    appear>
+    <!-- 背景覆蓋層 -->
     <div
-      class="be-dialog"
-      :class="{ small: type != 'custom' }">
-      <div class="top">
-        <div class="titleBox">
-          <h3 v-if="type == 'custom'">{{ title }}</h3>
-          <h3
-            class="alertTitle"
-            v-if="type == 'alert'">
-            {{ prompt || t("common.warning") }}
-          </h3>
+      class="be-coverBox"
+      v-if="visible">
+      <!-- 對話框彈出（縮放+淡入） -->
+      <Transition
+        name="pop"
+        appear>
+        <div
+          class="be-dialog"
+          :class="{ small: type != 'custom' }">
+          <div class="top">
+            <div class="titleBox">
+              <h3 v-if="type == 'custom'">{{ title }}</h3>
+              <h3
+                class="alertTitle"
+                v-if="type == 'alert'">
+                {{ prompt || t("common.warning") }}
+              </h3>
+            </div>
+            <div :class="['closeBox', { closePosition: type != 'custom' }]">
+              <CircleX
+                class="close"
+                @click="closeDialog" />
+            </div>
+          </div>
+          <!-- 客製化內容 -->
+          <div
+            v-if="type == 'custom'"
+            class="content">
+            <slot></slot>
+          </div>
+          <!-- 固定式訊息內容 -->
+          <div
+            v-if="type != 'custom'"
+            class="message">
+            {{ message }}
+          </div>
+          <!-- footer客製化插槽 -->
+          <template v-if="$slots.footer">
+            <div class="footer">
+              <slot name="footer"></slot>
+            </div>
+          </template>
+          <template v-else-if="showFooterBtn">
+            <!-- 固定式彈窗按鈕 -->
+            <div class="footer">
+              <be-btn
+                v-if="type != 'alert'"
+                @click="handleConfirm">
+                {{ t("common.confirm") }}
+              </be-btn>
+              <be-btn @click="closeDialog">
+                <span v-if="type != 'alert'">{{ t("common.cancel") }}</span>
+                <span v-else>{{ t("common.confirm") }}</span>
+              </be-btn>
+            </div>
+          </template>
         </div>
-        <div class="closeBox">
-          <CircleX
-            class="close"
-            @click="closeDialog" />
-        </div>
-      </div>
-      <!-- 客製化內容 -->
-      <div
-        v-if="type == 'custom'"
-        class="content">
-        <slot></slot>
-      </div>
-      <!-- 固定式訊息內容 -->
-      <div
-        v-if="type != 'custom'"
-        class="message">
-        {{ message }}
-      </div>
-      <!-- footer客製化插槽 -->
-      <template v-if="$slots.footer">
-        <div class="footer">
-          <slot name="footer"></slot>
-        </div>
-      </template>
-      <template v-else-if="showFooterBtn">
-        <!-- 固定式彈窗按鈕 -->
-        <div class="footer">
-          <be-btn
-            v-if="type != 'alert'"
-            @click="handleConfirm">
-            {{ t("common.confirm") }}
-          </be-btn>
-          <be-btn @click="closeDialog">
-            <span v-if="type != 'alert'">{{ t("common.cancel") }}</span>
-            <span v-else>{{ t("common.confirm") }}</span>
-          </be-btn>
-        </div>
-      </template>
+      </Transition>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <script setup>
@@ -146,10 +156,10 @@ watch(
     flex-direction: column;
     gap: 1rem;
 
-    padding: 1rem;
+    padding: 2rem;
     box-sizing: border-box;
     background-color: getColor(green-01);
-    width: 50%;
+    width: 60%;
     max-height: 80vh;
     border-radius: radius(dialog);
 
@@ -180,6 +190,16 @@ watch(
       .closeBox {
         position: absolute;
         right: 0;
+
+        &.closePosition {
+          top: calc(-3rem + 10px);
+          right: -4px;
+
+          .close {
+            width: 28px;
+            height: 28px;
+          }
+        }
 
         .close {
           cursor: pointer;
@@ -218,5 +238,28 @@ watch(
       font-size: 16px;
     }
   }
+}
+
+// 動畫css
+/* 遮罩淡入淡出 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* 對話框彈入彈出（縮放 + 輕微下移） */
+.pop-enter-active,
+.pop-leave-active {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.28s ease;
+  will-change: transform, opacity;
+}
+.pop-enter-from,
+.pop-leave-to {
+  transform: scale(0.96) translateY(8px);
+  opacity: 0;
 }
 </style>
