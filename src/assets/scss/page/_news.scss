@@ -4,14 +4,19 @@ body[data-page="news"] {
 
     .cardWrapper{
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         // place-items: center;
         gap: 2.8rem;
 
         color:getColor(text);
 
+        @include lg{
+        grid-template-columns: repeat(3,1fr);
+
+        }
+
         @include md{
-        grid-template-columns: repeat(2,2fr);
+        grid-template-columns: repeat(2,1fr);
         }
 
         @include sm{
@@ -24,7 +29,8 @@ body[data-page="news"] {
            gap:1rem;
 
            .titleBox{
-            
+            // 超過行數縮成...
+            @include textEllipsisMulti(1);
             .icon{
                 width: 2rem;
                 height: 2rem;
@@ -42,6 +48,9 @@ body[data-page="news"] {
         @include center();
         flex-direction: column;
         gap: 2rem;
+
+        padding: 12px 20px;
+        box-sizing: border-box;
         
         .imgBox{
             img{
@@ -49,9 +58,6 @@ body[data-page="news"] {
                 max-height: 50vh;
                 aspect-ratio: 4/3;
             }
-        }
-        .currentContent{
-            padding: 0 20px;
         }
     }
     .footer {

@@ -196,9 +196,6 @@ watch(
       position: relative;
       display: flex;
 
-      hr {
-      }
-
       .closeBox {
         position: absolute;
         right: 0;
