@@ -22,6 +22,10 @@
                 v-if="type == 'alert'">
                 {{ prompt || t("common.warning") }}
               </h3>
+              <!-- 分隔線 -->
+              <be-line
+                v-if="type == 'alert'"
+                :margin="false" />
             </div>
             <div :class="['closeBox', { closePosition: type != 'custom' }]">
               <CircleX
@@ -32,7 +36,11 @@
           <!-- 客製化內容 -->
           <div
             v-if="type == 'custom'"
-            class="content">
+            class="content"
+            style="
+              box-shadow: inset 0 -4px 4px -6px black,
+                inset 0 4px 4px -6px black;
+            ">
             <slot></slot>
           </div>
           <!-- 固定式訊息內容 -->
@@ -44,6 +52,7 @@
           <!-- footer客製化插槽 -->
           <template v-if="$slots.footer">
             <div class="footer">
+              <hr />
               <slot name="footer"></slot>
             </div>
           </template>
@@ -159,8 +168,8 @@ watch(
     padding: 2rem;
     box-sizing: border-box;
     background-color: getColor(green-01);
-    width: 60%;
-    max-height: 80vh;
+    width: 50%;
+    max-height: 90vh;
     border-radius: radius(dialog);
 
     color: getColor(black);
@@ -186,6 +195,9 @@ watch(
     .top {
       position: relative;
       display: flex;
+
+      hr {
+      }
 
       .closeBox {
         position: absolute;
