@@ -156,7 +156,8 @@ const textRotate = computed(() => `${props.imgCoverTextRotate}deg`);
     cursor: pointer;
     transition: transform 0.4s ease-in-out;
     &:hover {
-      transform: scale(1.03);
+      transform: translateY(-1rem);
+      box-shadow: 0 10px 10px getColor(shadow);
     }
   }
 
