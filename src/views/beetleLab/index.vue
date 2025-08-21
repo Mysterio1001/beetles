@@ -4,7 +4,13 @@
   <be-float-panel
     :title="t('lab.latestArticle')"
     side="right">
-    <div class="floatBox">abc</div>
+    <div class="floatBox">
+      <div
+        class="floatList"
+        v-for="(list, index) in floatData">
+        <p>{{ list.title }}</p>
+      </div>
+    </div>
   </be-float-panel>
 </template>
 
