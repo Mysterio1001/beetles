@@ -5,6 +5,8 @@
       { vertical: direction === 'vertical' },
       { lightMode },
       { hasMargin: margin },
+      { top: marginPosition === 'top' },
+      { bottom: marginPosition === 'bottom' },
     ]" />
 </template>
 
@@ -25,6 +27,8 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  // 單邊margin top/bottom
+  marginPosition: String,
 });
 
 const emit = defineEmits([]);
@@ -57,6 +61,13 @@ const emit = defineEmits([]);
   }
   &.hasMargin {
     margin: 1rem 0 1rem;
+
+    &.top {
+      margin: 1rem 0 0;
+    }
+    &.bottom {
+      margin: 0 0 1rem;
+    }
   }
 }
 </style>
