@@ -5,7 +5,7 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: () => import("@/views/homeView.vue"),
+    component: () => import("@/views/home/index.vue"),
     meta: {
       title: "route.home",
     },
@@ -13,7 +13,7 @@ const routes = [
   {
     path: "/test",
     name: "test",
-    component: () => import("@/views/test.vue"),
+    component: () => import("@/views/test/index.vue"),
     meta: {
       title: "route.test",
     },
@@ -21,7 +21,7 @@ const routes = [
   {
     path: "/test/testChild",
     name: "testChild",
-    component: () => import("@/views/testChild.vue"),
+    component: () => import("@/views/test/child/testChild.vue"),
     meta: {
       title: "route.testChild",
       parents: [{ path: "/test", name: "route.test" }],
@@ -30,7 +30,7 @@ const routes = [
   {
     path: "/test/testChild/jr",
     name: "testChildJr",
-    component: () => import("@/views/testChildJr.vue"),
+    component: () => import("@/views/test/child/child/testChildJr.vue"),
     meta: {
       title: "route.testChildJr",
       parents: [
@@ -42,7 +42,7 @@ const routes = [
   {
     path: "/news",
     name: "news",
-    component: () => import("@/views/newsView.vue"),
+    component: () => import("@/views/news/index.vue"),
     meta: {
       title: "route.news",
     },
@@ -50,7 +50,7 @@ const routes = [
   {
     path: "/beetle-lab",
     name: "beetleLab",
-    component: () => import("@/views/newsView.vue"),
+    component: () => import("@/views/beetleLab/index.vue"),
     meta: {
       title: "route.beetleLab",
     },
@@ -58,7 +58,7 @@ const routes = [
   {
     path: "/beetle-shop",
     name: "beetleShop",
-    component: () => import("@/views/newsView.vue"),
+    component: () => import("@/views/news/index.vue"),
     meta: {
       title: "route.beetleShop",
     },
@@ -66,7 +66,7 @@ const routes = [
   {
     path: "/beetle-bulletin",
     name: "beetleBulletin",
-    component: () => import("@/views/newsView.vue"),
+    component: () => import("@/views/news/index.vue"),
     meta: {
       title: "route.beetleBulletin",
     },
