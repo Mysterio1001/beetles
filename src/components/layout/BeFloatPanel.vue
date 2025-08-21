@@ -11,9 +11,9 @@
     <div
       class="title"
       v-if="title">
-      <h4>
+      <h6>
         {{ title }}
-      </h4>
+      </h6>
     </div>
     <div class="mainBox">
       <div class="content">
