@@ -1,0 +1,12 @@
+@use "../style.scss" as *;
+
+body[data-page="beetleLab"] {
+  // 浮動視窗
+  .floatBox {
+    .floatList {
+      p {
+        @include textEllipsisMulti(1);
+      }
+    }
+  }
+}

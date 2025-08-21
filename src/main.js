@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import i18n from "./locale";
-import "@/assets/scss/main.scss";
+import "@/style/main.scss";
 // 字體
 import "@fontsource/noto-sans-tc/400.css";
 import "@fontsource/noto-sans-tc/700.css";

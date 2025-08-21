@@ -20,10 +20,10 @@ $colors: (
   shadow: #313e3a,
   btnActive: #506d63,
   btnHover: #67897d,
-  gray-01:#d3dad8,
-  text-gray:#b1b6b4,
-  darkMode:#455c54,
-  opacity:rgba(177, 182, 180, 0.5)
+  gray-01: #d3dad8,
+  text-gray: #b1b6b4,
+  darkMode: #455c54,
+  opacity: rgba(177, 182, 180, 0.5),
 );
 
 //z-index
@@ -32,29 +32,28 @@ $z-index: (
   footer: 1000,
   dialog: 2000,
   option: 1100,
-  float: 1200
+  float: 1200,
 );
 
-// // input size  
-$input-sizes:(
-  small:(
+// // input size
+$input-sizes: (
+  small: (
     // font-size: 14px,
     padding: 5px 8px,
     icon-size: 12px,
   ),
-  default:(
+  default: (
     // font-size: 16px,
     padding: 8px 12px,
     icon-size: 16px,
   ),
-
 );
 
 // border-radius
-$borderRadius:(
+$borderRadius: (
   dialog: 36px,
   btn: 20px,
   input: 16px,
   block: 12px,
-  circle: 50%
-)
+  circle: 50%,
+);

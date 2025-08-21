@@ -30,7 +30,7 @@
 }
 
 // object flex center
-@mixin center{
+@mixin center {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,7 +41,7 @@
   $size-config: map.get($input-sizes, $size);
   $padding: map.get($size-config, padding);
   // 基礎樣式
-  
+
   padding: $padding;
   box-sizing: border-box;
   width: 100%;
