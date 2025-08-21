@@ -44,7 +44,7 @@ html {
     h4,
     h5,
     h6 {
-      font-weight: 500;
+      font-weight: 600;
       line-height: 1.6;
     }
 
@@ -67,11 +67,17 @@ html {
       font-size: 1.6rem;
     }
 
+    p {
+      font-size: 1.6rem;
+      line-height: 1.6;
+    }
+
     a {
       display: block;
       text-decoration: none;
       font-weight: bold;
       color: getColor(text);
+      line-height: 1.6;
     }
 
     input {

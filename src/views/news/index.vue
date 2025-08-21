@@ -46,7 +46,7 @@
           :alt="currentCard.title" />
       </div>
       <div class="currentContent">
-        <h5>{{ currentCard.content }}</h5>
+        <p>{{ currentCard.content }}</p>
       </div>
     </div>
     <template #footer>
