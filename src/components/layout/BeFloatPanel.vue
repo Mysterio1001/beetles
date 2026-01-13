@@ -42,7 +42,7 @@ const props = defineProps({
   title: String,
   topOffSet: {
     type: String,
-    default: "20",
+    default: "32",
   },
   side: {
     type: String,
