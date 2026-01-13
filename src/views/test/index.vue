@@ -313,14 +313,14 @@
   <be-float-panel
     side="right"
     title="浮動視窗"
-    topOffSet="40"
+    topOffSet="5"
     :initialHidden="true">
     <div class="title">
       <h3>&lt;be-float-panel&gt;&lt;/be-float-panel&gt;</h3>
       <h4>title = "標題"</h4>
       <h4>side = "置左或右"(預設左邊)</h4>
       <h4>initialHidden = "是否載入時收起"(預設展開)</h4>
-      <h4>topOffSet 輸入數字後可以改變Y軸位置(預設20%, 也支援px,rem等)</h4>
+      <h4>topOffSet 輸入數字後可以改變Y軸位置(預設32%, 也支援px,rem等)</h4>
     </div>
   </be-float-panel>
 </template>

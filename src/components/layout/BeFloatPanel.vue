@@ -98,9 +98,8 @@ const toggleMove = () => {
   position: fixed;
   //   top: 20%; 讓父元件控制位置
 
-  max-width: 96vw; // 以防超出視窗
-  background-color: getColor(gray-01);
-  opacity: 0.9;
+  max-width: 20vw; // 以防超出視窗
+  background-color: getColor(float-bgc);
   border-radius: radius(block);
   box-shadow: 0 0 8px getColor(shadow);
   z-index: z(float);
