@@ -86,7 +86,7 @@ const textRotate = computed(() => `${props.imgCoverTextRotate}deg`);
   }
 
   &.darkMode {
-    background-color: getColor(btnActive);
+    background-color: getColor(green-04);
     color: getColor(text-light);
   }
 

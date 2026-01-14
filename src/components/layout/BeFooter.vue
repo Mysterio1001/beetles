@@ -64,7 +64,7 @@ const socials = [
   align-items: center;
   margin-top: 32px;
   padding: 1rem 4rem;
-  background-color: getColor(green-04);
+  background-color: getColor(green-05);
 
   height: 10rem;
 

@@ -228,7 +228,7 @@ onMounted(() => {
           width: 100%;
           flex: 1;
 
-          border-bottom: 1px solid getColor(green-04);
+          border-bottom: 1px solid getColor(green-05);
 
           font-size: 4rem;
           line-height: 10;

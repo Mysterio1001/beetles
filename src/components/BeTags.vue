@@ -119,7 +119,7 @@ watch(
     border: 1px solid getColor(green-03);
     color: getColor(green-03);
   } @else if($type == "hover") {
-    border: 1px solid getColor(green-04);
+    border: 1px solid getColor(green-05);
     color: getColor(black);
   } @else if($type == "selected") {
     cursor: default;

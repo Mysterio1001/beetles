@@ -212,7 +212,7 @@ watch(
 
         .close {
           cursor: pointer;
-          color: getColor(green-04);
+          color: getColor(green-05);
           width: 40px;
           height: 40px;
 
