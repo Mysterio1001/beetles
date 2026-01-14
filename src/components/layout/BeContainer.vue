@@ -16,7 +16,9 @@ export default {};
   flex-direction: column;
   gap: 20px;
 
-  padding: 0 2rem;
+  padding: 0 10rem;
   box-sizing: border-box;
+
+  min-height: 72vh;
 }
 </style>

@@ -1,5 +1,7 @@
 <template>
-  <be-container v-if="!isHome">
+  <div
+    v-if="!isHome"
+    class="breadBox">
     <nav
       class="breadcrumb"
       aria-label="breadcrumb">
@@ -27,7 +29,7 @@
         </li>
       </ul>
     </nav>
-  </be-container>
+  </div>
 </template>
 
 <script setup>
@@ -77,32 +79,34 @@ const isHome = computed(() => {
 
 <style lang="scss" scoped>
 @use "sass:map";
-
-.breadcrumb {
-  ul {
-    display: flex;
-    gap: 1rem;
-
-    padding: 0 0 1.6rem 0;
-    box-sizing: border-box;
-
-    color: getColor(white);
-
-    @include md {
-      @include center;
-    }
-
-    li {
+.breadBox {
+  padding: 0 4rem;
+  .breadcrumb {
+    ul {
       display: flex;
       gap: 1rem;
 
-      a {
-        color: getColor(white);
+      padding: 0 0 1.6rem 0;
+      box-sizing: border-box;
+
+      color: getColor(white);
+
+      @include md {
+        @include center;
       }
 
-      h5 {
-        @include md {
-          font-size: 4rem;
+      li {
+        display: flex;
+        gap: 1rem;
+
+        a {
+          color: getColor(white);
+        }
+
+        h5 {
+          @include md {
+            font-size: 4rem;
+          }
         }
       }
     }

@@ -66,6 +66,8 @@ const socials = [
   padding: 1rem 4rem;
   background-color: getColor(green-04);
 
+  height: 10rem;
+
   img {
     width: 7rem;
     height: 7rem;
