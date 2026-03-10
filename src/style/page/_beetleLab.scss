@@ -1,11 +1,59 @@
 @use "../style.scss" as *;
 
 body[data-page="beetleLab"] {
-  // 浮動視窗
-  .floatBox {
-    .floatList {
-      p {
+  // 文章列表
+  .cardWrapper {
+    display: grid;
+    gap: 4rem;
+
+    padding-left: 20vw;
+    @include sm {
+      padding-left: 0;
+    }
+
+    .cardText {
+      @include center;
+      flex-direction: column;
+      align-items: start;
+      gap: 1rem;
+
+      h5 {
         @include textEllipsisMulti(1);
+      }
+      p {
+        @include textEllipsisMulti(2);
+      }
+    }
+  }
+  // 浮動視窗
+  .panel {
+    @include sm {
+      display: none;
+    }
+    .floatBox {
+      .floatList {
+        transition: transform 0.4s ease-in-out;
+        &:hover {
+          transform: translateX(-4px);
+        }
+        .listContent {
+          cursor: pointer;
+          &:hover {
+            color: getColor(btnHover);
+          }
+
+          &:active {
+            color: getColor(btnActive);
+          }
+
+          .more {
+            text-align: end;
+          }
+        }
+
+        p {
+          @include textEllipsisMulti(1);
+        }
       }
     }
   }

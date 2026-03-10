@@ -1,17 +1,41 @@
 <template>
-  <be-container>尚未開工</be-container>
-  <!-- 浮動視窗 -->
-  <be-float-panel
-    :title="t('lab.latestArticle')"
-    side="right">
-    <div class="floatBox">
-      <div
-        class="floatList"
-        v-for="(list, index) in floatData">
-        <p>{{ list.title }}</p>
-      </div>
+  <!-- 文章列表 -->
+  <be-container>
+    <div class="cardWrapper">
+      <be-card
+        v-for="(card, index) in cardsData"
+        :key="index"
+        :hasPadding="false"
+        :imgSrc="card.imgSrc"
+        imgPosition="right"
+        :clickable="true"
+        :darkMode="true">
+        <div class="cardText">
+          <h5>{{ card.title }}</h5>
+          <p class="small bold">{{ card.createDate }}</p>
+          <p>{{ card.content }}</p>
+        </div>
+      </be-card>
     </div>
-  </be-float-panel>
+    <!-- 浮動視窗 -->
+    <be-float-panel
+      :title="t('lab.latestArticle')"
+      side="left"
+      class="panel">
+      <div class="floatBox">
+        <div
+          class="floatList"
+          v-for="(list, index) in floatData">
+          <div class="listContent">
+            <p class="small">{{ list.title }}</p>
+            <p class="small bold more">MORE</p>
+          </div>
+          <!-- 底線 -->
+          <be-line marginPosition="bottom" />
+        </div>
+      </div>
+    </be-float-panel>
+  </be-container>
 </template>
 
 <script setup>
