@@ -174,11 +174,7 @@ const textRotate = computed(() => `${props.imgCoverTextRotate}deg`);
   .content {
     line-height: 1.6;
     flex: 7;
-    padding: 1.5rem 1rem 1rem;
-
-    @include sm {
-      padding: 1.5rem 20px 1rem;
-    }
+    padding: 2rem;
   }
 }
 </style>
