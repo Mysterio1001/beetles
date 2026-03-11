@@ -23,6 +23,5 @@ export function useDevice() {
       unwatch();
     }
   });
-  console.log("in", isMobile.value);
   return { isMobile, devicetype };
 }
