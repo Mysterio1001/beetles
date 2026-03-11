@@ -13,8 +13,6 @@ export function useDevice() {
   let unwatch;
 
   onMounted(() => {
-    console.log("掛載時寬度:", getView().width);
-    console.log("掛載時 isMobile:", getDevice().isMobile);
     unwatch = watchDevice((state) => {
       isMobile.value = state.isMobile;
       devicetype.value = state.device;
