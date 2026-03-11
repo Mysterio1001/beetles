@@ -2,20 +2,26 @@
   <!-- 文章列表 -->
   <be-container>
     <div class="cardWrapper">
-      <be-card
+      <router-link
         v-for="(card, index) in cardsData"
         :key="index"
-        :hasPadding="false"
-        :imgSrc="card.imgSrc"
-        imgPosition="right"
-        :clickable="true"
-        :darkMode="true">
-        <div class="cardText">
-          <h5>{{ card.title }}</h5>
-          <p class="small bold">{{ card.createDate }}</p>
-          <p>{{ card.content }}</p>
-        </div>
-      </be-card>
+        :to="{ name: 'beetleLabDetail', params: { title: card.title } }"
+        custom
+        v-slot="{ route, navigate }">
+        <be-card
+          :hasPadding="false"
+          :imgSrc="card.imgSrc"
+          imgPosition="right"
+          :clickable="true"
+          :darkMode="true"
+          @click="beforeNavigate(card, route, navigate)">
+          <div class="cardText">
+            <h5>{{ card.title }}</h5>
+            <p class="small bold">{{ card.createDate }}</p>
+            <p>{{ card.content }}</p>
+          </div>
+        </be-card>
+      </router-link>
     </div>
     <!-- 浮動視窗 -->
     <be-float-panel
@@ -40,6 +46,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { articleDataTest } from "@/api/testData";
 
@@ -51,9 +58,22 @@ const floatData = ref(articleDataTest);
 // const cardsData = ref([]) api傳入
 const cardsData = ref(articleDataTest);
 
+const router = useRouter();
+
 // Computed 計算屬性
 
 // Methods / Functions
+// 路由轉跳前 先改動他的麵包屑標題
+const beforeNavigate = (card, route, navigate) => {
+  // const targetRouter = router.resolve({
+  //   name: "beetleLabDetail",
+  //   params: { title: card.title },
+  // });
+
+  route.meta.title = card.title;
+
+  navigate();
+};
 
 // Watchers
 

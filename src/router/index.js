@@ -56,6 +56,15 @@ const routes = [
     },
   },
   {
+    path: "/beetle-lab/:title", // 動態路徑
+    name: "beetleLabDetail",
+    component: () => import("@/views/beetleLab/child/index.vue"),
+    meta: {
+      title: "route.beetleLabDetail",
+      parents: [{ path: "/beetle-lab", name: "route.beetleLab" }],
+    },
+  },
+  {
     path: "/beetle-shop",
     name: "beetleShop",
     component: () => import("@/views/news/index.vue"),
@@ -79,6 +88,12 @@ const router = createRouter({
 });
 //進入頁面更改title
 router.beforeEach((to, from, next) => {
+  // Beetle Lab文章詳細麵包屑處理
+  if (to.name === "beetleLabDetail" && to.params.title) {
+    // 強制覆蓋 meta.title 為文章標題
+    // 這樣下方的 i18n.global.t(to.meta.title) 找不到 Key 就會直接回傳標題字串
+    to.meta.title = to.params.title;
+  }
   i18n.global.t("route.home");
 
   const defaultTitle = i18n.global.t("route.default"); // 預設值
