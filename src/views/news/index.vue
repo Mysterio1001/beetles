@@ -58,10 +58,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { Bug, Megaphone, CalendarDays, NotebookPen } from "lucide-vue-next";
 import { cardsDataTest, swiperDataTest } from "@/api/testData";
+import { useDevice } from "@/utils/useDevice";
 
 const { t } = useI18n();
 
@@ -105,7 +106,7 @@ const showDialog = ref(false);
 const currentTitle = ref("");
 const currentCard = ref({});
 // RWD 監控
-const isMobile = ref(false);
+const { isMobile } = useDevice();
 
 // Computed 計算屬性
 
@@ -145,21 +146,10 @@ const handleClick = (card, index) => {
 };
 
 // 監控視窗變化
-const updateSize = () => {
-  isMobile.value = window.innerWidth <= 576;
-};
 
 // api
 
 // Watchers
 
 // Lifecycle Hooks
-onMounted(() => {
-  updateSize();
-  window.addEventListener("resize", updateSize);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener("resize", updateSize);
-});
 </script>
