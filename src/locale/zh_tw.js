@@ -3,6 +3,7 @@ import common from "./i18n/zh_tw/common.json";
 import home from "./i18n/zh_tw/home.json";
 import news from "./i18n/zh_tw/news.json";
 import lab from "./i18n/zh_tw/lab.json";
+import bulletin from "./i18n/zh_tw/bulletin.json"
 
 
 export default {
@@ -10,5 +11,6 @@ export default {
   common,
   home,
   news,
-  lab
+  lab,
+  bulletin
 };

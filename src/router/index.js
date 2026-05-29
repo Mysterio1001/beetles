@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { scrollTop } from "@/utils/scroll";
 import i18n from "@/locale/index";
 
 const routes = [
@@ -75,7 +76,7 @@ const routes = [
   {
     path: "/beetle-bulletin",
     name: "beetleBulletin",
-    component: () => import("@/views/news/index.vue"),
+    component: () => import("@/views/beetleBulletin/index.vue"),
     meta: {
       title: "route.beetleBulletin",
     },
@@ -88,6 +89,8 @@ const router = createRouter({
 });
 //進入頁面更改title
 router.beforeEach((to, from, next) => {
+  // 全路由轉換時先置頂
+  scrollTop();
   // Beetle Lab文章詳細麵包屑處理
   if (to.name === "beetleLabDetail" && to.params.title) {
     // 強制覆蓋 meta.title 為文章標題

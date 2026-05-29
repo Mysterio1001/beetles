@@ -1,2 +1,200 @@
+@use "../style.scss" as *;
+
 body[data-page="beetleBulletin"] {
+  overflow-x: hidden;
+
+  .bulletinContent {
+    width: min(100%, 112rem);
+    margin: 1rem auto 5rem;
+    padding: 3rem 3rem 12rem;
+    box-sizing: border-box;
+    background-color: getColor(white);
+    color: getColor(text);
+    text-align: center;
+    border-radius: radius(block);
+
+    h2 {
+      width: 75%;
+      margin: 0 auto 5.5rem;
+      font-size: clamp(1.8rem, 2vw, 3rem);
+      line-height: 1.6;
+
+      @include md {
+        width: 95%;
+      }
+    }
+
+    .note {
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 2rem 0 4rem;
+      font-size: clamp(2.6rem, 3vw, 4rem);
+      font-weight: 700;
+    }
+  }
+
+  .mobileHero {
+    display: none;
+    margin-bottom: 3rem;
+
+    img {
+      width: 95%;
+      border-radius: radius(block);
+    }
+
+    @include lg {
+      display: block;
+    }
+  }
+
+  .animatedHero {
+    position: relative;
+    width: 95%;
+    height: 33rem;
+    margin: 0 auto 3rem;
+    background: url("/img/img-beetle-bulletin/main-pic-no-bg.png") center /
+      cover;
+    border-radius: radius(block);
+    animation: bigBG 1.2s ease-out forwards;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      background-size: cover;
+    }
+
+    &::before {
+      left: 0;
+      width: 50.6rem;
+      height: 33rem;
+      background-image: url("/img/img-beetle-bulletin/beetle-left.png");
+      animation: runningBeetleLeft 0.8s ease-out forwards;
+    }
+
+    &::after {
+      right: 3rem;
+      width: 41.4rem;
+      height: 32.9rem;
+      background-image: url("/img/img-beetle-bulletin/beetle-right.png");
+      animation: runningBeetleRight 0.8s ease-out forwards;
+    }
+
+    .explosion {
+      position: absolute;
+      left: 12.5rem;
+      bottom: -2rem;
+      opacity: 0;
+      animation: displayExplosion 0.7s 0.64s linear forwards;
+    }
+
+    @include lg {
+      display: none;
+    }
+  }
+
+  .phone {
+    @include center;
+    gap: 2rem;
+    width: fit-content;
+    margin: 0 auto;
+    color: getColor(text);
+    font-size: 2.4rem;
+  }
+
+  .socialLinks {
+    @include center;
+    gap: 9rem;
+    margin-top: 5rem;
+
+    img {
+      width: 10rem;
+      height: 10rem;
+      transition: transform 0.3s;
+    }
+
+    a:hover img {
+      transform: translateY(-0.8rem);
+    }
+
+    @include sm {
+      gap: 6rem;
+
+      img {
+        width: 6rem;
+        height: 6rem;
+      }
+    }
+  }
+
+  @keyframes bigBG {
+    0% {
+      transform: scale(3);
+      z-index: 1001;
+    }
+    99% {
+      transform: scale(1);
+      z-index: 1001;
+    }
+    100% {
+      transform: scale(1);
+      z-index: 0;
+    }
+  }
+
+  @keyframes runningBeetleLeft {
+    0% {
+      transform: translateX(-70rem);
+      opacity: 0;
+    }
+    60% {
+      transform: translateX(10rem) rotate(-20deg);
+      opacity: 0.9;
+    }
+    80% {
+      transform: translateX(10rem) rotate(-60deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes runningBeetleRight {
+    0% {
+      transform: translateX(70rem);
+      opacity: 0;
+    }
+    60% {
+      transform: translateX(-10rem) rotate(20deg);
+      opacity: 0.9;
+    }
+    80% {
+      transform: translateX(-10rem) rotate(60deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-2rem);
+      opacity: 1;
+    }
+  }
+
+  @keyframes displayExplosion {
+    0% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+    20% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
 }
