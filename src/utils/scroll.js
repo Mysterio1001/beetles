@@ -39,3 +39,11 @@ export function listenScroll(target = window, callback) {
     target.removeEventListener("scroll", handler);
   };
 }
+
+/**
+ * 將捲軸捲動至頂部
+ * @param {Window|HTMLElement} target - 要捲動的元素，預設為 window
+ */
+export function scrollTop(target = window) {
+  target.scrollTo({ top: 0 });
+}
