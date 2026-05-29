@@ -52,6 +52,12 @@
   outline: none; /* 移除點選時的藍框 */
   transition: box-shadow 0.5s ease-in-out;
 
+  @if $size == "page" {
+    border-radius: radius(page);
+    // padding-left: 20px;
+    font-size: 16px;
+  }
+
   @if $type == "textarea" {
     min-height: 100px;
   }

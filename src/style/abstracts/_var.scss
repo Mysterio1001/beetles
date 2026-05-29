@@ -39,6 +39,11 @@ $z-index: (
 
 // // input size
 $input-sizes: (
+  page: (
+    font-size: 10px,
+    padding: 4px 4px 4px 8px,
+    icon-size: 12px,
+  ),
   small: (
     // font-size: 14px,
     padding: 5px 8px,
@@ -58,4 +63,5 @@ $borderRadius: (
   input: 16px,
   block: 12px,
   circle: 50%,
+  page: 8px,
 );

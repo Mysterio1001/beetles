@@ -17,6 +17,7 @@
       <input
         :id="inputId"
         :class="[
+          { page: size === 'page' },
           { small: size === 'small' },
           { disabled: disabled },
           { readonly: readonly },
@@ -35,7 +36,11 @@
       <component
         v-if="iconComponent && !disabled && !readonly"
         :is="iconComponent"
-        :class="['icon', { small: size === 'small' }]"
+        :class="[
+          'icon',
+          { page: size === 'page' },
+          { small: size === 'small' },
+        ]"
         @mousedown.prevent
         @click="iconClick" />
     </div>
@@ -87,7 +92,7 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  // 提供small size (僅支援input)
+  // 提供page, small,size (僅支援input)
   size: {
     type: String,
     default: "default",
@@ -204,6 +209,9 @@ const onInput = (e) => {
 
     input {
       @include fieldStyle("default");
+      &.page {
+        @include fieldStyle("default", page);
+      }
 
       &.small {
         @include fieldStyle("default", small);
@@ -229,6 +237,10 @@ const onInput = (e) => {
       opacity: 0;
 
       transition: opacity 0.3s ease-in-out;
+      &.page {
+        @include iconStyle(page);
+      }
+
       &.small {
         @include iconStyle(small);
       }

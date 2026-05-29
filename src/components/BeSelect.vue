@@ -15,7 +15,11 @@
         <input
           ref="inputRef"
           :id="selectId"
-          :class="[{ small: size === 'small' }, { disabled: disabled }]"
+          :class="[
+            { page: size === 'page' },
+            { small: size === 'small' },
+            { disabled: disabled },
+          ]"
           :value="displayLabel"
           :placeholder="placeholder"
           :disabled="disabled"
@@ -25,6 +29,7 @@
         <Bug
           :class="[
             'icon',
+            { page: size === 'page' },
             { small: size === 'small' },
             { clicked: isClicked },
             { disabled: disabled },
@@ -70,7 +75,7 @@ const props = defineProps({
   label: String, //欄位標題
   labelWidth: String, // 標題寬度
   placeholder: String, // 預設字
-  // 提供small size (僅支援input)
+  // 提供page, small,size (僅支援input)
   size: {
     type: String,
     default: "default",
@@ -107,7 +112,7 @@ const optionRef = ref(null);
 // 標題顯示
 const displayLabel = computed(() => {
   const match = props.options.find(
-    (option) => option.value == props.modelValue
+    (option) => option.value == props.modelValue,
   );
   return match ? match.label : "";
 });
@@ -199,6 +204,9 @@ onUnmounted(() => {
       input {
         @include fieldStyle("default");
         cursor: pointer;
+        &.page {
+          @include fieldStyle("default", page);
+        }
 
         &.small {
           @include fieldStyle("default", small);
@@ -216,7 +224,13 @@ onUnmounted(() => {
         right: 10px;
         color: getColor(green-03);
 
-        transition: opacity 0.3s ease-in-out, transform 0.5s ease;
+        transition:
+          opacity 0.3s ease-in-out,
+          transform 0.5s ease;
+        &.page {
+          @include iconStyle(page);
+        }
+
         &.small {
           @include iconStyle(small);
         }
