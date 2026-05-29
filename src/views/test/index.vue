@@ -10,6 +10,7 @@
           <be-swiper :data="swiperData" />
         </div>
       </div>
+      <!-- ----------- -->
       <div class="button section">
         <div class="title">
           <h2>按鈕</h2>
@@ -219,52 +220,64 @@
           <h4>hasPadding = "是否需要容器padding(Boolean)"</h4>
           <h4>darkMode = "支援暗色模式(Boolean)"</h4>
           <h4>clickable = "是否出現點擊樣式(Boolean)"</h4>
-          <div class="box cardBox">
-            <be-card
-              v-for="(card, index) in 3"
-              :key="index"
-              :hasPadding="false"
-              :imgSrc="testImg"
-              :imgCover="index == 1 ? true : false"
-              :clickable="index == 2 ? true : false"
-              :imgCoverTextRotate="30"
-              imgCoverText="Slod Out">
-              <div class="box">
-                <h3>{{ card }}</h3>
-                <p v-if="index == 1">
-                  :imgCover = "true"<br />
-                  <br />
-                  imgCoverText = "Slod Out"
-                  <br />
-                  imgCoverTextRotate="30"
-                </p>
-                <p v-else>:imgPosition = "top"</p>
+        </div>
+        <div class="box cardBox">
+          <be-card
+            v-for="(card, index) in 3"
+            :key="index"
+            :hasPadding="false"
+            :imgSrc="testImg"
+            :imgCover="index == 1 ? true : false"
+            :clickable="index == 2 ? true : false"
+            :imgCoverTextRotate="30"
+            imgCoverText="Slod Out">
+            <div class="box">
+              <h3>{{ card }}</h3>
+              <p v-if="index == 1">
+                :imgCover = "true"<br />
                 <br />
-                <p v-if="index == 2">:clickable="true"</p>
-              </div>
-            </be-card>
-          </div>
-          <div class="box cardBox two">
-            <be-card
-              v-for="(card, index) in 3"
-              :key="index"
-              :imgPosition="index == 1 ? 'right' : 'left'"
-              :darkMode="true"
-              :hasPadding="false"
-              :imgSrc="testImg">
-              <div class="box">
-                <h4>{{ card }}</h4>
-                <h4>
-                  <span v-if="index == 1">:imgPosition = "right"</span>
-                  <span v-else>:imgPosition = "left"</span><br />
-                  :darkMode = "true"<br />
-                  :hasPadding = "false"
-                </h4>
+                imgCoverText = "Slod Out"
                 <br />
-                <h4 v-if="index == 1">:imgPosition = "right</h4>
-              </div>
-            </be-card>
-          </div>
+                imgCoverTextRotate="30"
+              </p>
+              <p v-else>:imgPosition = "top"</p>
+              <br />
+              <p v-if="index == 2">:clickable="true"</p>
+            </div>
+          </be-card>
+        </div>
+        <div class="box cardBox two">
+          <be-card
+            v-for="(card, index) in 3"
+            :key="index"
+            :imgPosition="index == 1 ? 'right' : 'left'"
+            :darkMode="true"
+            :hasPadding="false"
+            :imgSrc="testImg">
+            <div class="box">
+              <h4>{{ card }}</h4>
+              <h4>
+                <span v-if="index == 1">:imgPosition = "right"</span>
+                <span v-else>:imgPosition = "left"</span><br />
+                :darkMode = "true"<br />
+                :hasPadding = "false"
+              </h4>
+              <br />
+              <h4 v-if="index == 1">:imgPosition = "right</h4>
+            </div>
+          </be-card>
+        </div>
+      </div>
+      <!-- ----------- -->
+      <div class="pagination section">
+        <div class="title">
+          <h2>分頁</h2>
+          <h3>&lt;be-pagination&gt;&lt;/be-pagination&gt;</h3>
+          <h3></h3>
+          <h4>imgPosition = "圖片位置(top, left, right) 預設為top"</h4>
+        </div>
+        <div class="box paginationBox">
+          <be-pagination />
         </div>
       </div>
     </div>
