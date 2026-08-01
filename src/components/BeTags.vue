@@ -1,198 +1,153 @@
 <template>
-  <div class="be-tag">
-    <ul class="tags">
+  <div class="be-tags">
+    <ul>
       <li
-        ref="tag"
         v-for="(tag, index) in data"
-        :key="index"
-        :class="[
-          'tag',
-          {
-            // 如果為多選擇把被點選樣式加到每一個tag上
-            selected: props.option?.multiple
-              ? selectedIndex.includes(index)
-              : selectedIndex === index,
-          },
-          { multiple: props.option?.multiple },
-          { disabled: disableTagIndex.includes(index) },
-          { responsive: responsive },
-        ]"
-        @click="tagSelect(index)">
-        <h5 class="label">
-          {{ tag.label }}
-        </h5>
-        <component
-          :is="tag.icon"
-          v-if="tag.icon"
-          class="icon" />
+        :key="tag.value ?? index">
+        <button
+          type="button"
+          :class="{
+            'is-selected': isSelected(index),
+            'is-responsive': responsive,
+          }"
+          :disabled="disabledIndices.includes(index)"
+          :aria-pressed="isSelected(index)"
+          @click="selectTag(index)">
+          <span>{{ tag.label }}</span>
+          <component
+            :is="tag.icon"
+            v-if="tag.icon"
+            aria-hidden="true" />
+        </button>
       </li>
     </ul>
   </div>
 </template>
 
 <script setup>
-import { ref, defineProps, watch } from "vue";
+import { computed, ref, watch } from "vue";
 
-// defineProps / defineEmits
 const props = defineProps({
-  data: Array, // [{label:"",value:""}]
-  option: {
-    type: Object,
-    default: () => ({}), //Vue：對於 Object 或 Array 類型的 預設值，必須用函式回傳
-  },
-  responsive: {
-    // 是否要響應式設計(小視窗時刪除標籤)
-    type: Boolean,
-    default: true,
-  },
+  data: { type: Array, default: () => [] },
+  option: { type: Object, default: () => ({}) },
+  responsive: { type: Boolean, default: true },
 });
 
 const emit = defineEmits(["tagsClick", "ready"]);
+const selected = ref([]);
+const disabledIndices = computed(() =>
+  Array.isArray(props.option.disableTagNo)
+    ? props.option.disableTagNo.map((number) => number - 1)
+    : [],
+);
 
-// Refs / Reactive State 定義
-const selectedIndex = ref([]);
-const disableTagIndex = ref([]);
+function isSelected(index) {
+  return props.option.multiple ? selected.value.includes(index) : selected.value === index;
+}
 
-// Methods / Functions
-// 點選後觸發的事件
-const tagSelect = (index) => {
-  // 如果含有禁止點選的tag
-  if (disableTagIndex.value.includes(index)) return;
+function selectTag(index) {
+  if (disabledIndices.value.includes(index)) return;
 
-  // 是否為複選
-  if (props.option?.multiple) {
-    // toogle邏輯（複選用）
-    const i = selectedIndex.value.indexOf(index);
-    if (i === -1) {
-      // 如果陣列裡沒有就加入
-      selectedIndex.value.push(index);
-      // 如果有就移除
-    } else {
-      selectedIndex.value.splice(i, 1);
-    }
+  if (props.option.multiple) {
+    const next = [...selected.value];
+    const selectedIndex = next.indexOf(index);
+    if (selectedIndex >= 0) next.splice(selectedIndex, 1);
+    else next.push(index);
+    selected.value = next;
     emit(
       "tagsClick",
-      selectedIndex.value.map((index) => props.data[index].value)
+      next.map((itemIndex) => props.data[itemIndex]?.value),
     );
-  } else {
-    // 單選
-    selectedIndex.value = index;
-    emit("tagsClick", props.data[index].value);
+    return;
   }
-};
 
-// Watchers
+  selected.value = index;
+  emit("tagsClick", props.data[index]?.value);
+}
+
 watch(
   () => props.option,
   (option) => {
-    // 預設被選擇的index
-    if (props.option?.multiple) {
-      // 複選
-      const indices = (option?.selectedTagNo || []).map((item) => item - 1);
-      selectedIndex.value = indices;
+    if (option.multiple) {
+      selected.value = (option.selectedTagNo || []).map((number) => number - 1);
       emit(
         "ready",
-        selectedIndex.value.map((i) => props.data[i]?.value)
+        selected.value.map((index) => props.data[index]?.value),
       );
-    } else {
-      // 單選
-      const index = option?.selectedTagNo - 1;
-      if (index >= 0) {
-        selectedIndex.value = index;
-        emit("ready", props.data[selectedIndex.value]?.value);
-      }
+      return;
     }
-    // 被禁用的index
-    disableTagIndex.value = Array.isArray(props.option?.disableTagNo)
-      ? props.option.disableTagNo.map((tag) => tag - 1)
-      : [];
+
+    const index = Number(option.selectedTagNo || 0) - 1;
+    selected.value = index;
+    if (index >= 0) emit("ready", props.data[index]?.value);
   },
-  { immediate: true } // 進入畫面時執行一次
+  { deep: true, immediate: true },
 );
 </script>
 
 <style lang="scss" scoped>
-@mixin tagsStyle($type: "default") {
-  @if ($type == "default") {
-    cursor: pointer;
-    background-color: getColor(green-01);
-    border: 1px solid getColor(green-03);
-    color: getColor(green-03);
-  } @else if($type == "hover") {
-    border: 1px solid getColor(green-05);
-    color: getColor(black);
-  } @else if($type == "selected") {
-    cursor: default;
-    background-color: getColor(green-03);
-    border: 1px solid getColor(white);
-    color: getColor(green-01);
-  } @else if($type == "disabled") {
+.be-tags ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.be-tags button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  min-height: 4.4rem;
+  padding: 0.8rem 1.6rem;
+  border: 1px solid rgba(216, 255, 230, 0.2);
+  border-radius: 999px;
+  background: rgba(229, 255, 238, 0.09);
+  color: rgba(240, 255, 246, 0.76);
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-3px);
+    color: #fff;
+    border-color: rgba(216, 255, 230, 0.38);
+  }
+
+  &.is-selected {
+    background: rgba(152, 240, 183, 0.24);
+    border-color: rgba(180, 255, 205, 0.5);
+    color: #fff;
+  }
+
+  &:disabled {
+    opacity: 0.4;
     cursor: not-allowed;
-    background-color: getColor(shadow);
-    border: 1px solid getColor(green-03);
-    color: getColor(green-03);
+  }
+
+  svg {
+    width: 1.8rem;
   }
 }
 
-.be-tag {
-  width: 100%;
-  .tags {
-    @include center;
-    gap: 4rem;
+@media (max-width: 560px) {
+  .be-tags button.is-responsive {
+    width: 4.8rem;
+    padding: 0;
 
-    @include md {
-      justify-content: space-around;
+    span {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
     }
 
-    .tag {
-      @include center;
-      @include tagsStyle("default");
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-
-      padding: 8px 20px;
-      box-sizing: border-box;
-      min-width: 4.8rem;
-      border-radius: radius(block);
-
-      &:hover {
-        @include tagsStyle("hover");
-      }
-
-      &.selected {
-        @include tagsStyle("selected");
-
-        &.multiple {
-          cursor: pointer;
-        }
-      }
-
-      &.disabled {
-        @include tagsStyle("disabled");
-      }
-
-      .icon {
-        width: 2rem;
-        height: 2rem;
-      }
-
-      @include md {
-        &.responsive {
-          border-radius: radius(circle);
-          min-width: auto;
-          padding: 16px;
-
-          .label {
-            display: none;
-          }
-
-          .icon {
-            width: 4rem;
-            height: 4rem;
-          }
-        }
-      }
+    svg {
+      width: 2.1rem;
     }
   }
 }

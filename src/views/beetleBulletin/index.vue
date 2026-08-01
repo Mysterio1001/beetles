@@ -48,35 +48,20 @@
 
 <script setup>
 import { useI18n } from "vue-i18n";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { Phone } from "lucide-vue-next";
+import { getBulletinContact } from "@/services/bulletinService";
 
 const { t } = useI18n();
+const contact = getBulletinContact();
 
-const bulletin = {
+const bulletin = computed(() => ({
   intro: t("bulletin.intro"),
   note: t("bulletin.note"),
   headline: t("bulletin.headline"),
-  phone: "0922-180-199",
-  socialLinks: [
-    {
-      label: "Facebook",
-      url: "https://www.facebook.com/profile.php?id=100082416973415&mibextid=LQQJ4d",
-      icon: "/img/img-beetle-bulletin/icon_facebook.png",
-    },
-    {
-      label: "LINE",
-      url: "https://line.me/ti/p/061ly8VaI_",
-      icon: "/img/img-beetle-bulletin/icon_LINE.png",
-    },
-    {
-      label: "Instagram",
-      url: "https://www.instagram.com/giraffa_beetle1001/",
-      icon: "/img/img-beetle-bulletin/icon_IG.png",
-    },
-  ],
-};
+  ...contact,
+}));
 
-const headlineLines = computed(() => bulletin.headline.split("\n"));
-const phoneDigits = computed(() => bulletin.phone.replace(/\D/g, ""));
+const headlineLines = computed(() => bulletin.value.headline.split("\n"));
+const phoneDigits = computed(() => bulletin.value.phone.replace(/\D/g, ""));
 </script>

@@ -1,24 +1,21 @@
 <!-- 外部容器統一設定 -->
 <template>
-  <div class="be-container">
-    <slot></slot>
-  </div>
+  <div class="be-container"><slot /></div>
 </template>
-
-<script>
-export default {};
-</script>
 
 <style lang="scss" scoped>
 .be-container {
-  @include center;
-  align-items: stretch; // 該為預設
+  display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 2rem;
+  width: min(144rem, calc(100% - clamp(3.2rem, 8vw, 11.2rem)));
+  min-height: 64vh;
+  margin: 0 auto;
+}
 
-  padding: 0 10rem;
-  box-sizing: border-box;
-
-  min-height: 72vh;
+@media (max-width: 560px) {
+  .be-container {
+    width: calc(100% - 2rem);
+  }
 }
 </style>

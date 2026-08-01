@@ -1,10 +1,10 @@
 <template>
   <div
-    class="be-swiper"
-    ref="beSwiper">
+    ref="beSwiper"
+    class="be-swiper">
     <ul
-      class="imgBox"
-      ref="imgBox">
+      ref="imgBox"
+      class="imgBox">
       <li
         v-for="(img, index) in siwperData"
         :key="index"
@@ -33,16 +33,7 @@
 </template>
 
 <script setup>
-import {
-  ref,
-  defineProps,
-  defineEmits,
-  onBeforeUpdate,
-  watch,
-  onMounted,
-  onBeforeUnmount,
-  nextTick,
-} from "vue";
+import { ref, defineProps, onBeforeUpdate, watch, onMounted, onBeforeUnmount, nextTick } from "vue";
 import { CircleChevronLeft, CircleChevronRight } from "lucide-vue-next";
 
 // defineProps / defineEmits
@@ -64,8 +55,6 @@ const props = defineProps({
   //   default: false,
   // },
 });
-
-const emit = defineEmits([]);
 
 // Refs / Reactive State 定義
 
@@ -96,9 +85,7 @@ const setImgRefs = (el) => {
 // 圖片移動
 const imgBoxTransform = (width, isTransition = true, time = "0.8") => {
   imgBox.value.style.transform = `translateX(-${width * currentIndex.value}px)`;
-  imgBox.value.style.transition = isTransition
-    ? `transform ${time}s linear`
-    : "none";
+  imgBox.value.style.transition = isTransition ? `transform ${time}s linear` : "none";
 };
 
 // let isActive = false; // 防止連續點擊
@@ -169,7 +156,7 @@ watch(
       imgBoxTransform(imgWidth, false);
     });
   },
-  { immediate: true }
+  { immediate: true },
 );
 // Lifecycle Hooks
 onBeforeUpdate(() => {

@@ -3,18 +3,18 @@
   <be-container>
     <div class="cardWrapper">
       <router-link
-        v-for="(card, index) in cardsData"
-        :key="index"
+        v-for="card in cardsData"
+        :key="card.id"
+        v-slot="{ navigate }"
         :to="{ name: 'beetleLabDetail', params: { title: card.title } }"
-        custom
-        v-slot="{ route, navigate }">
+        custom>
         <be-card
-          :hasPadding="false"
-          :imgSrc="card.imgSrc"
-          imgPosition="right"
+          :has-padding="false"
+          :img-src="card.imgSrc"
+          img-position="right"
           :clickable="true"
-          :darkMode="true"
-          @click="beforeNavigate(card, route, navigate)">
+          :dark-mode="true"
+          @click="navigate">
           <div class="cardText">
             <h5>{{ card.title }}</h5>
             <p class="small bold">{{ card.createDate }}</p>
@@ -30,14 +30,15 @@
       class="panel">
       <div class="floatBox">
         <div
-          class="floatList"
-          v-for="(list, index) in floatData">
+          v-for="list in floatData"
+          :key="list.id"
+          class="floatList">
           <div class="listContent">
             <p class="small">{{ list.title }}</p>
             <p class="small bold more">MORE</p>
           </div>
           <!-- 底線 -->
-          <be-line marginPosition="bottom" />
+          <be-line margin-position="bottom" />
         </div>
       </div>
     </be-float-panel>
@@ -46,36 +47,14 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { articleDataTest } from "@/api/testData";
+import { getArticles } from "@/services/articleService";
 
 // Refs / Reactive State 定義
 const { t } = useI18n();
 
 // const floatData = ref([]) api傳入
-const floatData = ref(articleDataTest);
+const floatData = ref(getArticles());
 // const cardsData = ref([]) api傳入
-const cardsData = ref(articleDataTest);
-
-const router = useRouter();
-
-// Computed 計算屬性
-
-// Methods / Functions
-// 路由轉跳前 先改動他的麵包屑標題
-const beforeNavigate = (card, route, navigate) => {
-  // const targetRouter = router.resolve({
-  //   name: "beetleLabDetail",
-  //   params: { title: card.title },
-  // });
-
-  route.meta.title = card.title;
-
-  navigate();
-};
-
-// Watchers
-
-// Lifecycle Hooks
+const cardsData = ref(getArticles());
 </script>

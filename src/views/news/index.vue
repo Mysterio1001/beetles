@@ -11,13 +11,13 @@
     <!-- 消息內容卡片   -->
     <div class="cardWrapper">
       <be-card
-        v-for="(card, index) in filterData"
-        :key="index"
-        :imgSrc="card.imgSrc"
-        :imgAlt="card.title"
-        :imgPosition="isMobile ? 'left' : 'top'"
+        v-for="card in filterData"
+        :key="card.id"
+        :img-src="card.imgSrc"
+        :img-alt="card.title"
+        :img-position="isMobile ? 'left' : 'top'"
         :clickable="true"
-        @click="handleClick(card, index)">
+        @click="handleClick(card)">
         <div class="cardContent">
           <div class="titleBox">
             <h5>
@@ -38,7 +38,7 @@
   <be-dialog
     v-model:visible="showDialog"
     :title="currentTitle"
-    :showFooterBtn="false">
+    :show-footer-btn="false">
     <div class="currentCard">
       <div class="imgBox">
         <img
@@ -58,10 +58,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { Bug, Megaphone, CalendarDays, NotebookPen } from "lucide-vue-next";
-import { cardsDataTest, swiperDataTest } from "@/api/testData";
+import { getNewsItems, getNewsSlides } from "@/services/newsService";
 import { useDevice } from "@/utils/useDevice";
 
 const { t } = useI18n();
@@ -69,35 +69,19 @@ const { t } = useI18n();
 const tagsOption = {
   selectedTagNo: 1, // 預設點選
 };
-const tagsData = [
-  {
-    label: t("news.all"),
-    value: "all",
-    icon: Bug,
-  },
-  {
-    label: t("news.announcement"),
-    value: "announcement",
-    icon: Megaphone,
-  },
-  {
-    label: t("news.event"),
-    value: "event",
-    icon: CalendarDays,
-  },
-  {
-    label: t("news.breedingInfo"),
-    value: "breedingInfo",
-    icon: NotebookPen,
-  },
-];
+const tagsData = computed(() => [
+  { label: t("news.all"), value: "all", icon: Bug },
+  { label: t("news.announcement"), value: "announcement", icon: Megaphone },
+  { label: t("news.event"), value: "event", icon: CalendarDays },
+  { label: t("news.breedingInfo"), value: "breedingInfo", icon: NotebookPen },
+]);
 // Refs / Reactive State 定義
 
 // const swiperData = ref([]) api傳入
-const swiperData = ref(swiperDataTest);
+const swiperData = ref(getNewsSlides());
 // const cardsData = ref([]) api傳入
 // 傳入的照片需要統一大小
-const cardsData = ref(cardsDataTest);
+const cardsData = ref(getNewsItems());
 const filterData = ref([]);
 // tags 點選後的值
 const currentTag = ref("");
@@ -139,7 +123,7 @@ const newsFilter = (val) => {
 };
 
 // 卡片點選
-const handleClick = (card, index) => {
+const handleClick = (card) => {
   currentTitle.value = card.title;
   showDialog.value = true;
   currentCard.value = card;

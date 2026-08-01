@@ -1,10 +1,7 @@
-dist/
-build/
-lib/
-bin/
-node_modules/
-.idea/
-.vscode/
-public/
-src/assets/ 
-src/locale/
+dist
+node_modules
+public
+src/views/test
+src/views/beetleLab/child
+src/style/page/_test.scss
+package-lock.json

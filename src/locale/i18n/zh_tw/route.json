@@ -3,9 +3,14 @@
   "home": "首頁",
   "news": "最新消息",
   "beetleLab": "甲蟲研究所",
+  "beetleLabDetail": "文章詳情",
   "beetleShop": "翅鞘商店",
   "beetleBulletin": "羽錄情報",
-  "test": "測試",
-  "testChild":"測試之子",
-  "testChildJr":"測試之孫"
+  "product": "商品詳情",
+  "login": "會員登入",
+  "signup": "會員註冊",
+  "cart": "購物車",
+  "checkout": "結帳",
+  "orderComplete": "訂單完成",
+  "notFound": "找不到頁面"
 }

@@ -9,8 +9,8 @@
       { isMovingRight: isMovingRight },
     ]">
     <div
-      class="title"
-      v-if="title">
+      v-if="title"
+      class="title">
       <h6>
         {{ title }}
       </h6>
@@ -19,8 +19,10 @@
       <div class="content">
         <slot></slot>
       </div>
-      <div
+      <button
         :class="['toggleIcon', { iconRotate: isMovingLeft || isMovingRight }]"
+        type="button"
+        :aria-label="title"
         @click="toggleMove">
         <ChevronsLeft
           v-if="side == 'left'"
@@ -28,13 +30,13 @@
         <ChevronsRight
           v-else
           class="icon" />
-      </div>
+      </button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits, computed } from "vue";
+import { ref, defineProps, computed } from "vue";
 import { ChevronsRight, ChevronsLeft } from "lucide-vue-next";
 
 // defineProps / defineEmits
@@ -53,8 +55,6 @@ const props = defineProps({
     default: false,
   },
 });
-
-const emit = defineEmits([]);
 
 // Refs / Reactive State 定義
 
@@ -106,7 +106,9 @@ const toggleMove = () => {
 
   color: getColor(text);
 
-  transition: transform 0.3s ease-in-out, translate 0.5s linear;
+  transition:
+    transform 0.3s ease-in-out,
+    translate 0.5s linear;
 
   &:hover:not(.isMovingLeft, .isMovingRight) {
     transform: scale(1.05);

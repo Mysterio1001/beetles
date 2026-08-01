@@ -1,287 +1,146 @@
 <template>
   <div
     class="be-select"
-    ref="selectRef">
+    :class="[`be-select--${size}`, { 'has-error': error }]">
     <label
-      class="label"
+      v-if="label"
       :for="selectId"
       :style="{ width: labelWidth }">
-      <h4>{{ label }}</h4>
+      {{ label }}
     </label>
-    <!-- 前方插槽 -->
     <slot name="prefix" />
-    <div class="selectBox">
-      <div class="innerSelect">
-        <input
-          ref="inputRef"
-          :id="selectId"
-          :class="[
-            { page: size === 'page' },
-            { small: size === 'small' },
-            { disabled: disabled },
-          ]"
-          :value="displayLabel"
-          :placeholder="placeholder"
-          :disabled="disabled"
-          @click="toggleDrop"
-          readonly />
-        <!-- i-con -->
-        <Bug
-          :class="[
-            'icon',
-            { page: size === 'page' },
-            { small: size === 'small' },
-            { clicked: isClicked },
-            { disabled: disabled },
-          ]"
-          @click="toggleDrop" />
-      </div>
-      <div
-        ref="optionRef"
-        :class="['option', { dropUp: isOutOfView }]"
-        v-if="optionVisible">
-        <ul>
-          <li
-            v-for="(option, index) in options"
-            :key="option.value"
-            @click="handleSelect(option.value)">
-            {{ option.label }}
-          </li>
-        </ul>
-      </div>
+    <div class="be-select__control">
+      <select
+        :id="selectId"
+        :value="modelValue"
+        :disabled="disabled"
+        :aria-invalid="Boolean(error)"
+        :aria-describedby="error ? `${selectId}-error` : undefined"
+        @change="handleChange">
+        <option
+          v-if="placeholder"
+          value=""
+          disabled>
+          {{ placeholder }}
+        </option>
+        <option
+          v-for="option in options"
+          :key="option.value"
+          :value="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+      <ChevronDown aria-hidden="true" />
     </div>
-    <!-- 後方插槽 -->
     <slot name="suffix" />
+    <p
+      v-if="error"
+      :id="`${selectId}-error`"
+      class="be-select__error">
+      {{ error }}
+    </p>
   </div>
 </template>
 
 <script setup>
-import {
-  ref,
-  defineProps,
-  defineEmits,
-  computed,
-  onMounted,
-  onUnmounted,
-  watch,
-  nextTick,
-} from "vue";
-import { Bug } from "lucide-vue-next";
-import { listenScroll } from "@/utils/scroll";
+import { ref } from "vue";
+import { ChevronDown } from "lucide-vue-next";
 
-// defineProps / defineEmits
 const props = defineProps({
-  modelValue: String, // 父元件v-model
-  label: String, //欄位標題
-  labelWidth: String, // 標題寬度
-  placeholder: String, // 預設字
-  // 提供page, small,size (僅支援input)
-  size: {
-    type: String,
-    default: "default",
-  },
-  // 禁用
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  // options 內容物 {label:"",value:""}
-  options: {
-    type: Array,
-    required: true,
-  },
+  modelValue: { type: [String, Number], default: "" },
+  label: { type: String, default: "" },
+  labelWidth: { type: String, default: "" },
+  placeholder: { type: String, default: "" },
+  size: { type: String, default: "default" },
+  disabled: { type: Boolean, default: false },
+  options: { type: Array, required: true },
+  error: { type: String, default: "" },
 });
 
 const emit = defineEmits(["update:modelValue", "select"]);
+const selectId = ref(`select-${Math.random().toString(36).slice(2, 9)}`);
 
-// Refs / Reactive State 定義
-const stopListen = ref(); // 存放移除監聽的函式
-// select id 唯一值
-const selectId = ref(`select-${Math.random().toString(36).slice(2, 8)}`);
-// select on/off
-const optionVisible = ref(false);
-const isClicked = ref(false);
-// 元件失焦
-const selectRef = ref(null);
-// 監控option與視窗底部的距離
-const isOutOfView = ref(false);
-const inputRef = ref(null);
-const optionRef = ref(null);
-
-// Computed 計算屬性
-// 標題顯示
-const displayLabel = computed(() => {
-  const match = props.options.find(
-    (option) => option.value == props.modelValue,
-  );
-  return match ? match.label : "";
-});
-
-// Methods / Functions
-// 下拉式開關
-const toggleDrop = () => {
-  if (!props.disabled) {
-    optionVisible.value = !optionVisible.value;
-    isClicked.value = !isClicked.value;
-  }
-};
-
-// 選擇選項
-const handleSelect = (val) => {
-  toggleDrop();
-  if (!val && val != 0) return;
-  const optionObj = props.options.find((option) => option.value == val);
-  emit("update:modelValue", val);
-  emit("select", optionObj);
-};
-
-// 元件失焦
-const clickOutside = (event) => {
-  if (selectRef.value && !selectRef.value.contains(event.target)) {
-    optionVisible.value = false;
-    isClicked.value = false;
-    stopListen.value?.(); // 關閉 scroll 監聽
-  }
-};
-
-// 計算距離
-const calculateIsOutOfView = () => {
-  // 計算inputRef的定位點(會回傳物件top, bottom, left, right , height , width
-  const inputRect = inputRef.value.getBoundingClientRect();
-  // optionRef的高
-  const optionHeight = optionVisible.value ? optionRef.value.offsetHeight : 0;
-  //  inputRef 和 視窗底部距離(下方空間)
-  const spaceBelow = window.innerHeight - inputRect.bottom;
-  //   如果下方空間小於option的高
-  isOutOfView.value = optionHeight > spaceBelow;
-};
-
-// Watchers
-watch(optionVisible, (visible) => {
-  if (visible) {
-    nextTick(() => {
-      calculateIsOutOfView();
-    });
-  }
-});
-
-// Lifecycle Hooks
-onMounted(() => {
-  stopListen.value = listenScroll(window, () => calculateIsOutOfView());
-  window.addEventListener("resize", calculateIsOutOfView);
-
-  document.addEventListener("mousedown", clickOutside);
-});
-
-onUnmounted(() => {
-  stopListen.value?.();
-  window.removeEventListener("resize", calculateIsOutOfView);
-  document.removeEventListener("mousedown", clickOutside);
-});
+function handleChange(event) {
+  const option = props.options.find((item) => String(item.value) === event.target.value);
+  const value = option?.value ?? event.target.value;
+  emit("update:modelValue", value);
+  emit("select", option);
+}
 </script>
 
 <style lang="scss" scoped>
-@use "sass:map";
-// select 樣式
-
 .be-select {
-  @include center;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.8rem 1.2rem;
+  width: 100%;
 
-  padding: 1.6rem 0;
-  box-sizing: border-box;
+  label {
+    color: rgba(240, 255, 246, 0.82);
+    font-weight: 700;
+  }
+}
 
-  .selectBox {
-    position: relative;
-    flex: 1;
+.be-select__control {
+  position: relative;
 
-    .innerSelect {
-      @include center;
-      position: relative;
+  select {
+    width: 100%;
+    min-height: 4.4rem;
+    appearance: none;
+    padding: 0.8rem 4rem 0.8rem 1.3rem;
+    border: 1px solid rgba(218, 255, 231, 0.22);
+    border-radius: 1.4rem;
+    background: rgba(235, 255, 242, 0.11);
+    color: #effff5;
+    cursor: pointer;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      box-shadow 160ms ease;
 
-      flex: 1;
-
-      input {
-        @include fieldStyle("default");
-        cursor: pointer;
-        &.page {
-          @include fieldStyle("default", page);
-        }
-
-        &.small {
-          @include fieldStyle("default", small);
-        }
-
-        &.disabled {
-          @include fieldStyle($status: "disabled");
-        }
-      }
-      .icon {
-        @include iconStyle(default);
-        cursor: pointer;
-
-        position: absolute;
-        right: 10px;
-        color: getColor(green-03);
-
-        transition:
-          opacity 0.3s ease-in-out,
-          transform 0.5s ease;
-        &.page {
-          @include iconStyle(page);
-        }
-
-        &.small {
-          @include iconStyle(small);
-        }
-
-        &.clicked {
-          transform: rotate(180deg);
-        }
-
-        &.disabled {
-          cursor: not-allowed;
-        }
-      }
+    &:hover:not(:disabled) {
+      background: rgba(235, 255, 242, 0.17);
+      border-color: rgba(218, 255, 231, 0.38);
     }
-    .option {
-      cursor: pointer;
 
-      position: absolute;
+    &:disabled {
+      opacity: 0.48;
+      cursor: not-allowed;
+    }
 
-      bottom: 0;
-      transform: translateY(104%);
-
-      width: 100%;
-      border: 0.5px solid getColor(green-03);
-      border-radius: radius("input");
-
-      z-index: z(option);
-
-      &.dropUp {
-        bottom: auto;
-        top: 0;
-        transform: translateY(-104%);
-      }
-
-      ul {
-        width: 100%;
-        border-radius: radius("tags");
-
-        overflow-y: auto;
-
-        li {
-          @include fieldStyle("default");
-          border: 0.5px solid getColor(green-02);
-          border-radius: radius(0);
-          font-size: clamp(10px, 2rem, 16px);
-
-          &:hover {
-            background-color: getColor(gray-01);
-          }
-        }
-      }
+    option {
+      background: #123b2a;
+      color: #effff5;
     }
   }
+
+  svg {
+    position: absolute;
+    top: 50%;
+    right: 1.2rem;
+    width: 1.8rem;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+}
+
+.be-select--page .be-select__control select,
+.be-select--small .be-select__control select {
+  min-height: 3.6rem;
+  padding-block: 0.5rem;
+  border-radius: 1rem;
+  font-size: 1.3rem;
+}
+
+.be-select__error {
+  grid-column: 2;
+  color: #ffc3c3;
+  font-size: 1.3rem;
+}
+
+.has-error select {
+  border-color: #ffaaaa;
 }
 </style>

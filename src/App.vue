@@ -1,12 +1,34 @@
 <template>
-  <be-header />
-  <be-breadcrumb></be-breadcrumb>
-  <router-view />
-  <be-footer />
+  <a
+    class="skip-link"
+    href="#main-content"
+    >{{ t("common.skipToContent") }}</a
+  >
+  <BeHeader />
+  <BeBreadcrumb />
+  <main
+    id="main-content"
+    tabindex="-1">
+    <RouterView />
+  </main>
+  <BeFooter />
 </template>
 
 <script setup>
-// 元件已經全域引用
-</script>
+import { watch } from "vue";
+import { useI18n } from "vue-i18n";
 
-<style lang="scss"></style>
+import { syncDocumentLanguage } from "@/locale";
+import { updateDocumentMeta } from "@/router";
+
+const { locale, t } = useI18n();
+
+watch(
+  locale,
+  () => {
+    syncDocumentLanguage();
+    updateDocumentMeta();
+  },
+  { immediate: true },
+);
+</script>

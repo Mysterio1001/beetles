@@ -13,8 +13,7 @@ export const passwordRules = {
 // 回傳一個Boolean
 export function validatePassword(pwd) {
   const rules = passwordRules;
-  if (pwd.length < rules.minLength || pwd.length > rules.maxLength)
-    return false;
+  if (pwd.length < rules.minLength || pwd.length > rules.maxLength) return false;
   if (rules.requireUppercase && !/[A-Z]/.test(pwd)) return false;
   if (rules.requireLowercase && !/[a-z]/.test(pwd)) return false;
   if (rules.requireNumber && !/[0-9]/.test(pwd)) return false;

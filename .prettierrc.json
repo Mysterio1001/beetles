@@ -1,5 +1,9 @@
 {
+  "printWidth": 100,
   "semi": true,
+  "singleQuote": false,
   "singleAttributePerLine": true,
-  "bracketSameLine": true
+  "bracketSameLine": true,
+  "trailingComma": "all",
+  "vueIndentScriptAndStyle": false
 }

@@ -1,180 +1,151 @@
 <template>
-  <div
+  <article
+    class="be-card glass-surface"
     :class="[
-      'be-card',
-      { hasPadding: hasPadding },
-      { darkMode: darkMode },
-      { imgTop: imgPosition == 'top' },
-      { imgRight: imgPosition == 'right' },
-      { clickable: clickable },
-    ]">
-    <!-- 圖片放置位置 -->
+      `be-card--image-${imgPosition}`,
+      {
+        'has-padding': hasPadding,
+        'is-dark': darkMode,
+        'is-clickable': clickable,
+      },
+    ]"
+    :role="clickable ? 'button' : undefined"
+    :tabindex="clickable ? 0 : undefined"
+    @click="activate"
+    @keydown.enter="activate"
+    @keydown.space.prevent="activate">
     <div
-      :class="['mainImg', { imgCover: imgCover }]"
       v-if="imgSrc"
-      :data-coverText="imgCoverText"
+      class="be-card__image"
+      :class="{ 'has-cover': imgCover }"
+      :data-cover-text="imgCoverText"
       :style="{ '--text-rotate': textRotate }">
-      <!-- 建立style變數 -->
-      <!-- --*** 為CSS變數 -->
       <img
         :src="imgSrc"
-        :alt="imgAlt" />
+        :alt="imgAlt"
+        loading="lazy" />
     </div>
-    <!-- 內容放置位置 -->
-    <div class="content">
-      <slot></slot>
-    </div>
-  </div>
+    <div class="be-card__content"><slot /></div>
+  </article>
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits, computed } from "vue";
+import { computed } from "vue";
 
-// defineProps / defineEmits
 const props = defineProps({
-  imgPosition: {
-    type: String,
-    default: "top",
-  },
-  hasPadding: {
-    type: Boolean,
-    default: true,
-  },
-  darkMode: {
-    type: Boolean,
-    default: false,
-  },
-  imgCoverTextRotate: {
-    type: Number,
-    default: 45,
-  },
-  imgSrc: String,
-  imgAlt: String,
-  imgCover: Boolean,
-  imgCoverText: String,
-  clickable: Boolean,
+  imgPosition: { type: String, default: "top" },
+  hasPadding: { type: Boolean, default: true },
+  darkMode: { type: Boolean, default: false },
+  imgCoverTextRotate: { type: Number, default: 45 },
+  imgSrc: { type: String, default: "" },
+  imgAlt: { type: String, default: "" },
+  imgCover: { type: Boolean, default: false },
+  imgCoverText: { type: String, default: "" },
+  clickable: { type: Boolean, default: false },
 });
 
-const emit = defineEmits([]);
-
-// Refs / Reactive State 定義
-
-// Computed 計算屬性
+const emit = defineEmits(["click"]);
 const textRotate = computed(() => `${props.imgCoverTextRotate}deg`);
-// Methods / Functions
 
-// Watchers
-
-// Lifecycle Hooks
+function activate(event) {
+  if (props.clickable) emit("click", event);
+}
 </script>
 
 <style lang="scss" scoped>
-@use "sass:map";
-
 .be-card {
-  // border: 1px solid black;
   display: flex;
-
-  background-color: getColor(green-01);
-  box-shadow: 0 0 8px getColor(shadow);
-
-  border-radius: radius(block);
+  min-width: 0;
   overflow: hidden;
+  border-radius: 2.4rem;
+  background: rgba(232, 255, 240, 0.13);
+  color: #eafff1;
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
 
-  &.hasPadding {
-    padding: 1.5rem;
+.be-card.has-padding {
+  padding: 1.4rem;
+}
+
+.be-card.is-dark {
+  background: rgba(7, 40, 28, 0.72);
+}
+
+.be-card--image-top {
+  flex-direction: column;
+}
+
+.be-card--image-right {
+  flex-direction: row-reverse;
+}
+
+.be-card.is-clickable {
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-0.7rem);
+    border-color: rgba(218, 255, 231, 0.38);
+    box-shadow: 0 2.4rem 5rem rgba(0, 24, 13, 0.3);
   }
 
-  &.darkMode {
-    background-color: getColor(green-04);
-    color: getColor(text-light);
+  &:active {
+    transform: translateY(-0.2rem) scale(0.99);
+  }
+}
+
+.be-card__image {
+  position: relative;
+  flex: 3;
+  min-width: 0;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 1.6rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 360ms ease;
   }
 
-  &.imgRight {
-    flex-direction: row-reverse;
+  &.has-cover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(235, 255, 242, 0.42);
   }
 
-  &.imgTop {
+  &.has-cover::after {
+    content: attr(data-cover-text);
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    width: 100%;
+    color: rgba(8, 44, 29, 0.58);
+    font-size: 3rem;
+    font-weight: 900;
+    text-align: center;
+    transform: translateY(-50%) rotate(var(--text-rotate));
+  }
+}
+
+.is-clickable:hover .be-card__image img {
+  transform: scale(1.035);
+}
+
+.be-card__content {
+  flex: 7;
+  min-width: 0;
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+@media (max-width: 640px) {
+  .be-card--image-right {
     flex-direction: column;
-    align-items: center;
-    display: block;
-  }
-  .mainImg {
-    aspect-ratio: 4/3;
-    position: relative;
-
-    // @include md {
-    //   aspect-ratio: 8/5;
-    // }
-
-    @include sm {
-      aspect-ratio: 3/2;
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-      border-radius: radius(block);
-    }
-
-    // 圖片遮罩
-    &.imgCover:before {
-      content: "";
-      display: block;
-
-      position: absolute;
-      top: 0;
-      left: 0;
-
-      width: 100%;
-      height: 100%;
-      background-color: rgba(getColor(white), 0.4);
-      border-radius: radius(block);
-
-      @include center;
-    }
-
-    // 圖片遮罩上文字
-    &.imgCover:after {
-      content: attr(data-coverText);
-      display: block;
-      width: 100%;
-
-      position: absolute;
-      top: 50%;
-
-      color: rgba(getColor(black), 0.4);
-      text-align: center;
-      font-size: 4rem;
-      font-weight: 1000;
-      // CSS 自訂變數
-      transform: translate(0, -50%) rotate(var(--text-rotate));
-    }
-  }
-
-  &.clickable {
-    cursor: pointer;
-    transition: transform 0.4s ease-in-out;
-    &:hover {
-      transform: translateY(-1rem);
-      box-shadow: 0 10px 10px getColor(shadow);
-    }
-  }
-
-  .mainImg {
-    flex: 3;
-
-    img {
-      width: 100%;
-      height: 100%;
-      border-radius: radius(block);
-    }
-  }
-
-  .content {
-    line-height: 1.6;
-    flex: 7;
-    padding: 2rem;
   }
 }
 </style>

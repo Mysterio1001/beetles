@@ -3,9 +3,14 @@
   "home": "Home",
   "news": "News",
   "beetleLab": "Beetle Lab",
+  "beetleLabDetail": "Article",
   "beetleShop": "Beetle Shop",
   "beetleBulletin": "Beetle Bulletin",
-  "test": "Test",
-  "testChild":"Test Child",
-  "testChildJr":"Test Child Jr"
+  "product": "Product",
+  "login": "Sign In",
+  "signup": "Sign Up",
+  "cart": "Cart",
+  "checkout": "Checkout",
+  "orderComplete": "Order Complete",
+  "notFound": "Page Not Found"
 }

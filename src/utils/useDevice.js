@@ -1,5 +1,5 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
-import { getDevice, watchDevice, getView } from "@mysterio1001/toolkit";
+import { getDevice, watchDevice } from "@mysterio1001/toolkit";
 
 /**
  * @function useDevice

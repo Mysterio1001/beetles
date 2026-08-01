@@ -1,274 +1,248 @@
 <template>
   <div
-    class="be-input"
-    v-if="type != 'textarea'">
-    <!-- 前方插槽 -->
+    class="be-field"
+    :class="[`be-field--${size}`, { 'has-error': error }]">
     <label
-      class="label"
       v-if="label"
       :for="inputId"
       :style="{ width: labelWidth }">
-      <h4>
-        {{ label }}
-      </h4>
+      {{ label }}
     </label>
     <slot name="prefix" />
-    <div :class="['innerInput', { hasValue: modelValue }]">
+
+    <div
+      v-if="type !== 'textarea'"
+      class="be-field__control">
       <input
+        v-bind="$attrs"
         :id="inputId"
-        :class="[
-          { page: size === 'page' },
-          { small: size === 'small' },
-          { disabled: disabled },
-          { readonly: readonly },
-        ]"
         :value="modelValue"
         :type="currentType"
         :placeholder="placeholder"
-        @input="onInput"
-        @keydown.enter="handleEnter"
         :maxlength="maxlength"
         :readonly="readonly"
         :disabled="disabled"
+        :aria-invalid="Boolean(error)"
+        :aria-describedby="error ? `${inputId}-error` : undefined"
+        @input="onInput"
+        @keydown.enter="handleEnter"
         @compositionstart="isComposing = true"
         @compositionend="isComposing = false" />
-      <!-- icon 集合 -->
-      <component
-        v-if="iconComponent && !disabled && !readonly"
-        :is="iconComponent"
-        :class="[
-          'icon',
-          { page: size === 'page' },
-          { small: size === 'small' },
-        ]"
-        @mousedown.prevent
-        @click="iconClick" />
+      <button
+        v-if="showAction"
+        class="be-field__action"
+        type="button"
+        :aria-label="actionLabel"
+        @click="handleAction">
+        <EyeOff
+          v-if="type === 'password' && eyeIsOpen"
+          aria-hidden="true" />
+        <Eye
+          v-else-if="type === 'password'"
+          aria-hidden="true" />
+        <X
+          v-else
+          aria-hidden="true" />
+      </button>
     </div>
-    <!-- 後方插槽 -->
-    <slot name="suffix" />
-  </div>
-  <div
-    :class="['textarea', { labelTop: labelTop }]"
-    v-else>
-    <label
-      class="label"
-      v-if="label"
-      :for="inputId">
-      <h4>{{ label }}</h4>
-    </label>
-    <div class="innerTextarea">
+
+    <div
+      v-else
+      class="be-field__control be-field__control--textarea">
       <textarea
+        v-bind="$attrs"
         :id="inputId"
         :value="modelValue"
         :placeholder="placeholder"
-        @keydown.enter="handleEnter"
-        @input="onInput"
         :maxlength="maxlength"
         :readonly="readonly"
         :disabled="disabled"
+        :aria-invalid="Boolean(error)"
+        :aria-describedby="error ? `${inputId}-error` : undefined"
+        @input="onInput"
+        @keydown.enter="handleEnter"
         @compositionstart="isComposing = true"
         @compositionend="isComposing = false" />
     </div>
+
+    <slot name="suffix" />
+    <p
+      v-if="error"
+      :id="`${inputId}-error`"
+      class="be-field__error">
+      {{ error }}
+    </p>
   </div>
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits, computed } from "vue";
-import { CircleX, Eye, EyeClosed } from "lucide-vue-next";
+import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { Eye, EyeOff, X } from "lucide-vue-next";
+
 import { filterAlphaNumeric } from "@/utils/inputFilters";
 
-// defineProps / defineEmits
+defineOptions({ inheritAttrs: false });
+
 const props = defineProps({
-  modelValue: String, // 父元件v-model
-  type: {
-    type: String, // 類型text, password
-    default: "text",
-  },
-  label: String, //欄位標題
-  labelWidth: String, // 標題寬度
-  placeholder: String, // 預設字
-  // 提供textarea標題在上方
-  labelTop: {
-    type: Boolean,
-    default: false,
-  },
-  // 提供page, small,size (僅支援input)
-  size: {
-    type: String,
-    default: "default",
-  },
-  // 可清除按鈕 (僅支援input)
-  clearable: {
-    type: Boolean,
-    default: true,
-  },
-  // 唯獨
-  readonly: {
-    type: Boolean,
-    default: false,
-  },
-  // 禁用
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  // 最大字元數
-  maxlength: Number,
+  modelValue: { type: [String, Number], default: "" },
+  type: { type: String, default: "text" },
+  label: { type: String, default: "" },
+  labelWidth: { type: String, default: "" },
+  placeholder: { type: String, default: "" },
+  labelTop: { type: Boolean, default: false },
+  size: { type: String, default: "default" },
+  clearable: { type: Boolean, default: true },
+  readonly: { type: Boolean, default: false },
+  disabled: { type: Boolean, default: false },
+  maxlength: { type: Number, default: undefined },
+  error: { type: String, default: "" },
 });
 
-const emit = defineEmits([
-  "update:modelValue",
-  "update:type",
-  "enter",
-  "input",
-]);
-
-// Refs / Reactive State 定義
-// input id 唯一值
-const inputId = ref(`input-${Math.random().toString(36).slice(2, 8)}`);
-// 密碼查看icon 切換
+const emit = defineEmits(["update:modelValue", "enter", "input"]);
+const { t } = useI18n();
+const inputId = ref(`input-${Math.random().toString(36).slice(2, 9)}`);
 const eyeIsOpen = ref(false);
-// 是否正在組字(中日等需要組字的輸入法判斷)
 const isComposing = ref(false);
 
-// Computed 計算屬性
 const currentType = computed(() => {
-  if (props.type !== "password") {
-    return props.type;
-  } else {
-    return eyeIsOpen.value ? "text" : "password";
-  }
+  if (props.type !== "password") return props.type;
+  return eyeIsOpen.value ? "text" : "password";
 });
 
-// icon集合管理
-const iconComponent = computed(() => {
-  if (props.type == "password") {
-    return eyeIsOpen.value ? Eye : EyeClosed;
-  } else if (props.clearable) {
-    return CircleX;
-  }
+const showAction = computed(
+  () =>
+    !props.disabled &&
+    !props.readonly &&
+    (props.type === "password" || (props.clearable && String(props.modelValue).length)),
+);
+
+const actionLabel = computed(() => {
+  if (props.type !== "password") return t("common.clearField");
+  return t(eyeIsOpen.value ? "common.hidePassword" : "common.showPassword");
 });
 
-// Methods / Functions
-const toggleEye = () => {
-  eyeIsOpen.value = !eyeIsOpen.value;
-};
+function handleAction() {
+  if (props.type === "password") eyeIsOpen.value = !eyeIsOpen.value;
+  else emit("update:modelValue", "");
+}
 
-// input內容清除
-const clear = () => {
-  emit("update:modelValue", "");
-};
+function handleEnter() {
+  if (!isComposing.value) emit("enter");
+}
 
-const iconClick = () => {
+function onInput(event) {
+  let value = event.target.value;
   if (props.type === "password") {
-    toggleEye();
-  } else {
-    clear();
+    value = filterAlphaNumeric(value);
+    event.target.value = value;
   }
-};
-
-// Enter的行為
-const handleEnter = () => {
-  // 如果在組字就返回
-  if (isComposing.value) return;
-  // 空白不執行
-  if (!props.modelValue) return;
-  emit("enter");
-};
-
-// input的行爲
-const onInput = (e) => {
-  const val = e.target.value;
-  if (props.type == "password") {
-    const filtered = filterAlphaNumeric(val);
-    e.target.value = filtered; // 過濾的值重新塞入
-    emit("update:modelValue", filtered);
-    emit("input", filtered);
-  } else {
-    emit("update:modelValue", val);
-    emit("input", val);
-  }
-};
+  emit("update:modelValue", value);
+  emit("input", value);
+}
 </script>
 
 <style lang="scss" scoped>
-@use "sass:map";
+.be-field {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.8rem 1.2rem;
+  width: 100%;
 
-.be-input {
-  @include center;
-  gap: 2rem;
-
-  padding: 1.6rem 0;
-  box-sizing: border-box;
-
-  .innerInput {
-    @include center;
-    position: relative;
-
-    flex: 1;
-
-    input {
-      @include fieldStyle("default");
-      &.page {
-        @include fieldStyle("default", page);
-      }
-
-      &.small {
-        @include fieldStyle("default", small);
-      }
-
-      &.disabled {
-        @include fieldStyle($status: "disabled");
-      }
-      &.readonly {
-        @include fieldStyle($status: "readonly");
-      }
-    }
-    &.hasValue:hover .icon {
-      cursor: pointer;
-      opacity: 1;
-    }
-    .icon {
-      @include iconStyle(default);
-
-      position: absolute;
-      right: 10px;
-      color: getColor(green-01-1);
-      opacity: 0;
-
-      transition: opacity 0.3s ease-in-out;
-      &.page {
-        @include iconStyle(page);
-      }
-
-      &.small {
-        @include iconStyle(small);
-      }
-    }
+  label {
+    color: rgba(240, 255, 246, 0.82);
+    font-weight: 700;
   }
 }
 
-.textarea {
-  @include center;
-  gap: 2rem;
-  align-items: start;
+.be-field__control {
+  position: relative;
 
-  padding: 1.6rem 0;
-  box-sizing: border-box;
+  input,
+  textarea {
+    width: 100%;
+    min-height: 4.4rem;
+    padding: 0.8rem 4.2rem 0.8rem 1.3rem;
+    border: 1px solid rgba(218, 255, 231, 0.22);
+    border-radius: 1.4rem;
+    background: rgba(235, 255, 242, 0.11);
+    color: #effff5;
+    outline: 0;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      box-shadow 160ms ease;
 
-  .innerTextarea {
-    flex: 1;
-    textarea {
-      @include fieldStyle("textarea");
+    &::placeholder {
+      color: rgba(220, 248, 230, 0.42);
+    }
+
+    &:hover:not(:disabled, :read-only) {
+      background: rgba(235, 255, 242, 0.16);
+      border-color: rgba(218, 255, 231, 0.38);
+    }
+
+    &:focus-visible {
+      border-color: #a8f7c1;
+      box-shadow: 0 0 0 3px rgba(136, 239, 171, 0.18);
+    }
+
+    &:disabled,
+    &:read-only {
+      opacity: 0.55;
+      cursor: not-allowed;
     }
   }
 
-  &.labelTop {
-    flex-direction: column;
-
-    .innerTextarea {
-      width: 100%;
-    }
+  textarea {
+    min-height: 12rem;
+    resize: vertical;
+    padding-right: 1.3rem;
   }
+}
+
+.be-field__action {
+  position: absolute;
+  top: 50%;
+  right: 0.7rem;
+  display: grid;
+  place-items: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: rgba(231, 255, 239, 0.62);
+  cursor: pointer;
+  transform: translateY(-50%);
+
+  &:hover {
+    background: rgba(224, 255, 235, 0.12);
+    color: #fff;
+  }
+
+  svg {
+    width: 1.7rem;
+  }
+}
+
+.be-field--page input,
+.be-field--small input {
+  min-height: 3.6rem;
+  border-radius: 1rem;
+  font-size: 1.3rem;
+}
+
+.be-field__error {
+  grid-column: 2;
+  color: #ffc3c3;
+  font-size: 1.3rem;
+}
+
+.has-error input,
+.has-error textarea {
+  border-color: #ffaaaa;
 }
 </style>

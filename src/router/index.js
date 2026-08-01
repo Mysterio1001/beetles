@@ -1,119 +1,122 @@
-import { createRouter, createWebHistory } from "vue-router";
-import { scrollTop } from "@/utils/scroll";
-import i18n from "@/locale/index";
+import { createRouter, createWebHashHistory } from "vue-router";
+
+import i18n from "@/locale";
+
+const placeholder = () => import("@/views/system/PagePlaceholder.vue");
 
 const routes = [
   {
     path: "/",
     name: "home",
     component: () => import("@/views/home/index.vue"),
-    meta: {
-      title: "route.home",
-    },
-  },
-  {
-    path: "/test",
-    name: "test",
-    component: () => import("@/views/test/index.vue"),
-    meta: {
-      title: "route.test",
-    },
-  },
-  {
-    path: "/test/testChild",
-    name: "testChild",
-    component: () => import("@/views/test/child/testChild.vue"),
-    meta: {
-      title: "route.testChild",
-      parents: [{ path: "/test", name: "route.test" }],
-    },
-  },
-  {
-    path: "/test/testChild/jr",
-    name: "testChildJr",
-    component: () => import("@/views/test/child/child/testChildJr.vue"),
-    meta: {
-      title: "route.testChildJr",
-      parents: [
-        { path: "/test", name: "route.test" },
-        { path: "/test/testChild", name: "route.testChild" },
-      ],
-    },
+    meta: { titleKey: "route.home" },
   },
   {
     path: "/news",
     name: "news",
     component: () => import("@/views/news/index.vue"),
-    meta: {
-      title: "route.news",
-    },
+    meta: { titleKey: "route.news" },
   },
   {
     path: "/beetle-lab",
     name: "beetleLab",
     component: () => import("@/views/beetleLab/index.vue"),
-    meta: {
-      title: "route.beetleLab",
-    },
+    meta: { titleKey: "route.beetleLab" },
   },
   {
-    path: "/beetle-lab/:title", // 動態路徑
+    path: "/beetle-lab/:title",
     name: "beetleLabDetail",
-    component: () => import("@/views/beetleLab/child/index.vue"),
+    component: placeholder,
     meta: {
-      title: "route.beetleLabDetail",
-      parents: [{ path: "/beetle-lab", name: "route.beetleLab" }],
+      titleKey: "route.beetleLabDetail",
+      parents: [{ path: "/beetle-lab", titleKey: "route.beetleLab" }],
     },
   },
   {
     path: "/beetle-shop",
     name: "beetleShop",
-    component: () => import("@/views/news/index.vue"),
+    component: placeholder,
+    meta: { titleKey: "route.beetleShop" },
+  },
+  {
+    path: "/beetle-shop/:productId",
+    name: "product",
+    component: placeholder,
     meta: {
-      title: "route.beetleShop",
+      titleKey: "route.product",
+      parents: [{ path: "/beetle-shop", titleKey: "route.beetleShop" }],
     },
   },
   {
     path: "/beetle-bulletin",
     name: "beetleBulletin",
     component: () => import("@/views/beetleBulletin/index.vue"),
+    meta: { titleKey: "route.beetleBulletin" },
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: placeholder,
+    meta: { titleKey: "route.login" },
+  },
+  {
+    path: "/signup",
+    name: "signup",
+    component: placeholder,
     meta: {
-      title: "route.beetleBulletin",
+      titleKey: "route.signup",
+      parents: [{ path: "/login", titleKey: "route.login" }],
     },
+  },
+  {
+    path: "/cart",
+    name: "cart",
+    component: placeholder,
+    meta: { titleKey: "route.cart" },
+  },
+  {
+    path: "/checkout",
+    name: "checkout",
+    component: placeholder,
+    meta: {
+      titleKey: "route.checkout",
+      parents: [{ path: "/cart", titleKey: "route.cart" }],
+    },
+  },
+  {
+    path: "/order-complete",
+    name: "orderComplete",
+    component: placeholder,
+    meta: { titleKey: "route.orderComplete" },
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "notFound",
+    component: () => import("@/views/system/NotFound.vue"),
+    meta: { titleKey: "route.notFound" },
   },
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
+  scrollBehavior() {
+    return { top: 0, left: 0 };
+  },
 });
-//進入頁面更改title
-router.beforeEach((to, from, next) => {
-  // 全路由轉換時先置頂
-  scrollTop();
-  // Beetle Lab文章詳細麵包屑處理
-  if (to.name === "beetleLabDetail" && to.params.title) {
-    // 強制覆蓋 meta.title 為文章標題
-    // 這樣下方的 i18n.global.t(to.meta.title) 找不到 Key 就會直接回傳標題字串
-    to.meta.title = to.params.title;
-  }
-  i18n.global.t("route.home");
 
-  const defaultTitle = i18n.global.t("route.default"); // 預設值
-  const pageTitle = i18n.global.t(to.meta.title);
-  if (pageTitle) {
-    document.title = pageTitle + "－" + defaultTitle;
-  } else {
-    document.title = defaultTitle;
-  }
-  // 以to.name建立data-page 屬性
-  if (to.name) {
-    document.body.dataset.page = to.name;
-  } else {
-    document.body.removeAttribute("data-page");
-  }
+export function updateDocumentMeta(route = router.currentRoute.value) {
+  const siteTitle = i18n.global.t("route.default");
+  const pageTitle = route?.meta?.titleKey ? i18n.global.t(route.meta.titleKey) : "";
 
-  next();
+  document.title = pageTitle ? `${pageTitle}｜${siteTitle}` : siteTitle;
+
+  if (route?.name) document.body.dataset.page = String(route.name);
+  else delete document.body.dataset.page;
+}
+
+router.afterEach((to) => {
+  updateDocumentMeta(to);
 });
 
 export default router;

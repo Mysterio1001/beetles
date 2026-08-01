@@ -11,10 +11,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from "vue";
-
-// defineProps / defineEmits
-const props = defineProps({
+defineProps({
   // 垂直 horizontal | vertical
   direction: { type: String, default: "horizontal" },
   // 淺色模式
@@ -30,18 +27,6 @@ const props = defineProps({
   // 單邊margin top/bottom
   marginPosition: String,
 });
-
-const emit = defineEmits([]);
-
-// Refs / Reactive State 定義
-
-// Computed 計算屬性
-
-// Methods / Functions
-
-// Watchers
-
-// Lifecycle Hooks
 </script>
 
 <style lang="scss" scoped>
