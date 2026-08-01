@@ -3,7 +3,7 @@ artifact_type: Specification
 artifact_id: SPEC-BEETLES-VUE3-REBUILD-001
 workflow_id: beetles-vue3-rebuild-20260801
 core_version: 1.0.1
-status: Draft
+status: Approved
 inputs:
   - docs/project/requirements/beetles-vue3-rebuild-requirements.md
   - docs/project/knowledge-base.md
@@ -13,7 +13,7 @@ deferred:
   - 真實後端、資料庫、身分驗證、郵件、物流與金流整合。
   - Vitest、Vue Test Utils、Playwright E2E 與 CI 自動化測試。
 handoff: plan-tickets after approval
-approval: Pending user approval
+approval: "Approved by user on 2026-08-01; evidence: explicit response '核准' to SPEC-BEETLES-VUE3-REBUILD-001"
 ---
 
 # Beetles Vue 3 全站重建 Specification
