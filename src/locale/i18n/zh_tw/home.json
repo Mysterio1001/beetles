@@ -1,1 +1,15 @@
-{}
+{
+  "primaryAction": "探索翅鞘商店",
+  "secondaryAction": "閱讀飼育紀錄",
+  "brandSection": "關於甲蟲羽錄",
+  "productsEyebrow": "RECENT ARRIVALS",
+  "productsTitle": "近期到貨",
+  "productsDescription": "精選狀態與來源清楚的個體，點擊查看商品詳情。",
+  "viewProduct": "查看商品",
+  "allProducts": "查看全部商品",
+  "articlesEyebrow": "BREEDING NOTES",
+  "articlesTitle": "最新飼育紀錄",
+  "articlesDescription": "把每一次觀察整理成下一次飼育的可靠參考。",
+  "readArticle": "閱讀紀錄",
+  "allArticles": "前往甲蟲研究所"
+}

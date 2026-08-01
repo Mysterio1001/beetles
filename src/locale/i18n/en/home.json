@@ -1,1 +1,15 @@
-{}
+{
+  "primaryAction": "Explore the shop",
+  "secondaryAction": "Read breeding journals",
+  "brandSection": "About Recording of Beetles",
+  "productsEyebrow": "RECENT ARRIVALS",
+  "productsTitle": "Recent arrivals",
+  "productsDescription": "Selected beetles with clear condition and provenance. Open a card for details.",
+  "viewProduct": "View product",
+  "allProducts": "View all products",
+  "articlesEyebrow": "BREEDING NOTES",
+  "articlesTitle": "Latest breeding journals",
+  "articlesDescription": "Careful observations shaped into reliable references for the next breeding cycle.",
+  "readArticle": "Read journal",
+  "allArticles": "Visit the Beetle Lab"
+}
