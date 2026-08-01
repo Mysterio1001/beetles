@@ -1,7 +1,18 @@
 {
+  "eyebrow": "FIELD NOTES & EVENTS",
+  "title": "Latest news",
+  "description": "Follow breeding milestones, event announcements, and practical care knowledge from Recording of Beetles.",
   "all": "All",
   "announcement": "Announcement",
   "event": "Event",
   "breedingInfo": "Breeding Info",
-  "go": "GO!"
+  "featured": "Featured stories",
+  "previousSlide": "Previous story",
+  "nextSlide": "Next story",
+  "goToSlide": "Go to story {number}",
+  "listTitle": "News list",
+  "readMore": "Read full story",
+  "publishedAt": "Published {date}",
+  "emptyTitle": "No stories match this category",
+  "emptyBody": "Choose another category to continue browsing."
 }

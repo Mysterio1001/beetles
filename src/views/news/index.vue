@@ -1,139 +1,277 @@
 <template>
-  <be-container>
-    <!-- 幻燈片 -->
-    <be-swiper :data="swiperData" />
-    <!-- 過濾點選tags -->
-    <be-tags
-      :data="tagsData"
-      :option="tagsOption"
-      @tags-click="newsFilter"
-      @ready="newsFilter" />
-    <!-- 消息內容卡片   -->
-    <div class="cardWrapper">
-      <be-card
-        v-for="card in filterData"
-        :key="card.id"
-        :img-src="card.imgSrc"
-        :img-alt="card.title"
-        :img-position="isMobile ? 'left' : 'top'"
-        :clickable="true"
-        @click="handleClick(card)">
-        <div class="cardContent">
-          <div class="titleBox">
-            <h5>
-              <span>
-                <component
-                  :is="currentIcon(card.type)"
-                  class="icon" />
-              </span>
-              {{ card.title }}
-            </h5>
+  <div class="news-page">
+    <header class="news-intro">
+      <p class="news-eyebrow">{{ t("news.eyebrow") }}</p>
+      <h1>{{ t("news.title") }}</h1>
+      <p>{{ t("news.description") }}</p>
+    </header>
+
+    <section
+      class="news-carousel glass-surface"
+      :aria-label="t('news.featured')">
+      <div class="news-carousel__media">
+        <Transition
+          name="news-slide"
+          mode="out-in">
+          <img
+            :key="currentSlide.id"
+            :src="currentSlide.image"
+            :alt="currentSlide.title" />
+        </Transition>
+      </div>
+      <div class="news-carousel__content">
+        <p class="news-eyebrow">{{ t("news.featured") }}</p>
+        <Transition
+          name="news-copy"
+          mode="out-in">
+          <div
+            :key="currentSlide.id"
+            aria-live="polite">
+            <h2>{{ currentSlide.title }}</h2>
+            <p>{{ currentSlide.description }}</p>
           </div>
-          <p class="contentBox">{{ card.content }}</p>
+        </Transition>
+
+        <div class="news-carousel__controls">
+          <button
+            type="button"
+            :aria-label="t('news.previousSlide')"
+            @click="moveSlide(-1)">
+            <ArrowLeft aria-hidden="true" />
+          </button>
+          <div class="news-carousel__dots">
+            <button
+              v-for="(slide, index) in page.slides"
+              :key="slide.id"
+              type="button"
+              :class="{ 'is-active': index === currentSlideIndex }"
+              :aria-label="t('news.goToSlide', { number: index + 1 })"
+              :aria-current="index === currentSlideIndex ? 'true' : undefined"
+              @click="selectSlide(index)" />
+          </div>
+          <button
+            type="button"
+            :aria-label="t('news.nextSlide')"
+            @click="moveSlide(1)">
+            <ArrowRight aria-hidden="true" />
+          </button>
         </div>
-      </be-card>
-    </div>
-  </be-container>
-  <!-- 消息彈窗 -->
-  <be-dialog
-    v-model:visible="showDialog"
-    :title="currentTitle"
-    :show-footer-btn="false">
-    <div class="currentCard">
-      <div class="imgBox">
+      </div>
+    </section>
+
+    <section
+      class="news-list"
+      aria-labelledby="news-list-title">
+      <header class="news-list__header">
+        <h2 id="news-list-title">{{ t("news.listTitle") }}</h2>
+        <div
+          class="news-categories"
+          role="group"
+          :aria-label="t('news.listTitle')">
+          <button
+            v-for="category in categories"
+            :key="category.value"
+            type="button"
+            :class="{ 'is-active': activeCategory === category.value }"
+            :aria-pressed="activeCategory === category.value"
+            @click="activeCategory = category.value">
+            <component
+              :is="category.icon"
+              aria-hidden="true" />
+            {{ category.label }}
+            <span>{{ categoryCount(category.value) }}</span>
+          </button>
+        </div>
+      </header>
+
+      <div
+        v-if="filteredItems.length"
+        class="news-grid">
+        <button
+          v-for="item in filteredItems"
+          :key="item.id"
+          class="news-card glass-surface"
+          type="button"
+          @click="openItem(item.id)">
+          <span class="news-card__image">
+            <img
+              :src="item.image"
+              :alt="item.title"
+              loading="lazy" />
+            <span class="news-card__category">
+              <component
+                :is="categoryIcon(item.category)"
+                aria-hidden="true" />
+              {{ t(`news.${item.category}`) }}
+            </span>
+          </span>
+          <span class="news-card__content">
+            <time :datetime="item.date">{{ formatDate(item.date) }}</time>
+            <strong>{{ item.title }}</strong>
+            <span>{{ item.content }}</span>
+            <span class="news-card__action">
+              {{ t("news.readMore") }}
+              <ArrowUpRight aria-hidden="true" />
+            </span>
+          </span>
+        </button>
+      </div>
+
+      <div
+        v-else
+        class="news-empty glass-surface">
+        <SearchX aria-hidden="true" />
+        <h3>{{ t("news.emptyTitle") }}</h3>
+        <p>{{ t("news.emptyBody") }}</p>
+      </div>
+    </section>
+
+    <BeDialog
+      v-model:visible="dialogVisible"
+      :title="selectedItem?.title || ''"
+      :show-footer-btn="false"
+      @close="closeItem">
+      <article
+        v-if="selectedItem"
+        class="news-detail">
         <img
-          :src="currentCard.imgSrc"
-          :alt="currentCard.title" />
-      </div>
-      <div class="currentContent">
-        <p>{{ currentCard.content }}</p>
-      </div>
-    </div>
-    <template #footer>
-      <div class="footer">
-        <a href="">{{ `➤ ${t("news.go")}` }}</a>
-      </div>
-    </template>
-  </be-dialog>
+          :src="selectedItem.image"
+          :alt="selectedItem.title" />
+        <div class="news-detail__meta">
+          <span>
+            <component
+              :is="categoryIcon(selectedItem.category)"
+              aria-hidden="true" />
+            {{ t(`news.${selectedItem.category}`) }}
+          </span>
+          <time :datetime="selectedItem.date">
+            {{ t("news.publishedAt", { date: formatDate(selectedItem.date) }) }}
+          </time>
+        </div>
+        <p>{{ selectedItem.content }}</p>
+      </article>
+    </BeDialog>
+  </div>
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { Bug, Megaphone, CalendarDays, NotebookPen } from "lucide-vue-next";
-import { getNewsItems, getNewsSlides } from "@/services/newsService";
-import { useDevice } from "@/utils/useDevice";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  Bug,
+  CalendarDays,
+  Megaphone,
+  NotebookPen,
+  SearchX,
+} from "lucide-vue-next";
 
-const { t } = useI18n();
+import {
+  canAutoplayNewsCarousel,
+  filterNewsItems,
+  getNewsItemById,
+  getNewsPageData,
+} from "@/services/newsService";
 
-const tagsOption = {
-  selectedTagNo: 1, // 預設點選
-};
-const tagsData = computed(() => [
-  { label: t("news.all"), value: "all", icon: Bug },
-  { label: t("news.announcement"), value: "announcement", icon: Megaphone },
-  { label: t("news.event"), value: "event", icon: CalendarDays },
-  { label: t("news.breedingInfo"), value: "breedingInfo", icon: NotebookPen },
-]);
-// Refs / Reactive State 定義
+const { locale, t } = useI18n();
+const page = computed(() => getNewsPageData(locale.value));
+const activeCategory = ref("all");
+const currentSlideIndex = ref(0);
+const dialogVisible = ref(false);
+const selectedItemId = ref("");
+const prefersReducedMotion = ref(false);
+let carouselTimer;
+let motionQuery;
 
-// const swiperData = ref([]) api傳入
-const swiperData = ref(getNewsSlides());
-// const cardsData = ref([]) api傳入
-// 傳入的照片需要統一大小
-const cardsData = ref(getNewsItems());
-const filterData = ref([]);
-// tags 點選後的值
-const currentTag = ref("");
-// 彈窗相關
-const showDialog = ref(false);
-const currentTitle = ref("");
-const currentCard = ref({});
-// RWD 監控
-const { isMobile } = useDevice();
-
-// Computed 計算屬性
-
-// Methods / Functions
-
-// 根據類型顯示icon
-const currentIcon = (type) => {
-  switch (type) {
-    case "announcement":
-      return Megaphone;
-    case "event":
-      return CalendarDays;
-    case "breedingInfo":
-      return NotebookPen;
-    default:
-      return Bug;
-  }
-};
-// 消息過濾
-const newsFilter = (val) => {
-  // 如果是已經點選的不執行
-  if (val === currentTag.value) return;
-  // 儲存這次點選的值
-  currentTag.value = val;
-  if (val === "all") {
-    filterData.value = cardsData.value;
-  } else {
-    filterData.value = cardsData.value.filter((item) => item.type === val);
-  }
+const categoryIcons = {
+  all: Bug,
+  announcement: Megaphone,
+  event: CalendarDays,
+  breedingInfo: NotebookPen,
 };
 
-// 卡片點選
-const handleClick = (card) => {
-  currentTitle.value = card.title;
-  showDialog.value = true;
-  currentCard.value = card;
-};
+const categories = computed(() =>
+  Object.keys(categoryIcons).map((value) => ({
+    value,
+    label: t(`news.${value}`),
+    icon: categoryIcons[value],
+  })),
+);
 
-// 監控視窗變化
+const currentSlide = computed(() => page.value.slides[currentSlideIndex.value]);
+const filteredItems = computed(() => filterNewsItems(page.value.items, activeCategory.value));
+const selectedItem = computed(() =>
+  selectedItemId.value ? getNewsItemById(locale.value, selectedItemId.value) : null,
+);
 
-// api
+function categoryIcon(category) {
+  return categoryIcons[category] || Bug;
+}
 
-// Watchers
+function categoryCount(category) {
+  return filterNewsItems(page.value.items, category).length;
+}
 
-// Lifecycle Hooks
+function formatDate(date) {
+  return new Intl.DateTimeFormat(locale.value, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }).format(new Date(`${date}T00:00:00`));
+}
+
+function stopCarousel() {
+  window.clearInterval(carouselTimer);
+  carouselTimer = undefined;
+}
+
+function startCarousel() {
+  stopCarousel();
+  if (!canAutoplayNewsCarousel(page.value.slides.length, prefersReducedMotion.value)) return;
+  carouselTimer = window.setInterval(() => {
+    currentSlideIndex.value = (currentSlideIndex.value + 1) % page.value.slides.length;
+  }, 5500);
+}
+
+function selectSlide(index) {
+  currentSlideIndex.value = index;
+  startCarousel();
+}
+
+function moveSlide(direction) {
+  const total = page.value.slides.length;
+  selectSlide((currentSlideIndex.value + direction + total) % total);
+}
+
+function openItem(id) {
+  selectedItemId.value = id;
+  dialogVisible.value = true;
+}
+
+function closeItem() {
+  dialogVisible.value = false;
+}
+
+function syncMotionPreference(event) {
+  prefersReducedMotion.value = event.matches;
+  startCarousel();
+}
+
+watch(dialogVisible, (visible) => {
+  if (!visible) selectedItemId.value = "";
+});
+
+onMounted(() => {
+  motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  prefersReducedMotion.value = motionQuery.matches;
+  motionQuery.addEventListener("change", syncMotionPreference);
+  startCarousel();
+});
+
+onBeforeUnmount(() => {
+  stopCarousel();
+  motionQuery?.removeEventListener("change", syncMotionPreference);
+});
 </script>

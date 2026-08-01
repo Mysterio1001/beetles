@@ -1,7 +1,18 @@
 {
+  "eyebrow": "FIELD NOTES & EVENTS",
+  "title": "最新消息",
+  "description": "從繁殖進度、活動公告到飼育知識，掌握甲蟲羽錄的最新動態。",
   "all": "全部",
   "announcement": "公告",
   "event": "活動",
   "breedingInfo": "飼育情報",
-  "go": "前往！"
+  "featured": "焦點消息",
+  "previousSlide": "上一張消息",
+  "nextSlide": "下一張消息",
+  "goToSlide": "前往第 {number} 張消息",
+  "listTitle": "消息列表",
+  "readMore": "閱讀完整消息",
+  "publishedAt": "發布於 {date}",
+  "emptyTitle": "目前沒有符合的消息",
+  "emptyBody": "請切換其他分類查看最新內容。"
 }
