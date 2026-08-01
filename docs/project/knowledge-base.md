@@ -5,7 +5,7 @@ workflow_id: beetles-vue3-rebuild-20260801
 core_version: 1.0.1
 status: Approved
 approval: "Approved by user on 2026-08-01 together with RDR-BEETLES-VUE3-REBUILD-001"
-last_synced: "2026-08-01 from approved SPEC-BEETLES-VUE3-REBUILD-001; change explicitly approved by user"
+last_synced: "2026-08-02 from approved PLAN-BEETLES-VUE3-REBUILD-001; change explicitly approved by user"
 ---
 
 # Beetles Project Knowledge Base
@@ -62,4 +62,4 @@ last_synced: "2026-08-01 from approved SPEC-BEETLES-VUE3-REBUILD-001; change exp
 - [Requirement Decision Record](requirements/beetles-vue3-rebuild-requirements.md)
 - [Draft Working Notes](drafts/beetles-vue3-rebuild-20260801-working-notes.md)
 - [Approved Specification](../specs/beetles-vue3-rebuild.md)
-- Ticket Plan：待 Specification 核准後建立。
+- [Approved Ticket Plan](../plans/beetles-vue3-rebuild.md)
