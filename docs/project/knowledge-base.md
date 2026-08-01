@@ -3,8 +3,8 @@ artifact_type: Project Knowledge Base
 artifact_id: KB-BEETLES-001
 workflow_id: beetles-vue3-rebuild-20260801
 core_version: 1.0.1
-status: Draft
-approval: Pending approval with RDR-BEETLES-VUE3-REBUILD-001
+status: Approved
+approval: "Approved by user on 2026-08-01 together with RDR-BEETLES-VUE3-REBUILD-001"
 ---
 
 # Beetles Project Knowledge Base

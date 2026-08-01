@@ -3,7 +3,7 @@ artifact_type: Requirement Decision Record
 artifact_id: RDR-BEETLES-VUE3-REBUILD-001
 workflow_id: beetles-vue3-rebuild-20260801
 core_version: 1.0.1
-status: Draft
+status: Approved
 inputs:
   - /Users/ian/vs code-worksapce/Poject Report/
   - /Users/ian/vs code-worksapce/beetles/
@@ -14,7 +14,7 @@ deferred:
   - 真實會員、付款、物流與訂單 API。
   - Vitest、Vue Test Utils 與 Playwright E2E。
 handoff: write-spec after approval
-approval: Pending user approval
+approval: "Approved by user on 2026-08-01; evidence: explicit response '核准' to the displayed RDR and Knowledge Base Change Summary"
 ---
 
 # Beetles Vue 3 全站重建需求決策紀錄

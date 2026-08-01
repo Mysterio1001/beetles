@@ -11,8 +11,8 @@ assumptions: []
 deferred:
   - 真實會員、付款與訂單 API 整合不在本次前端重建範圍。
   - Vitest、Vue Test Utils 與 Playwright E2E 延後至後端開發階段導入。
-handoff: ask-with-docs
-approval: Pending Requirement Decision Record and Knowledge Base approval
+handoff: write-spec
+approval: "RDR-BEETLES-VUE3-REBUILD-001 and KB-BEETLES-001 approved by user on 2026-08-01"
 ---
 
 # Beetles Vue 3 全站重建－Draft Working Notes
