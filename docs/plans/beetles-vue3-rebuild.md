@@ -3,7 +3,7 @@ artifact_type: Ticket Plan
 artifact_id: PLAN-BEETLES-VUE3-REBUILD-001
 workflow_id: beetles-vue3-rebuild-20260801
 core_version: 1.0.1
-status: Draft
+status: Approved
 inputs:
   - docs/specs/beetles-vue3-rebuild.md
   - docs/project/knowledge-base.md
@@ -14,7 +14,7 @@ deferred:
   - 真實後端、資料庫、身分驗證、郵件、物流與金流整合。
   - Vitest、Vue Test Utils、Playwright E2E 與 CI 自動化測試。
 handoff: implement-tdd after approval, using the approved non-framework verification policy
-approval: Pending user approval
+approval: "Approved by user on 2026-08-02; evidence: explicit response '核准' to PLAN-BEETLES-VUE3-REBUILD-001"
 ---
 
 # Beetles Vue 3 全站重建 Ticket Plan
