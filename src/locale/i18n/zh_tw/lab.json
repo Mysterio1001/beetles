@@ -1,3 +1,24 @@
 {
-  "latestArticle": "最新文章"
+  "eyebrow": "BREEDING JOURNAL",
+  "title": "甲蟲研究所",
+  "description": "把飼育環境、繁殖節點與日常觀察整理成可追溯的紀錄，讓每一次經驗都成為下一次成長的養分。",
+  "latestArticle": "最新文章",
+  "latestDescription": "依發布日期整理最近更新的飼育筆記。",
+  "articleList": "全部飼育紀錄",
+  "articleListDescription": "搜尋感興趣的品種或飼育主題，閱讀完整觀察。",
+  "searchLabel": "搜尋飼育紀錄",
+  "searchPlaceholder": "輸入文章標題或摘要",
+  "resultCount": "找到 {count} 篇紀錄",
+  "readArticle": "閱讀完整紀錄",
+  "clearSearch": "清除搜尋",
+  "emptyTitle": "沒有符合的飼育紀錄",
+  "emptyBody": "請調整關鍵字，或清除搜尋查看所有文章。",
+  "publishedAt": "發布於 {date}",
+  "detailEyebrow": "FIELD NOTE",
+  "backToLab": "返回甲蟲研究所",
+  "articleBodyTitle": "飼育觀察",
+  "articleBodyDescription": "以下內容保留原始測試資料的完整紀錄，作為後續資料維護與 API 串接基準。",
+  "notFoundEyebrow": "ARTICLE NOT FOUND",
+  "notFoundTitle": "找不到這篇文章",
+  "notFoundBody": "文章識別值不存在或內容已移除，請返回研究所選擇其他紀錄。"
 }

@@ -1,3 +1,24 @@
 {
-  "latestArticle": "Latest Article"
+  "eyebrow": "BREEDING JOURNAL",
+  "title": "Beetle Lab",
+  "description": "We turn habitat conditions, breeding milestones, and daily observations into traceable notes so every experience can guide the next cycle.",
+  "latestArticle": "Latest articles",
+  "latestDescription": "Recently published field notes, ordered by date.",
+  "articleList": "All breeding notes",
+  "articleListDescription": "Search by species or care topic and continue to the full observation.",
+  "searchLabel": "Search breeding notes",
+  "searchPlaceholder": "Search article titles or summaries",
+  "resultCount": "{count} notes found",
+  "readArticle": "Read full note",
+  "clearSearch": "Clear search",
+  "emptyTitle": "No breeding notes match",
+  "emptyBody": "Change the keyword or clear the search to see every article.",
+  "publishedAt": "Published {date}",
+  "detailEyebrow": "FIELD NOTE",
+  "backToLab": "Back to Beetle Lab",
+  "articleBodyTitle": "Care observations",
+  "articleBodyDescription": "The complete record is retained from the primary Vue test data as the maintenance and future API baseline.",
+  "notFoundEyebrow": "ARTICLE NOT FOUND",
+  "notFoundTitle": "This article cannot be found",
+  "notFoundBody": "The article id does not exist or the content was removed. Return to the lab to choose another note."
 }

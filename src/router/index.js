@@ -24,9 +24,9 @@ const routes = [
     meta: { titleKey: "route.beetleLab" },
   },
   {
-    path: "/beetle-lab/:title",
+    path: "/beetle-lab/:articleId",
     name: "beetleLabDetail",
-    component: placeholder,
+    component: () => import("@/views/beetleLab/detail.vue"),
     meta: {
       titleKey: "route.beetleLabDetail",
       parents: [{ path: "/beetle-lab", titleKey: "route.beetleLab" }],
