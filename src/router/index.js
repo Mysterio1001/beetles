@@ -2,10 +2,10 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 import i18n from "@/locale";
 import { resolveCheckoutAccess } from "@/router/cartNavigation";
+import { resolveOrderCompleteAccess } from "@/router/orderNavigation";
 import { useCartState } from "@/state/cartState";
 import { useMemberState } from "@/state/memberState";
-
-const placeholder = () => import("@/views/system/PagePlaceholder.vue");
+import { useOrderState } from "@/state/orderState";
 
 const routes = [
   {
@@ -80,7 +80,7 @@ const routes = [
   {
     path: "/checkout",
     name: "checkout",
-    component: placeholder,
+    component: () => import("@/views/checkout/CheckoutView.vue"),
     beforeEnter: () => resolveCheckoutAccess(useCartState().itemCount.value),
     meta: {
       titleKey: "route.checkout",
@@ -90,7 +90,8 @@ const routes = [
   {
     path: "/order-complete",
     name: "orderComplete",
-    component: placeholder,
+    component: () => import("@/views/order/OrderCompleteView.vue"),
+    beforeEnter: () => resolveOrderCompleteAccess(useOrderState().currentOrder.value),
     meta: { titleKey: "route.orderComplete" },
   },
   {

@@ -7,6 +7,7 @@ import shop from "./i18n/en/shop.json";
 import bulletin from "./i18n/en/bulletin.json";
 import auth from "./i18n/en/auth.json";
 import cart from "./i18n/en/cart.json";
+import checkout from "./i18n/en/checkout.json";
 import system from "./i18n/en/system.json";
 
 export default {
@@ -19,5 +20,6 @@ export default {
   bulletin,
   auth,
   cart,
+  checkout,
   system,
 };
