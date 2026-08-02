@@ -1,170 +1,82 @@
-# 開發規則 / Development Guidelines
+# Beetles Vue 3
 
-本專案採用明確的樣式與結構分層原則，以維持高可讀性與擴展性，請依照以下規則開發。
+以 Vue 3 重建的甲蟲品牌靜態網站。專案提供綠色液態玻璃視覺、繁體中文／英文、響應式版面，以及可完整操作的純前端 Mock 會員、購物車、結帳與訂單完成流程。
+
+本專案沒有後端、真實身分驗證、金流或物流 API。請勿輸入真實密碼、信用卡或個人資料。
+
+## 環境需求
+
+- Node.js 20 以上
+- npm 10 以上
+
+## 安裝與開發
+
+```bash
+npm install
+npm run dev
+```
+
+Vite 會顯示本機開發網址。所有正式路由都使用 Hash Router，因此子頁網址位於 `/#/...`。
+
+## 品質命令
+
+```bash
+npm test
+npm run lint
+npm run format:check
+npm run build
+npm run preview
+```
+
+- `npm test`：執行目前所有 Node domain／contract tests。
+- `npm run lint`：檢查 `src/`、`tests/` 與 Vite／ESLint 設定。
+- `npm run format:check`：以 Prettier 檢查 JS、Vue、SCSS、JSON 與根目錄設定檔。
+- `npm run build`：建立 production 產物至 `dist/`。
+- `npm run preview`：在本機預覽最新 `dist/`。
+
+Vitest、Vue Test Utils 與 Playwright E2E 依目前專案決策延後至後端開發階段；現階段以 Node tests 與實際瀏覽器驗收互補。
 
 ## Mock 測試帳號
-
-會員功能是純前端展示流程，資料只保存在目前瀏覽器，請勿輸入真實密碼或敏感個資。
 
 - 帳號：`beetles_demo`
 - 電子信箱：`demo@beetles.test`
 - 密碼：`Beetle2026`
 
-## 頁面（Page View）
+註冊會員、登入狀態與購物車會保存在目前瀏覽器。Checkout 收件表單、信用卡欄位與訂單完成狀態只存在記憶體，不會持久化。
 
-- 邏輯與結構統一寫在 `.vue` 檔案中。
-- 樣式需寫在獨立的 `.scss` 檔案，放置於 `assets/scss/page/` 資料夾中。
-- 每個頁面樣式需包裹在 `body[data-page="xxx"]` selector 中，以避免全域污染。
-- `data-page` 的值應與對應的 route `name` 一致。
+## 專案結構與維護邊界
 
-## 元件（Component）
-
-- 所有結構、邏輯與樣式統一寫在 `.vue` 檔案內部。
-- 樣式請使用 `<style scoped lang="scss">`，以避免影響其他元件。
-- 複用元件命名請使用 `PascalCase`，並建議搭配 BEM 命名法提升清晰度與一致性。
-
-## 元件說明
-
----
-
-### `BeDialog.vue`
-
-多用途對話框元件，支援三種 `type` 模式，可依情境切換顯示樣式與操作邏輯。\
-**預設提供底部按鈕區塊，亦可透過插槽自定義 footer。**
-
-| Props             | 說明                                    |
-| ----------------- | ------------------------------------- |
-| `v-model:visible` | 控制對話框開關（`Boolean`）                    |
-| `title`           | 對話框標題                                 |
-| `type`            | 模式類型：`"custom"`、`"alert"`、`"confirm"` |
-| `message`         | 顯示訊息（適用於 `alert`、`confirm` 模式）        |
-| `show-footer-btn` | 是否顯示預設「確認 / 取消」按鈕（`Boolean`）          |
-| `prompt`          | 警告對話框的提示標題，僅適用於 `alert` 模式            |
-
-| Events     | 說明      |
-| ---------- | ------- |
-| `@close`   | 關閉時觸發   |
-| `@confirm` | 按下確認時觸發 |
-
-| Slot      | 說明             |
-| --------- | -------------- |
-| `default` | 對話框主要內容插槽      |
-| `footer`  | 自訂底部內容，覆蓋預設按鈕區 |
-
-#### **custom 模式：**
-
-```vue
-<BeDialog
-  v-model:visible="isDialogVisible"
-  title="自訂表單"
-  type="custom"
-  @close="handleClose">
-  <div>這裡可以放入任何自定義內容</div>
-
-  <template #footer>自定義底部</template>
-</BeDialog>
+```text
+src/
+├── components/       共用 Vue 元件；元件樣式寫在元件內的 scoped style
+├── locale/i18n/      zh_tw 與 en 翻譯 namespace
+├── mocks/            集中內容與 Mock data
+├── router/           Hash Router、route guards 與 navigation policy
+├── services/         Mock data 的查詢、投影與 domain validation
+├── state/            會員、購物車與當次訂單狀態
+├── style/page/       正式頁面 SCSS
+├── style/main.scss   唯一頁面樣式匯出入口
+└── views/            正式 route views
 ```
 
-#### **alert 模式：**
+維護規則：
 
-```vue
-<BeDialog
-  v-model:visible="isAlertVisible"
-  type="alert"
-  message="請確認所有欄位皆已填寫"
-  @close="handleClose"
-  @confirm="handleConfirm" />
-```
+- 消息、文章、商品、配送、門市、付款方式及預設會員維護於 `src/mocks/`，不要直接寫入頁面。
+- 頁面透過 `src/services/` 消費集中資料；未來接後端時可替換 service／Mock import boundary。
+- 翻譯維護於 `src/locale/i18n/zh_tw/` 與 `src/locale/i18n/en/`；英文是缺少翻譯及不支援瀏覽器語言的 fallback。
+- 元件樣式保留在元件 `.vue` 的 `<style scoped lang="scss">`。
+- 主畫面樣式放在 `src/style/page/`，並由 `src/style/main.scss` 匯出。
+- 靜態圖片放在 `public/img/`；集中 Mock data 以 base-relative `img/...` 參照，不寫 `/public/...`。
 
-#### **confirm 模式：**
+## 語言行為
 
-```vue
-<BeDialog
-  v-model:visible="isConfirmVisible"
-  type="confirm"
-  message="確定要執行此操作？"
-  @close="handleClose"
-  @confirm="handleConfirm" />
-```
+第一次造訪時，中文瀏覽器語言使用繁體中文、英文使用英文，其他語言回退英文。Header 可即時切換語言，手動選擇會保存在瀏覽器並優先於瀏覽器預設語言。
 
----
+## 靜態部署
 
-### `BeTags.vue`
+1. 執行 `npm run build`。
+2. 將 `dist/` 內容部署到 GitHub Pages 或其他靜態主機。
+3. 專案使用 Hash Router，不需要 server rewrite；可直接重新整理 `/#/beetle-shop` 等子頁。
+4. 若部署在非根路徑，透過 Vite `base` 設定提供對應 base path，再重新 build。
 
-標籤元件，支援單選與多選模式，並可綁定 icon。
-
-| Props    | 說明                                  |
-| -------- | ----------------------------------- |
-| `data`   | 標籤資料，格式為 `{ label, value, icon }[]` |
-| `option` | 標籤設定物件，支援：                          |
-|          | • `multiple`：是否為多選模式（Boolean）       |
-|          | • `selectedTagNo`：預設選中的 tag 編號      |
-|          | • `disableTagNo`：禁用點選的 tag 編號陣列     |
-
-| Events        | 說明                           |
-| ------------- | ---------------------------- |
-| `@tags-click` | 點選標籤後觸發，回傳 value（或 value 陣列） |
-| `@ready`      | 載入完成後觸發                      |
-
-**範例：**
-
-```vue
-<BeTags
-  :data="tagsData"
-  :option="{
-    selectedTagNo: [1, 2],
-    disableTagNo: [3],
-    multiple: true
-  }"
-  @tags-click="handleClick"
-  @ready="handleReady" />
-```
-
----
-
-### `BeInput.vue`
-
-輸入框元件，支援 `text`、`password`、`textarea` 三種輸入型態，並可透過 slot 插入自定義內容。
-
-| Props         | 說明                                  |
-| ------------- | ----------------------------------- |
-| `v-model`     | 綁定輸入內容                              |
-| `type`        | 類型：`text` / `password` / `textarea` |
-| `label`       | 欄位標題                                |
-| `placeholder` | 提示文字                                |
-| `disabled`    | 是否禁用                                |
-| `readonly`    | 是否唯讀                                |
-| `maxlength`   | 最長輸入字元數                             |
-| `labelTop`    | （textarea 限用）標題是否置上（Boolean）        |
-| `size`        | 僅支援 input 類型：`default` / `small`    |
-| `clearable`   | 是否顯示清除按鈕（預設為 true）                  |
-
-| Events   | 說明               |
-| -------- | ---------------- |
-| `@input` | 輸入變更時觸發，回傳當前內容文字 |
-| `@enter` | 按下 Enter 鍵時觸發    |
-
-| Slots     | 位置與用途         |
-| --------- | ------------- |
-| `#prefix` | 標題後、輸入框前的插槽區域 |
-| `#suffix` | 輸入框右側插槽區域     |
-
----
-
-### `BeSelect.vue`
-
-下拉選單元件，提供自訂樣式、禁用選項、標題寬度等設定。
-
-| Props         | 說明                              |
-| ------------- | ------------------------------- |
-| `v-model`     | 綁定選中的 value                     |
-| `label`       | 標題文字                            |
-| `labelWidth`  | 標題欄寬度                           |
-| `placeholder` | 提示文字                            |
-| `options`     | 下拉選項陣列，格式為 `{ label, value }[]` |
-| `size`        | 尺寸類型：`default` / `small`        |
-| `disabled`    | 是否禁用選單                          |
-
-| Events    | 說明                                  |
-| --------- | ----------------------------------- |
-| `@select` | 點選選項後觸發，回傳整個選項物件 `{ label, value }` |
+部署前至少執行 `npm test`、`npm run lint`、`npm run format:check` 與 `npm run build`，並確認 `dist/` 沒有 `/public` 資產 URL。

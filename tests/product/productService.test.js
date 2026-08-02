@@ -9,7 +9,7 @@ test("商品詳情提供舊版長頸鹿商品的完整欄位與三個穩定規�
   assert.equal(product.id, "giraffe-stag-nishiyamai");
   assert.equal(product.price, 2999);
   assert.equal(product.availability, "available");
-  assert.match(product.detailImage, /^\/img\/img-beetle-product\//);
+  assert.match(product.detailImage, /^img\/img-beetle-product\//);
   assert.deepEqual(
     product.variants.map((variant) => variant.id),
     ["105-plus", "101-plus", "97-plus"],

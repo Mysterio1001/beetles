@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "test": "node --test tests/**/*.test.js",
     "test:foundation": "node --test tests/foundation/*.test.js",
     "lint": "eslint src tests vite.config.js eslint.config.js",
     "lint:fix": "npm run lint -- --fix",
@@ -14,11 +15,11 @@
     "format:check": "prettier --check \"src/**/*.{js,vue,scss,json}\" \"tests/**/*.js\" \"*.{js,json,html}\""
   },
   "dependencies": {
+    "@intlify/core-base": "12.0.0-alpha.2",
     "@fontsource/noto-sans-tc": "^5.2.6",
     "@fontsource/yuji-boku": "^5.2.6",
     "@iconify-icons/simple-icons": "^1.2.74",
     "@iconify/vue": "^5.0.0",
-    "@mysterio1001/toolkit": "^1.4.0",
     "lucide-vue-next": "^0.509.0",
     "marked": "^15.0.12",
     "vue": "^3.5.13",

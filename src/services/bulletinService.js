@@ -1,4 +1,5 @@
-import { bulletinContact, bulletinContent, bulletinVisuals } from "../mocks/bulletin.js";
+import { bulletinContent, bulletinVisuals } from "../mocks/bulletin.js";
+import { getContactData } from "./contactService.js";
 
 const FALLBACK_LOCALE = "en";
 
@@ -27,18 +28,8 @@ export function getBulletinPageData(locale = FALLBACK_LOCALE) {
     contact: {
       eyebrow: localize(bulletinContent.contact.eyebrow, locale),
       headline: localize(bulletinContent.contact.headline, locale),
-      phone: bulletinContact.phone,
-      phoneHref: `tel:${bulletinContact.phone.replace(/\D/g, "")}`,
-      socialLinks: bulletinContact.socialLinks.map((link) => ({
-        ...link,
-        target: "_blank",
-        rel: "noopener noreferrer",
-      })),
+      ...getContactData(),
     },
     visuals: bulletinVisuals,
   };
-}
-
-export function getBulletinContact() {
-  return getBulletinPageData().contact;
 }

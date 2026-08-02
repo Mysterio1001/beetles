@@ -131,15 +131,15 @@ import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import { CircleAlert, CircleCheck, Info, KeyRound, LogIn, ShieldCheck } from "lucide-vue-next";
 
-import { defaultMemberRecords } from "@/mocks/members";
+import BeBtn from "@/components/BeBtn.vue";
+import BeInput from "@/components/BeInput.vue";
 import { getResolvedAuthRedirect } from "@/router/authNavigation";
 import { useMemberState } from "@/state/memberState";
 
 const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
-const { login } = useMemberState();
-const demoMember = defaultMemberRecords[0];
+const { demoCredentials: demoMember, login } = useMemberState();
 
 const identifier = ref(typeof route.query.account === "string" ? route.query.account : "");
 const password = ref("");

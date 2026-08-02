@@ -205,6 +205,9 @@ import {
   X,
 } from "lucide-vue-next";
 
+import BeInput from "@/components/BeInput.vue";
+import BePagination from "@/components/BePagination.vue";
+import BeSelect from "@/components/BeSelect.vue";
 import {
   CATALOG_SORT_IDS,
   SHOP_PAGE_SIZE,

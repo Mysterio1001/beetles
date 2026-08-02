@@ -47,6 +47,17 @@ test("集中預設會員提供可文件化的 Mock 測試帳號", () => {
   assert.equal(defaultMemberRecords[0].password, "Beetle2026");
 });
 
+test("會員 state 只向頁面公開最小化且唯讀的 Demo 登入資料", () => {
+  const store = createMemberStore({ storage: createMemoryStorage() });
+
+  assert.deepEqual(store.demoCredentials, {
+    account: "beetles_demo",
+    email: "demo@beetles.test",
+    password: "Beetle2026",
+  });
+  assert.equal(Object.isFrozen(store.demoCredentials), true);
+});
+
 test("生日選項涵蓋指定年度並遵守閏年與月份天數", () => {
   assert.deepEqual(getBirthYearOptions(2026).slice(0, 3), [2026, 2025, 2024]);
   assert.equal(getDaysInMonth(2000, 2), 29);

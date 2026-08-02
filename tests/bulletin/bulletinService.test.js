@@ -36,7 +36,7 @@ test("Bulletin 三個社群連結使用安全新頁面屬性", () => {
   );
   for (const link of contact.socialLinks) {
     assert.match(link.url, /^https:\/\//);
-    assert.match(link.icon, /^\/img\//);
+    assert.match(link.icon, /^img\//);
     assert.equal(link.target, "_blank");
     assert.match(link.rel, /noopener/);
     assert.match(link.rel, /noreferrer/);
@@ -46,9 +46,9 @@ test("Bulletin 三個社群連結使用安全新頁面屬性", () => {
 test("Bulletin 桌面動畫與手機主圖資產使用正式路徑", () => {
   const { visuals } = getBulletinPageData("en");
 
-  assert.match(visuals.mobile, /^\/img\//);
-  assert.match(visuals.desktop.background, /^\/img\//);
-  assert.match(visuals.desktop.leftBeetle, /^\/img\//);
-  assert.match(visuals.desktop.rightBeetle, /^\/img\//);
-  assert.match(visuals.desktop.explosion, /^\/img\//);
+  assert.match(visuals.mobile, /^img\//);
+  assert.match(visuals.desktop.background, /^img\//);
+  assert.match(visuals.desktop.leftBeetle, /^img\//);
+  assert.match(visuals.desktop.rightBeetle, /^img\//);
+  assert.match(visuals.desktop.explosion, /^img\//);
 });

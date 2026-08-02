@@ -1,4 +1,5 @@
 import { createI18n } from "vue-i18n";
+import { compile, resolveValue } from "@intlify/core-base";
 import zhTw from "./zh_tw";
 import en from "./en";
 import { isSupportedLocale, loadInitialLocale, persistLocale } from "./localePreference";
@@ -13,6 +14,8 @@ const i18n = createI18n({
   locale: loadInitialLocale(),
   fallbackLocale: "en",
   messages,
+  messageCompiler: compile,
+  messageResolver: resolveValue,
   missingWarn: false,
   fallbackWarn: false,
 });

@@ -82,13 +82,13 @@ import { useI18n } from "vue-i18n";
 import { onBeforeRouteLeave, useRouter } from "vue-router";
 import { ArrowUpRight, BadgeCheck, Home, ShieldCheck, Timer } from "lucide-vue-next";
 
-import { getBulletinContact } from "@/services/bulletinService";
+import { getContactData } from "@/services/contactService";
 import { useOrderState } from "@/state/orderState";
 
 const router = useRouter();
 const { locale, t } = useI18n();
 const { currentOrder, clearCurrentOrder } = useOrderState();
-const socialLinks = getBulletinContact().socialLinks;
+const socialLinks = getContactData().socialLinks;
 const countdown = ref(5);
 let timerId = null;
 

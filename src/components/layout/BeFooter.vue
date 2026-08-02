@@ -18,12 +18,12 @@
         :aria-label="t('route.default')">
         <li
           v-for="item in socials"
-          :key="item.name">
+          :key="item.id">
           <a
             :href="item.url"
-            :aria-label="item.name"
-            rel="noopener noreferrer"
-            target="_blank">
+            :aria-label="item.label"
+            :rel="item.rel"
+            :target="item.target">
             <Icon
               :icon="item.icon"
               aria-hidden="true" />
@@ -42,22 +42,15 @@ import instagram from "@iconify-icons/simple-icons/instagram";
 import line from "@iconify-icons/simple-icons/line";
 
 import footerLogo from "@/assets/images/logo/rwd-white-logo.svg";
+import { getContactData } from "@/services/contactService";
 
 const { t } = useI18n();
 const currentYear = new Date().getFullYear();
-const socials = [
-  {
-    name: "Instagram",
-    url: "https://www.instagram.com/giraffa_beetle1001/",
-    icon: instagram,
-  },
-  { name: "LINE", url: "https://line.me/ti/p/061ly8VaI_", icon: line },
-  {
-    name: "Facebook",
-    url: "https://www.facebook.com/profile.php?id=100082416973415&mibextid=LQQJ4d",
-    icon: facebook,
-  },
-];
+const socialIcons = { facebook, instagram, line };
+const socials = getContactData().socialLinks.map((item) => ({
+  ...item,
+  icon: socialIcons[item.id],
+}));
 </script>
 
 <style lang="scss" scoped>

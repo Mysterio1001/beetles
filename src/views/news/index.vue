@@ -168,6 +168,7 @@ import {
   SearchX,
 } from "lucide-vue-next";
 
+import BeDialog from "@/components/BeDialog.vue";
 import {
   canAutoplayNewsCarousel,
   filterNewsItems,

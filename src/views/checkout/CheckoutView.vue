@@ -394,6 +394,8 @@ import {
   UserRound,
 } from "lucide-vue-next";
 
+import BeInput from "@/components/BeInput.vue";
+import BeSelect from "@/components/BeSelect.vue";
 import { EMPTY_CART_NOTICE_CODE } from "@/router/cartNavigation";
 import { getCartRows, getShippingMethod } from "@/services/cartService";
 import {

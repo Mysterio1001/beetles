@@ -199,6 +199,8 @@ import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import { CircleAlert, ShieldCheck, Sparkles, UserPlus } from "lucide-vue-next";
 
+import BeBtn from "@/components/BeBtn.vue";
+import BeInput from "@/components/BeInput.vue";
 import { getResolvedAuthRedirect } from "@/router/authNavigation";
 import { getBirthYearOptions, getDaysInMonth } from "@/services/memberService";
 import { useMemberState } from "@/state/memberState";

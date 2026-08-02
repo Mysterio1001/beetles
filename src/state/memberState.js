@@ -61,6 +61,14 @@ function toPublicMember(member) {
   });
 }
 
+function toDemoCredentials(member) {
+  return Object.freeze({
+    account: String(member?.account ?? ""),
+    email: String(member?.email ?? ""),
+    password: String(member?.password ?? ""),
+  });
+}
+
 function sanitizeRegisteredMembers(members, defaultMembers) {
   const sanitized = [];
 
@@ -130,6 +138,7 @@ export function createMemberStore({
     currentMemberId: initialMemberId,
   });
   const internalMembers = computed(() => [...defaultMembers, ...state.registeredMembers]);
+  const demoCredentials = toDemoCredentials(defaultMembers[0]);
   const members = computed(() => internalMembers.value.map(toPublicMember));
   const currentMember = computed(() =>
     toPublicMember(
@@ -193,6 +202,7 @@ export function createMemberStore({
   }
 
   return {
+    demoCredentials,
     members,
     currentMember,
     isAuthenticated,

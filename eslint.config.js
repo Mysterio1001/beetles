@@ -33,6 +33,7 @@ export default [
         },
       ],
       "vue/multi-word-component-names": "off",
+      "vue/no-undef-components": ["error", { ignorePatterns: ["RouterLink", "RouterView"] }],
       "vue/no-unused-vars": "warn",
       "vue/require-default-prop": "off",
     },

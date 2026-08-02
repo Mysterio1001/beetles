@@ -24,7 +24,7 @@ test("首頁商品入口使用穩定商品 id 與正式圖片路徑", () => {
   assert.equal(new Set(featuredProducts.map((item) => item.id)).size, 4);
   for (const product of featuredProducts) {
     assert.equal(product.to, `/beetle-shop/${product.id}`);
-    assert.match(product.image, /^\/img\//);
+    assert.match(product.image, /^img\//);
   }
 });
 
@@ -34,7 +34,7 @@ test("首頁文章入口使用穩定文章 id 與正式圖片路徑", () => {
   assert.equal(new Set(featuredArticles.map((item) => item.id)).size, 3);
   for (const article of featuredArticles) {
     assert.equal(article.to, `/beetle-lab/${article.id}`);
-    assert.match(article.image, /^\/img\//);
+    assert.match(article.image, /^img\//);
   }
 });
 

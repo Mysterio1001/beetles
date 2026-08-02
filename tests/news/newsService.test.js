@@ -14,8 +14,8 @@ test("News service 保留既有九筆消息與三張輪播資料", () => {
   assert.equal(page.items.length, 9);
   assert.equal(page.slides.length, 3);
   assert.equal(new Set(page.items.map((item) => item.id)).size, 9);
-  assert.ok(page.items.every((item) => item.image.startsWith("/img/")));
-  assert.ok(page.slides.every((item) => item.image.startsWith("/img/")));
+  assert.ok(page.items.every((item) => item.image.startsWith("img/")));
+  assert.ok(page.slides.every((item) => item.image.startsWith("img/")));
 });
 
 test("News service 提供完整英文並讓未知語言回退英文", () => {

@@ -11,8 +11,8 @@ export const homeContent = Object.freeze({
       "從專業飼育、品系紀錄到昆蟲美學，我們用細緻而負責的方式，陪你探索每一段獨特的生命旅程。",
       "From responsible breeding and lineage records to insect aesthetics, we help you explore every remarkable life journey with care.",
     ),
-    image: "/img/image-index/main.png",
-    imageMobile: "/img/image-index/main-rwd.png",
+    image: "img/image-index/main.png",
+    imageMobile: "img/image-index/main-rwd.png",
   },
   brand: {
     eyebrow: localized("OUR HABITAT", "OUR HABITAT"),
@@ -24,7 +24,7 @@ export const homeContent = Object.freeze({
       "甲蟲羽錄聚集飼育紀錄、精選個體與實作課程，讓新手能安心起步，也讓資深玩家找到值得深入研究的品系與故事。",
       "Recording of Beetles brings together breeding journals, selected specimens, and hands-on learning so newcomers can begin confidently and experienced keepers can go deeper.",
     ),
-    image: "/img/image-index/picOfAward.png",
+    image: "img/image-index/picOfAward.png",
     pillars: [
       {
         id: "responsible",
@@ -55,28 +55,28 @@ export const homeContent = Object.freeze({
   featuredProducts: [
     {
       id: "japanese-stag-t-brand",
-      image: "/img/image-index/product1.png",
+      image: "img/image-index/product1.png",
       name: localized("日本大鍬 T-brand 血統", "Japanese Stag Beetle · T-brand Line"),
       scientificName: "Dorcus hopei binodulosus",
       badge: localized("近期到貨", "NEW ARRIVAL"),
     },
     {
       id: "hercules-kono-line",
-      image: "/img/image-index/product2.png",
+      image: "img/image-index/product2.png",
       name: localized("長戟大兜・河野血統", "Hercules Beetle · Kono Line"),
       scientificName: "Dynastes hercules hercules",
       badge: localized("精選品系", "SELECTED LINE"),
     },
     {
       id: "babai-golden-stag",
-      image: "/img/image-index/product3.png",
+      image: "img/image-index/product3.png",
       name: localized("馬場黃金鬼鍬形蟲", "Babai Golden Stag Beetle"),
       scientificName: "Allotopus moellenkampi babai",
       badge: localized("人氣品種", "POPULAR"),
     },
     {
       id: "cameroon-crab-stag",
-      image: "/img/image-index/product4.png",
+      image: "img/image-index/product4.png",
       name: localized("螃蟹鍬形蟲・喀麥隆產", "Crab Stag Beetle · Cameroon"),
       scientificName: "Homoderus mellyi",
       badge: localized("特色個體", "FEATURED"),
@@ -85,7 +85,7 @@ export const homeContent = Object.freeze({
   featuredArticles: [
     {
       id: "giraffe-stag-breeding-log",
-      image: "/img/image-index/record1.png",
+      image: "img/image-index/record1.png",
       title: localized("長頸鹿鋸齒鍬形蟲飼育紀錄", "Giraffe Stag Beetle Breeding Journal"),
       summary: localized(
         "從環境配置到產木管理，整理完整飼育觀察。",
@@ -95,7 +95,7 @@ export const homeContent = Object.freeze({
     },
     {
       id: "pentodon-breeding-log",
-      image: "/img/image-index/record2.png",
+      image: "img/image-index/record2.png",
       title: localized("五角大兜飼育與繁殖紀錄", "Pentodon Beetle Breeding Journal"),
       summary: localized(
         "溫濕度、食材與幼蟲成長階段的重點筆記。",
@@ -105,7 +105,7 @@ export const homeContent = Object.freeze({
     },
     {
       id: "harris-longhorn-flower-beetle-log",
-      image: "/img/image-index/record3.png",
+      image: "img/image-index/record3.png",
       title: localized("哈里斯長角花金龜飼育紀錄", "Harris Longhorn Flower Beetle Journal"),
       summary: localized(
         "記錄特殊花金龜的日常照護與成長變化。",

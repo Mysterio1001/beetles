@@ -68,6 +68,8 @@ import { nextTick, onBeforeUnmount, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { X } from "lucide-vue-next";
 
+import BeBtn from "@/components/BeBtn.vue";
+
 const props = defineProps({
   title: { type: String, default: "" },
   visible: { type: Boolean, default: false },

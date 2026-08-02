@@ -238,6 +238,7 @@ import {
   Zap,
 } from "lucide-vue-next";
 
+import BeSelect from "@/components/BeSelect.vue";
 import { getProductDetail } from "@/services/productService";
 import { normalizeCartQuantity, useCartState } from "@/state/cartState";
 

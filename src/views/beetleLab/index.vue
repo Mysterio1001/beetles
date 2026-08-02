@@ -110,6 +110,8 @@ import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { ArrowUpRight, BookOpenText, Search, SearchX, Sparkles } from "lucide-vue-next";
 
+import BeInput from "@/components/BeInput.vue";
+import BePagination from "@/components/BePagination.vue";
 import {
   ARTICLE_PAGE_SIZE,
   filterArticles,

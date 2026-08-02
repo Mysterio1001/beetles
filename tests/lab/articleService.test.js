@@ -14,7 +14,7 @@ test("Article service 以五筆既有 Vue 資料建立穩定詳情入口", () =>
   assert.equal(page.articles.length, 5);
   assert.equal(page.latestArticles.length, 3);
   assert.equal(new Set(page.articles.map((article) => article.id)).size, 5);
-  assert.ok(page.articles.every((article) => article.image.startsWith("/img/")));
+  assert.ok(page.articles.every((article) => article.image.startsWith("img/")));
   assert.ok(page.articles.every((article) => article.to === `/beetle-lab/${article.id}`));
   assert.deepEqual(
     page.latestArticles.map((article) => article.id),

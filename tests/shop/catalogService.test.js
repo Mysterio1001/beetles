@@ -20,7 +20,7 @@ test("Catalog service 集中舊版八筆商品、完整分類及穩定詳情入�
 
   for (const product of page.products) {
     assert.equal(product.to, `/beetle-shop/${product.id}`);
-    assert.match(product.image, /^\/img\/img-beetle-shop\//);
+    assert.match(product.image, /^img\/img-beetle-shop\//);
     assert.ok(product.name);
     assert.ok(product.scientificName);
     assert.ok(Number.isInteger(product.price));
