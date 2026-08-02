@@ -43,8 +43,21 @@
         </RouterLink>
 
         <div class="site-header__mobile-actions">
+          <template v-if="isAuthenticated">
+            <span class="site-header__member-summary">
+              <UserRound aria-hidden="true" />
+              {{ t("common.signedInAs", { name: memberLabel }) }}
+            </span>
+            <button
+              type="button"
+              @click="handleLogout">
+              <LogOut aria-hidden="true" />
+              {{ t("common.signOut") }}
+            </button>
+          </template>
           <RouterLink
-            to="/login"
+            v-else
+            :to="loginDestination"
             @click="closeMenu">
             <UserRound aria-hidden="true" />
             {{ t("common.signIn") }}
@@ -71,9 +84,24 @@
             <option value="en">{{ t("common.english") }}</option>
           </select>
         </label>
+        <div
+          v-if="isAuthenticated"
+          class="site-header__member-state">
+          <span :title="t('common.signedInAs', { name: memberLabel })">
+            <UserRound aria-hidden="true" />
+            <strong>{{ memberLabel }}</strong>
+          </span>
+          <button
+            type="button"
+            :aria-label="t('common.signOut')"
+            @click="handleLogout">
+            <LogOut aria-hidden="true" />
+          </button>
+        </div>
         <RouterLink
+          v-else
           class="site-header__icon-link"
-          to="/login"
+          :to="loginDestination"
           :aria-label="t('common.signIn')">
           <UserRound aria-hidden="true" />
         </RouterLink>
@@ -86,6 +114,14 @@
         </RouterLink>
       </div>
     </div>
+
+    <p
+      v-if="memberActionError"
+      class="site-header__member-error"
+      role="alert">
+      <CircleAlert aria-hidden="true" />
+      {{ t(`auth.${memberActionError}`) }}
+    </p>
 
     <button
       v-if="menuOpen"
@@ -100,16 +136,20 @@
 import { computed, onBeforeUnmount, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
-import { Languages, Menu, ShoppingBag, UserRound, X } from "lucide-vue-next";
+import { CircleAlert, Languages, LogOut, Menu, ShoppingBag, UserRound, X } from "lucide-vue-next";
 
 import logo from "@/assets/images/logo/rwd-white-logo.svg";
 import { setLocale } from "@/locale";
+import { getAuthSourceRedirect } from "@/router/authNavigation";
 import { useCartState } from "@/state/cartState";
+import { useMemberState } from "@/state/memberState";
 
 const { locale, t } = useI18n();
 const route = useRoute();
 const menuOpen = ref(false);
+const memberActionError = ref("");
 const { itemCount: cartCount } = useCartState();
+const { currentMember, isAuthenticated, logout } = useMemberState();
 
 const navigation = computed(() => [
   { label: t("route.home"), to: "/" },
@@ -118,6 +158,14 @@ const navigation = computed(() => [
   { label: t("route.beetleShop"), to: "/beetle-shop" },
   { label: t("route.beetleBulletin"), to: "/beetle-bulletin" },
 ]);
+const memberLabel = computed(() => currentMember.value?.name || currentMember.value?.account || "");
+const loginDestination = computed(() => {
+  const redirect = getAuthSourceRedirect(route);
+  return {
+    name: "login",
+    query: redirect === "/" ? {} : { redirect },
+  };
+});
 
 function toggleMenu() {
   menuOpen.value = !menuOpen.value;
@@ -125,6 +173,18 @@ function toggleMenu() {
 
 function closeMenu() {
   menuOpen.value = false;
+}
+
+function handleLogout() {
+  const result = logout();
+  if (!result.ok) {
+    memberActionError.value = result.reason;
+    closeMenu();
+    return;
+  }
+
+  memberActionError.value = "";
+  closeMenu();
 }
 
 function changeLocale(event) {
@@ -145,7 +205,13 @@ watch(
   { flush: "post" },
 );
 
-watch(() => route.fullPath, closeMenu);
+watch(
+  () => route.fullPath,
+  () => {
+    memberActionError.value = "";
+    closeMenu();
+  },
+);
 
 onBeforeUnmount(() => {
   document.body.classList.remove("menu-open");
@@ -252,6 +318,83 @@ onBeforeUnmount(() => {
   gap: 0.7rem;
 }
 
+.site-header__member-error {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: fit-content;
+  max-width: min(42rem, calc(100% - 2rem));
+  align-items: flex-start;
+  gap: 0.7rem;
+  margin: 0.7rem 1rem 0 auto;
+  padding: 0.9rem 1.2rem;
+  border: 1px solid rgba(255, 190, 190, 0.28);
+  border-radius: 1.3rem;
+  background: rgba(73, 18, 28, 0.88);
+  color: #ffe5e5;
+  box-shadow: 0 1rem 2.5rem rgba(18, 2, 7, 0.28);
+  font-size: 1.2rem;
+
+  svg {
+    width: 1.7rem;
+    flex: 0 0 auto;
+  }
+}
+
+.site-header__member-state {
+  display: flex;
+  min-height: 4.4rem;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(219, 255, 232, 0.18);
+  border-radius: 999px;
+  background: rgba(222, 255, 235, 0.09);
+
+  > span {
+    display: flex;
+    max-width: 15rem;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0 0.5rem 0 1rem;
+
+    svg {
+      width: 1.8rem;
+      flex: 0 0 auto;
+    }
+
+    strong {
+      overflow: hidden;
+      font-size: 1.2rem;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  > button {
+    display: grid;
+    width: 3.6rem;
+    height: 3.6rem;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: rgba(239, 255, 245, 0.72);
+    cursor: pointer;
+    transition:
+      color 160ms ease,
+      background-color 160ms ease;
+
+    &:hover {
+      background: rgba(224, 255, 235, 0.14);
+      color: #fff;
+    }
+
+    svg {
+      width: 1.7rem;
+    }
+  }
+}
+
 .site-header__locale,
 .site-header__icon-link,
 .site-header__menu-button {
@@ -348,7 +491,8 @@ onBeforeUnmount(() => {
   }
 
   .site-header__brand span,
-  .site-header__actions .site-header__icon-link {
+  .site-header__actions .site-header__icon-link,
+  .site-header__member-state {
     display: none;
   }
 
@@ -400,7 +544,9 @@ onBeforeUnmount(() => {
     padding-top: 0.8rem;
     border-top: 1px solid rgba(219, 255, 232, 0.14);
 
-    a {
+    a,
+    button,
+    .site-header__member-summary {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -410,6 +556,23 @@ onBeforeUnmount(() => {
       border-radius: 1.4rem;
       background: rgba(212, 255, 228, 0.1);
       color: #f2fff7;
+    }
+
+    button {
+      border: 0;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .site-header__member-summary {
+      grid-column: 1 / -1;
+      justify-content: flex-start;
+      color: rgba(238, 255, 244, 0.78);
+      font-size: 1.25rem;
+    }
+
+    svg {
+      width: 1.8rem;
     }
   }
 

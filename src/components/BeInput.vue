@@ -80,8 +80,6 @@ import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { Eye, EyeOff, X } from "lucide-vue-next";
 
-import { filterAlphaNumeric } from "@/utils/inputFilters";
-
 defineOptions({ inheritAttrs: false });
 
 const props = defineProps({
@@ -132,11 +130,7 @@ function handleEnter() {
 }
 
 function onInput(event) {
-  let value = event.target.value;
-  if (props.type === "password") {
-    value = filterAlphaNumeric(value);
-    event.target.value = value;
-  }
+  const value = event.target.value;
   emit("update:modelValue", value);
   emit("input", value);
 }

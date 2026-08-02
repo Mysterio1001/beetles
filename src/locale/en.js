@@ -5,6 +5,7 @@ import news from "./i18n/en/news.json";
 import lab from "./i18n/en/lab.json";
 import shop from "./i18n/en/shop.json";
 import bulletin from "./i18n/en/bulletin.json";
+import auth from "./i18n/en/auth.json";
 import system from "./i18n/en/system.json";
 
 export default {
@@ -15,5 +16,6 @@ export default {
   lab,
   shop,
   bulletin,
+  auth,
   system,
 };

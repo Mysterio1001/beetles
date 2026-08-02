@@ -1,6 +1,8 @@
 {
   "signIn": "會員登入",
   "account": "會員中心",
+  "signedInAs": "已登入：{name}",
+  "signOut": "登出",
   "cart": "購物車",
   "cartCount": "購物車，共 {count} 件商品",
   "language": "語言",

@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
 import i18n from "@/locale";
+import { useMemberState } from "@/state/memberState";
 
 const placeholder = () => import("@/views/system/PagePlaceholder.vue");
 
@@ -56,13 +57,13 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: placeholder,
+    component: () => import("@/views/auth/LoginView.vue"),
     meta: { titleKey: "route.login" },
   },
   {
     path: "/signup",
     name: "signup",
-    component: placeholder,
+    component: () => import("@/views/auth/SignupView.vue"),
     meta: {
       titleKey: "route.signup",
       parents: [{ path: "/login", titleKey: "route.login" }],
@@ -103,6 +104,12 @@ const router = createRouter({
   scrollBehavior() {
     return { top: 0, left: 0 };
   },
+});
+
+router.beforeEach((to) => {
+  const isAuthRoute = to.name === "login" || to.name === "signup";
+  if (isAuthRoute && useMemberState().isAuthenticated.value) return { name: "home" };
+  return true;
 });
 
 export function updateDocumentMeta(route = router.currentRoute.value) {
