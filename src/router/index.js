@@ -35,7 +35,7 @@ const routes = [
   {
     path: "/beetle-shop",
     name: "beetleShop",
-    component: placeholder,
+    component: () => import("@/views/beetleShop/index.vue"),
     meta: { titleKey: "route.beetleShop" },
   },
   {

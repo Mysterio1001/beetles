@@ -3,6 +3,7 @@ import common from "./i18n/en/common.json";
 import home from "./i18n/en/home.json";
 import news from "./i18n/en/news.json";
 import lab from "./i18n/en/lab.json";
+import shop from "./i18n/en/shop.json";
 import bulletin from "./i18n/en/bulletin.json";
 import system from "./i18n/en/system.json";
 
@@ -12,6 +13,7 @@ export default {
   home,
   news,
   lab,
+  shop,
   bulletin,
   system,
 };

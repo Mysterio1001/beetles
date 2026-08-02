@@ -1,0 +1,37 @@
+{
+  "eyebrow": "CURATED BEETLE CATALOG",
+  "title": "翅鞘商店",
+  "description": "從經典品系到特色產地個體，依名稱、學名與飼育關鍵字找到適合你的下一段觀察旅程。",
+  "controlsLabel": "商品搜尋與排序",
+  "searchLabel": "搜尋商品",
+  "searchPlaceholder": "輸入名稱、學名或關鍵字",
+  "sortLabel": "排列方式",
+  "sort": {
+    "default": "預設順序",
+    "price-high": "價格高到低",
+    "price-low": "價格低到高",
+    "date-new": "日期新到舊",
+    "date-old": "日期舊到新"
+  },
+  "openFilters": "開啟商品分類",
+  "closeFilters": "關閉商品分類",
+  "filterEyebrow": "FILTER BY",
+  "categoryTitle": "商品分類",
+  "categoryDescription": "以生命階段與服務類型縮小商品範圍。",
+  "categoryCount": "{count} 筆",
+  "catalogEyebrow": "COLLECTION",
+  "catalogTitle": "精選商品",
+  "catalogDescription": "搜尋、分類與排序可以同時使用。",
+  "resultCount": "找到 {count} 項商品",
+  "activeCategory": "目前分類：{category}",
+  "newBadge": "新品",
+  "availability": {
+    "available": "可選購",
+    "sold-out": "已售完"
+  },
+  "viewProduct": "查看商品",
+  "imageUnavailable": "商品圖片暫時無法顯示",
+  "emptyTitle": "這個組合目前沒有商品",
+  "emptyBody": "調整關鍵字、分類或排列方式，即可繼續探索其他商品。",
+  "resetFilters": "重設全部條件"
+}

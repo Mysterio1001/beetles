@@ -3,3 +3,4 @@ export { articleRecords } from "./articles.js";
 export { bulletinContact, bulletinContent, bulletinVisuals } from "./bulletin.js";
 export { homeContent } from "./home.js";
 export { newsItems, newsSlides } from "./news.js";
+export { productCategories, productRecords } from "./products.js";

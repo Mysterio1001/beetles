@@ -1,0 +1,37 @@
+{
+  "eyebrow": "CURATED BEETLE CATALOG",
+  "title": "Beetle Shop",
+  "description": "Explore classic lineages and distinctive local forms, then search by name, scientific name, or keeping keyword to find your next observation journey.",
+  "controlsLabel": "Product search and sorting",
+  "searchLabel": "Search products",
+  "searchPlaceholder": "Search names, scientific names, or keywords",
+  "sortLabel": "Sort products",
+  "sort": {
+    "default": "Default order",
+    "price-high": "Price: high to low",
+    "price-low": "Price: low to high",
+    "date-new": "Date: newest first",
+    "date-old": "Date: oldest first"
+  },
+  "openFilters": "Open product categories",
+  "closeFilters": "Close product categories",
+  "filterEyebrow": "FILTER BY",
+  "categoryTitle": "Product categories",
+  "categoryDescription": "Narrow the catalog by life stage or service type.",
+  "categoryCount": "{count} items",
+  "catalogEyebrow": "COLLECTION",
+  "catalogTitle": "Curated products",
+  "catalogDescription": "Search, categories, and sorting work together.",
+  "resultCount": "Products found: {count}",
+  "activeCategory": "Current category: {category}",
+  "newBadge": "New",
+  "availability": {
+    "available": "Available",
+    "sold-out": "Sold out"
+  },
+  "viewProduct": "View product",
+  "imageUnavailable": "Product image is temporarily unavailable",
+  "emptyTitle": "No products match this combination",
+  "emptyBody": "Change the keyword, category, or sorting to continue exploring the catalog.",
+  "resetFilters": "Reset all filters"
+}
