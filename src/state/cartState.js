@@ -1,6 +1,8 @@
 import { computed, reactive } from "vue";
 
 import { productRecords } from "../mocks/products.js";
+import { DEFAULT_SHIPPING_METHOD_ID } from "../mocks/shipping.js";
+import { calculateCartTotals, isShippingMethodId } from "../services/cartService.js";
 import { readStoredJson, writeStoredJson } from "../utils/safeStorage.js";
 
 export const CART_STORAGE_KEY = "beetles.cart.v1";
@@ -26,6 +28,10 @@ function isCartPayload(value) {
 
 function isPositiveInteger(value) {
   return Number.isInteger(value) && value > 0;
+}
+
+function normalizeShippingMethodId(value) {
+  return isShippingMethodId(value) ? value : DEFAULT_SHIPPING_METHOD_ID;
 }
 
 export function normalizeCartQuantity(value) {
@@ -61,25 +67,49 @@ export function sanitizeCartItems(items, products = productRecords) {
 }
 
 export function createCartStore({ storage = getBrowserStorage(), products = productRecords } = {}) {
-  const fallbackPayload = { version: CART_SCHEMA_VERSION, items: [] };
+  const fallbackPayload = {
+    version: CART_SCHEMA_VERSION,
+    shippingMethodId: DEFAULT_SHIPPING_METHOD_ID,
+    items: [],
+  };
   const storedPayload = readStoredJson(storage, CART_STORAGE_KEY, fallbackPayload, isCartPayload);
   const initialItems = sanitizeCartItems(storedPayload.items, products);
-  const normalizedPayload = { version: CART_SCHEMA_VERSION, items: initialItems };
+  const initialShippingMethodId = normalizeShippingMethodId(storedPayload.shippingMethodId);
+  const normalizedPayload = {
+    version: CART_SCHEMA_VERSION,
+    shippingMethodId: initialShippingMethodId,
+    items: initialItems,
+  };
 
   if (JSON.stringify(storedPayload) !== JSON.stringify(normalizedPayload)) {
     writeStoredJson(storage, CART_STORAGE_KEY, normalizedPayload);
   }
 
   const productsById = new Map(products.map((product) => [product.id, product]));
-  const state = reactive({ items: initialItems });
+  const state = reactive({
+    items: initialItems,
+    shippingMethodId: initialShippingMethodId,
+  });
   const items = computed(() => state.items);
   const itemCount = computed(() => state.items.reduce((total, item) => total + item.quantity, 0));
+  const shippingMethodId = computed(() => state.shippingMethodId);
+  const totals = computed(() => calculateCartTotals(state.items, state.shippingMethodId, products));
+  const subtotal = computed(() => totals.value.subtotal);
+  const shippingFee = computed(() => totals.value.shippingFee);
+  const total = computed(() => totals.value.total);
 
-  function persist() {
+  function persist(nextItems = state.items, nextShippingMethodId = state.shippingMethodId) {
     return writeStoredJson(storage, CART_STORAGE_KEY, {
       version: CART_SCHEMA_VERSION,
-      items: state.items.map((item) => ({ ...item })),
+      shippingMethodId: nextShippingMethodId,
+      items: nextItems.map((item) => ({ ...item })),
     });
+  }
+
+  function commitItems(nextItems) {
+    if (!persist(nextItems)) return false;
+    state.items.splice(0, state.items.length, ...nextItems);
+    return true;
   }
 
   function addItem({ productId, variantId, quantity = 1 } = {}) {
@@ -88,14 +118,14 @@ export function createCartStore({ storage = getBrowserStorage(), products = prod
     if (!product || product.availability !== "available" || !variantExists) return false;
 
     const normalizedQuantity = normalizeCartQuantity(quantity);
-    const existingItem = state.items.find(
+    const nextItems = state.items.map((item) => ({ ...item }));
+    const existingItem = nextItems.find(
       (item) => item.productId === productId && item.variantId === variantId,
     );
 
     if (existingItem) existingItem.quantity += normalizedQuantity;
-    else state.items.push({ productId, variantId, quantity: normalizedQuantity });
-    persist();
-    return true;
+    else nextItems.push({ productId, variantId, quantity: normalizedQuantity });
+    return commitItems(nextItems);
   }
 
   function updateQuantity(productId, variantId, quantity) {
@@ -104,9 +134,14 @@ export function createCartStore({ storage = getBrowserStorage(), products = prod
     );
     if (!item) return false;
 
-    item.quantity = normalizeCartQuantity(quantity);
-    persist();
-    return true;
+    const nextItems = state.items.map((candidate) => ({
+      ...candidate,
+      quantity:
+        candidate.productId === productId && candidate.variantId === variantId
+          ? normalizeCartQuantity(quantity)
+          : candidate.quantity,
+    }));
+    return commitItems(nextItems);
   }
 
   function removeItem(productId, variantId) {
@@ -115,23 +150,35 @@ export function createCartStore({ storage = getBrowserStorage(), products = prod
     );
     if (index < 0) return false;
 
-    state.items.splice(index, 1);
-    persist();
-    return true;
+    const nextItems = state.items.filter((_, itemIndex) => itemIndex !== index);
+    return commitItems(nextItems);
   }
 
   function clear() {
-    state.items.splice(0);
-    persist();
+    if (!state.items.length) return true;
+    return commitItems([]);
+  }
+
+  function setShippingMethod(methodId) {
+    if (!isShippingMethodId(methodId)) return false;
+    if (methodId === state.shippingMethodId) return true;
+    if (!persist(state.items, methodId)) return false;
+    state.shippingMethodId = methodId;
+    return true;
   }
 
   return {
     items,
     itemCount,
+    shippingMethodId,
+    subtotal,
+    shippingFee,
+    total,
     addItem,
     updateQuantity,
     removeItem,
     clear,
+    setShippingMethod,
   };
 }
 

@@ -1,6 +1,8 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
 import i18n from "@/locale";
+import { resolveCheckoutAccess } from "@/router/cartNavigation";
+import { useCartState } from "@/state/cartState";
 import { useMemberState } from "@/state/memberState";
 
 const placeholder = () => import("@/views/system/PagePlaceholder.vue");
@@ -72,13 +74,14 @@ const routes = [
   {
     path: "/cart",
     name: "cart",
-    component: placeholder,
+    component: () => import("@/views/cart/CartView.vue"),
     meta: { titleKey: "route.cart" },
   },
   {
     path: "/checkout",
     name: "checkout",
     component: placeholder,
+    beforeEnter: () => resolveCheckoutAccess(useCartState().itemCount.value),
     meta: {
       titleKey: "route.checkout",
       parents: [{ path: "/cart", titleKey: "route.cart" }],
