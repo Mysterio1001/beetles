@@ -27,6 +27,15 @@ function localizeProduct(product, locale) {
     ...product,
     name: localize(product.name, locale),
     keywords: localize(product.keywords, locale),
+    variants: (product.variants ?? []).map((variant) => ({
+      ...variant,
+      label: localize(variant.label, locale),
+    })),
+    details: Object.fromEntries(
+      Object.entries(product.details ?? {}).map(([id, value]) => [id, localize(value, locale)]),
+    ),
+    description: localize(product.description, locale),
+    note: localize(product.note, locale),
     to: `/beetle-shop/${product.id}`,
   };
 }

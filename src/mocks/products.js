@@ -26,6 +26,8 @@ export const productRecords = Object.freeze([
     date: "2024-01-01",
     availability: "sold-out",
     image: "/img/img-beetle-shop/product_top_1.png",
+    relatedProductIds: ["goliath-goliatus-gga", "japanese-stag-t-brand", "babai-golden-stag"],
+    relatedArticleIds: ["pentodon-breeding-log", "beginner-beetle-guide"],
   },
   {
     id: "babai-golden-stag",
@@ -41,6 +43,8 @@ export const productRecords = Object.freeze([
     date: "2024-02-15",
     availability: "sold-out",
     image: "/img/img-beetle-shop/product_top_2.png",
+    relatedProductIds: ["japanese-stag-t-brand", "giraffe-stag-nishiyamai", "tokara-saw-stag"],
+    relatedArticleIds: ["beginner-beetle-guide", "oviposition-wood-tips"],
   },
   {
     id: "cameroon-crab-stag",
@@ -56,6 +60,8 @@ export const productRecords = Object.freeze([
     date: "2024-03-20",
     availability: "sold-out",
     image: "/img/img-beetle-shop/product_main_1.png",
+    relatedProductIds: ["babai-golden-stag", "tokara-saw-stag", "rainbow-stag-red"],
+    relatedArticleIds: ["beginner-beetle-guide"],
   },
   {
     id: "japanese-stag-t-brand",
@@ -71,6 +77,8 @@ export const productRecords = Object.freeze([
     date: "2024-04-10",
     availability: "sold-out",
     image: "/img/img-beetle-shop/product_main_2.png",
+    relatedProductIds: ["babai-golden-stag", "giraffe-stag-nishiyamai", "tokara-saw-stag"],
+    relatedArticleIds: ["oviposition-wood-tips", "beginner-beetle-guide"],
   },
   {
     id: "giraffe-stag-nishiyamai",
@@ -86,6 +94,33 @@ export const productRecords = Object.freeze([
     date: "2024-05-05",
     availability: "available",
     image: "/img/img-beetle-shop/product_main_3.png",
+    detailImage: "/img/img-beetle-product/hero-image.png",
+    variants: [
+      { id: "105-plus", label: localized("105 mm++", "105 mm++") },
+      { id: "101-plus", label: localized("101 mm++", "101 mm++") },
+      { id: "97-plus", label: localized("97 mm++", "97 mm++") },
+    ],
+    details: {
+      origin: localized("蘇拉威西島", "Sulawesi"),
+      parentage: localized("101 × 50", "101 × 50"),
+      type: localized("成對成蟲", "Adult pair"),
+      generation: localized("WF2", "WF2"),
+      size: localized("公蟲 99–105 mm；母蟲 all size", "Male 99–105 mm; female all size"),
+      condition: localized(
+        "公蟲目前蟄伏中；母蟲已過蟄伏。",
+        "The male is currently dormant; the female has completed dormancy.",
+      ),
+    },
+    description: localized(
+      "大顎較為細長、光澤偏亮，內齒較密且輪廓圓潤，是台灣市面上少見的長頸鹿鋸齒鍬形蟲亞種。數量有限，售完為止。",
+      "This uncommon giraffe stag beetle subspecies has slender mandibles, a brighter sheen, and closely spaced rounded inner teeth. Quantities are limited.",
+    ),
+    note: localized(
+      "母蟲於 10 月初挖出；公蟲於 11 月初挖出。",
+      "The female was excavated in early October and the male in early November.",
+    ),
+    relatedProductIds: ["tokara-saw-stag", "japanese-stag-t-brand", "babai-golden-stag"],
+    relatedArticleIds: ["giraffe-stag-breeding-log", "oviposition-wood-tips"],
   },
   {
     id: "tokara-saw-stag",
@@ -101,6 +136,8 @@ export const productRecords = Object.freeze([
     date: "2024-06-15",
     availability: "sold-out",
     image: "/img/img-beetle-shop/product_main_4.png",
+    relatedProductIds: ["giraffe-stag-nishiyamai", "babai-golden-stag", "japanese-stag-t-brand"],
+    relatedArticleIds: ["giraffe-stag-breeding-log", "oviposition-wood-tips"],
   },
   {
     id: "goliath-goliatus-gga",
@@ -116,6 +153,8 @@ export const productRecords = Object.freeze([
     date: "2024-07-18",
     availability: "sold-out",
     image: "/img/img-beetle-shop/product_main_5.png",
+    relatedProductIds: ["hercules-kono-line", "rainbow-stag-red", "cameroon-crab-stag"],
+    relatedArticleIds: ["pentodon-breeding-log", "beginner-beetle-guide"],
   },
   {
     id: "rainbow-stag-red",
@@ -131,5 +170,7 @@ export const productRecords = Object.freeze([
     date: "2024-08-01",
     availability: "sold-out",
     image: "/img/img-beetle-shop/product_main_6.png",
+    relatedProductIds: ["tokara-saw-stag", "babai-golden-stag", "goliath-goliatus-gga"],
+    relatedArticleIds: ["beginner-beetle-guide"],
   },
 ]);

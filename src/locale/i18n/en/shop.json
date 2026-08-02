@@ -33,5 +33,40 @@
   "imageUnavailable": "Product image is temporarily unavailable",
   "emptyTitle": "No products match this combination",
   "emptyBody": "Change the keyword, category, or sorting to continue exploring the catalog.",
-  "resetFilters": "Reset all filters"
+  "resetFilters": "Reset all filters",
+  "product": {
+    "eyebrow": "SPECIMEN PROFILE",
+    "backToShop": "Back to Beetle Shop",
+    "detailsTitle": "Specimen details",
+    "descriptionTitle": "Product description",
+    "noteTitle": "Specimen note",
+    "purchaseTitle": "Choose a variant and quantity",
+    "variantLabel": "Product variant",
+    "quantityLabel": "Quantity",
+    "decreaseQuantity": "Decrease quantity",
+    "increaseQuantity": "Increase quantity",
+    "quantityInput": "Product quantity",
+    "addToCart": "Add to cart",
+    "buyNow": "Buy now",
+    "addedToCart": "Added to cart: {quantity}",
+    "unavailableTitle": "This product is currently sold out",
+    "unavailableBody": "You can still review the product details and choose a variant when it returns.",
+    "relatedProducts": "Related products",
+    "relatedProductsEyebrow": "CURATED PAIRINGS",
+    "relatedProductsDescription": "Continue with related adult beetles and selected lineages.",
+    "relatedArticles": "Related care notes",
+    "relatedArticlesEyebrow": "FIELD NOTES",
+    "relatedArticlesDescription": "Read complete breeding records and practical guidance from the primary Vue data.",
+    "notFoundEyebrow": "PRODUCT NOT FOUND",
+    "notFoundTitle": "This product cannot be found",
+    "notFoundBody": "The product id does not exist or the content was removed. Return to the shop to choose another item.",
+    "fields": {
+      "origin": "Origin",
+      "parentage": "Parentage",
+      "type": "Type",
+      "generation": "Generation",
+      "size": "Size",
+      "condition": "Condition"
+    }
+  }
 }

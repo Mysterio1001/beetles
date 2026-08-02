@@ -41,7 +41,7 @@ const routes = [
   {
     path: "/beetle-shop/:productId",
     name: "product",
-    component: placeholder,
+    component: () => import("@/views/beetleShop/detail.vue"),
     meta: {
       titleKey: "route.product",
       parents: [{ path: "/beetle-shop", titleKey: "route.beetleShop" }],

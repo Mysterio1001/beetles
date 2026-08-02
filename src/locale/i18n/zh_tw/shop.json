@@ -33,5 +33,40 @@
   "imageUnavailable": "商品圖片暫時無法顯示",
   "emptyTitle": "這個組合目前沒有商品",
   "emptyBody": "調整關鍵字、分類或排列方式，即可繼續探索其他商品。",
-  "resetFilters": "重設全部條件"
+  "resetFilters": "重設全部條件",
+  "product": {
+    "eyebrow": "SPECIMEN PROFILE",
+    "backToShop": "返回翅鞘商店",
+    "detailsTitle": "個體資訊",
+    "descriptionTitle": "商品說明",
+    "noteTitle": "個體備註",
+    "purchaseTitle": "選擇規格與數量",
+    "variantLabel": "商品規格",
+    "quantityLabel": "數量",
+    "decreaseQuantity": "減少數量",
+    "increaseQuantity": "增加數量",
+    "quantityInput": "商品數量",
+    "addToCart": "加入購物車",
+    "buyNow": "立即購買",
+    "addedToCart": "已加入購物車：{quantity} 件",
+    "unavailableTitle": "此商品目前已售完",
+    "unavailableBody": "商品資訊仍可瀏覽，待補貨後即可重新選擇規格。",
+    "relatedProducts": "相關商品",
+    "relatedProductsEyebrow": "CURATED PAIRINGS",
+    "relatedProductsDescription": "從同類成蟲與精選品系繼續探索。",
+    "relatedArticles": "相關飼育資訊",
+    "relatedArticlesEyebrow": "FIELD NOTES",
+    "relatedArticlesDescription": "閱讀既有 Vue 資料中的完整飼育紀錄與實作技巧。",
+    "notFoundEyebrow": "PRODUCT NOT FOUND",
+    "notFoundTitle": "找不到這項商品",
+    "notFoundBody": "商品識別值不存在或內容已移除，請返回商店選擇其他品項。",
+    "fields": {
+      "origin": "產地",
+      "parentage": "親代",
+      "type": "類別",
+      "generation": "累代",
+      "size": "尺寸",
+      "condition": "狀況"
+    }
+  }
 }
